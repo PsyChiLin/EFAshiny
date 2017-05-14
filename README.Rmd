@@ -19,6 +19,8 @@ library(shiny)
 runGitHub( "EFAshiny", "PsyChiLin") 
 ```
 
+Temp Link : https://psychilin.shinyapps.io/EFAshiny/
+
 Upload Data and Download Results 
 
 Main arguments : SPSS Users
