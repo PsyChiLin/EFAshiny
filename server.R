@@ -1,6 +1,9 @@
 library(shiny)
 library(corrplot)
 library(psych)
+library(reshape2)
+library(ggplot2)
+library(moments)
 source("faplot.R")
 
 ### VSS
@@ -78,15 +81,60 @@ shinyServer(function(input, output) {
                 return(Dataset()[,input$vars,drop=FALSE])
         },rownames = T)
        # Dataset <- ifelse(is.null(input$vars) || length(input$vars)==0,Dataset[,input$vars,drop=FALSE],NULL)
+        
+        output$sum_table <- renderTable({
+                if (is.null(input$vars) || length(input$vars)==0){D <- NULL} 
+                D <- Dataset()[,input$vars,drop=FALSE]
+                my_summary <- function(x) {
+                        funs <- c(mean, sd, skewness, kurtosis)
+                        sapply(funs, function(f)f(x, na.rm = TRUE))
+                }
+                dta_desc <- apply(D,2,my_summary)
+                row.names(dta_desc) <- c("Mean","SD","Skewness","Kurtosis")
+                rst <- as.data.frame(t(dta_desc))
+                round(rst,3)
+        }, rownames = T)
+        output$itemdist <- renderPlot({
+                if (is.null(input$vars) || length(input$vars)==0){D <- NULL} 
+                D <- Dataset()[,input$vars,drop=FALSE]
+                dtalong <- melt(D)
+                colnames(dtalong) <- c("Item", "Response")
+                ggplot(dtalong, aes(x = Response, fill = Item))+
+                        geom_histogram()+
+                        facet_wrap(~Item)+
+                        theme_bw()+
+                        labs(list(y = "Count"))
+        })
+        output$itemplot <- renderPlot({
+                if (is.null(input$vars) || length(input$vars)==0){D <- NULL} 
+                D <- Dataset()[,input$vars,drop=FALSE]
+                dtbllist <- apply(D,2,table)
+                dtbl <- do.call(rbind, dtbllist)
+                dtbll <- melt(dtbl)
+                names(dtbll) <- c("Item","Response","Ratio")
+                dtbll$Ratio <- dtbll$Ratio/input$nobs
+                ggplot(dtbll,aes(x = reorder(Item, Ratio, max), 
+                                 y = Ratio, ymin = 0.25, ymax = Ratio, color = Item))+
+                        geom_pointrange()+
+                        geom_hline(yintercept = 0.25, linetype = "dotted")+
+                        facet_grid(.~ Response)+
+                        coord_flip()+
+                        labs(list(x = "Item"))+
+                        theme_bw()
+        })
+        
+        
+        
+        
         output$distPlot <- renderPlot({
                 if (is.null(input$vars) || length(input$vars)==0){D <- NULL} 
                 D <- Dataset()[,input$vars,drop=FALSE]
                 if(input$cortype == "Pearson") {M <- cor(as.matrix(D))} 
                 if(input$cortype == "tetrachoric"){
-                        M <- tetrachoric(as.matrix(Dataset()))$rho
+                        M <- tetrachoric(D)$rho
                 }
                 if(input$cortype == "polychoric"){
-                        M <- polychoric(as.matrix(Dataset()))$rho
+                        M <- polychoric(D)$rho
                 }
                 corrplot(M,order="AOE", method=input$method,type="upper",tl.pos="d")
                 corrplot(M,add=TRUE, type="lower", method="number",order="AOE",
@@ -104,8 +152,8 @@ shinyServer(function(input, output) {
                 if (is.null(input$vars) || length(input$vars)==0){D <- NULL} 
                 D<- Dataset()[,input$vars,drop=FALSE]
                 if(input$cortype == "Pearson") {M <- cor(as.matrix(D))} 
-                if(input$cortype == "tetrachoric"){M <- tetrachoric(as.matrix(D))$rho}
-                if(input$cortype == "polychoric"){M < polychoric(as.matrix(D))$rho}
+                if(input$cortype == "tetrachoric"){M <- tetrachoric(D)$rho}
+                if(input$cortype == "polychoric"){M <- polychoric(D)$rho}
                 farst <- fa(M,input$nfactors,n.obs =  input$nobs,
                             rotate = input$rotate,fm = input$fm )
                 test <- cbind(unclass(farst$loadings),
@@ -124,7 +172,7 @@ shinyServer(function(input, output) {
                 D<- Dataset()[,input$vars,drop=FALSE]
                 if(input$cortype == "Pearson") {M <- cor(as.matrix(D))} 
                 if(input$cortype == "tetrachoric"){M <- tetrachoric(as.matrix(D))$rho}
-                if(input$cortype == "polychoric"){M < polychoric(as.matrix(D))$rho}
+                if(input$cortype == "polychoric"){M <- polychoric(as.matrix(D))$rho}
                 farst <- fa(M,input$nfactors,n.obs =  input$nobs,
                             rotate = input$rotate,fm = input$fm )
                 return(as.data.frame(unclass(farst$Phi))) ### print

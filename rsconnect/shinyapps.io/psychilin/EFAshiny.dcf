@@ -1,0 +1,10 @@
+name: EFAshiny
+title:
+account: psychilin
+server: shinyapps.io
+appId: 180501
+bundleId: 827239
+url: https://psychilin.shinyapps.io/EFAshiny/
+when: 1494772420.60958
+asMultiple: FALSE
+asStatic: FALSE

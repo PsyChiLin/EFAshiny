@@ -29,22 +29,30 @@ shinyUI(fluidPage(
                         #textInput("name","Dataset name:","Data"),
                         #downloadLink('downloadDump', 'Download source'),
                         #downloadLink('downloadSave', 'Download binary'),
-                )),
+                        ),
+                        mainPanel(tableOutput("table"))),
                 #tabPanel("Exploration"),
-                tabPanel("R Maxtrix",
+                tabPanel("Data Explorations",
                          sidebarPanel(
-                                 numericInput('nobs', "Number of Observations", 500,min = 1),
+                                 numericInput('nobs', "Number of Observations", 300,min = 1),
                                  selectInput("cortype","Correlations Methods",
                                              c("Pearson", "tetrachoric", "polychoric")),
                                  selectInput("method","Display Methods",
                                              c("circle", "square", "ellipse",
                                                "number", "shade","color", "pie"))
-                )),
-                tabPanel("Retaintion",
+                        ),
+                        mainPanel(navbarPage("",
+                                             tabPanel("Summary",tableOutput("sum_table")),
+                                             tabPanel("Distribution", plotOutput("itemdist"),plotOutput("itemplot")),
+                                             #tabPanel(,),
+                                             tabPanel("Correlation Matrix", plotOutput("distPlot"))))
+                ),
+                tabPanel("Retention",
                          sidebarPanel(
-                                 numericInput('qpa',"Quantile of Parallel analysis",NULL,min = 0,max = 1),
+                                 numericInput('qpa',"Quantile of Parallel analysis", 0.99 , min = 0 , max = 1),
                                  numericInput("npasim","Number of simulated analyses to perform",20,min = 1)
-                                 )),
+                                 ),
+                         mainPanel(plotOutput("nfPlot"))),
                 tabPanel("Extraction and Rotation", 
                         sidebarPanel(
                         numericInput('nfactors', "Number of Factors", 3,min = 1),
@@ -58,14 +66,9 @@ shinyUI(fluidPage(
                                       "Promax", "oblimin", "simplimax",
                                       "bentlerQ", "geominQ","biquartimin","cluster"),
                                     selected = "Promax")
-                ))),
-        mainPanel(
-                navbarPage("",
-                        tabPanel("Data", tableOutput("table")),
-                        tabPanel("R Matrix", plotOutput("distPlot")), 
-                        tabPanel("Number of factors", plotOutput("nfPlot")),
-                        tabPanel("Patten Matrix", tableOutput("textfa")),
-                        tabPanel("Factors R",tableOutput("factcor"))
-                )
-        )
+                        ),
+                        mainPanel(navbarPage("",
+                                   tabPanel("Patten Matrix", tableOutput("textfa")),
+                                   tabPanel("Factors Inter-correlation",tableOutput("factcor"))))
+                        ))
 ))
