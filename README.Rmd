@@ -25,9 +25,17 @@ Upload Data and Download Results
 
 Main arguments : SPSS Users
 
+Detect NA
+
+Factor Name inconsistent in different data frame
+
 Factor loading SE
 
+Factor Loading Plot : https://www.r-bloggers.com/plotting-factor-analysis-results/
+
 Analysis Flow and Diagnotic plots (check CF and CP book)
+
+Fitting values ?
 
 FactoMineR
 

@@ -17,7 +17,7 @@ shinyUI(fluidPage(
                         htmlOutput("ArgText"),
                         # Upload data:
                         fileInput("file", "Upload data-file:"),
-                        # correlation matrix or
+                        #correlation matrix or
                         #radioButtons('datatype', 'Type of Data',
                         #             c("Raw Data Frame",
                         #               "Correlation Matrix"),
@@ -25,10 +25,9 @@ shinyUI(fluidPage(
                         #checkboxInput('corrrm', 'Correlation Matrix ?', FALSE),
                         # Variable selection:
                         htmlOutput("varselect"),
-                        br()
-                        #textInput("name","Dataset name:","Data"),
-                        #downloadLink('downloadDump', 'Download source'),
-                        #downloadLink('downloadSave', 'Download binary'),
+                        br(),
+                        textInput("name","Dataset name:","Data"),
+                        downloadLink('downloadSave', 'Download RData')
                         ),
                         mainPanel(tableOutput("table"))),
                 #tabPanel("Exploration"),
@@ -43,8 +42,9 @@ shinyUI(fluidPage(
                         ),
                         mainPanel(navbarPage("",
                                              tabPanel("Summary",tableOutput("sum_table")),
-                                             tabPanel("Distribution", plotOutput("itemdist"),plotOutput("itemplot")),
-                                             #tabPanel(,),
+                                             #tabPanel("NA detection"),
+                                             tabPanel("Distribution", plotOutput("itemdist")),
+                                             tabPanel("Response Pattern",plotOutput("itemplot")),
                                              tabPanel("Correlation Matrix", plotOutput("distPlot"))))
                 ),
                 tabPanel("Retention",
@@ -57,7 +57,8 @@ shinyUI(fluidPage(
                         sidebarPanel(
                         numericInput('nfactors', "Number of Factors", 3,min = 1),
                         selectInput("fm","Factor Extraction Methods",
-                                    c("pa", "ml", "minres","uls", "wls","gls", "minchi","minrank"),
+                                    c("pa", "ml", "minres","uls", "wls",
+                                      "gls", "minchi","minrank"),
                                     selected = "pa"),
                         selectInput("rotate","Rotation Methods",
                                     c("none",
@@ -65,10 +66,15 @@ shinyUI(fluidPage(
                                       "equamax", "varimin", "geominT","bifactor",
                                       "Promax", "oblimin", "simplimax",
                                       "bentlerQ", "geominQ","biquartimin","cluster"),
-                                    selected = "Promax")
+                                    selected = "Promax"),
+                        numericInput("bsnum","Number of Bootstraps",200, min = 20)
                         ),
                         mainPanel(navbarPage("",
                                    tabPanel("Patten Matrix", tableOutput("textfa")),
-                                   tabPanel("Factors Inter-correlation",tableOutput("factcor"))))
-                        ))
+                                   tabPanel("Factors correlation",tableOutput("factcor"))))
+                        ),
+                tabPanel("Diagram",
+                         mainPanel(plotOutput("Diag"))),
+                tabPanel("Loadings Figure",
+                         mainPanel(plotOutput("LFig"))))
 ))
