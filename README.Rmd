@@ -20,23 +20,14 @@ runGitHub( "EFAshiny", "PsyChiLin")
 ```
 
 Temp Link : https://psychilin.shinyapps.io/EFAshiny/
+Article -- Main arguments : SPSS Users
 
-Upload Data and Download Results 
+1. Upload Data and Download Results 
+2. Detect NA
+3. Correlation CI
+4. FactoMineR
+5. Funcitons for plot
+6. Factor Scores
+7. Analysis Flow and Diagnotic plots (check CF and CP book)
 
-Main arguments : SPSS Users
 
-Detect NA
-
-Factor Name inconsistent in different data frame
-
-Factor loading SE
-
-Factor Loading Plot : https://www.r-bloggers.com/plotting-factor-analysis-results/
-
-Analysis Flow and Diagnotic plots (check CF and CP book)
-
-Fitting values ?
-
-FactoMineR
-
-Link GITHUB: OK

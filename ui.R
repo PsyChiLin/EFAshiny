@@ -52,7 +52,9 @@ shinyUI(fluidPage(
                                  numericInput('qpa',"Quantile of Parallel analysis", 0.99 , min = 0 , max = 1),
                                  numericInput("npasim","Number of simulated analyses to perform",20,min = 1)
                                  ),
-                         mainPanel(plotOutput("nfPlot"))),
+                         mainPanel(navbarPage("",
+                                              tabPanel("Sree Plot",plotOutput("nfPlot")),
+                                              tabPanel("Very Simple Structure")))),
                 tabPanel("Extraction and Rotation", 
                         sidebarPanel(
                         numericInput('nfactors', "Number of Factors", 3,min = 1),
@@ -75,6 +77,8 @@ shinyUI(fluidPage(
                         ),
                 tabPanel("Diagram",
                          mainPanel(plotOutput("Diag"))),
-                tabPanel("Loadings Figure",
-                         mainPanel(plotOutput("LFig"))))
+                tabPanel("Bargraph",
+                         mainPanel(plotOutput("LFig"))),
+                tabPanel("StackedBar",
+                         mainPanel(plotOutput("SFig"))))
 ))
