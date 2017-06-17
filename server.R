@@ -5,6 +5,8 @@ library(reshape2)
 library(ggplot2)
 library(moments)
 library(grid)
+library(gridExtra)
+
 source("faplot.R")
 source("bargraph.R")
 source("printLoadings.R")
@@ -159,9 +161,11 @@ shinyServer(function(input, output) {
         })
         # Correlation Matrix
         output$distPlot <- renderPlot({
-                corrplot(M(),order="AOE", method=input$method,type="upper",tl.pos = "lt")
-                corrplot(M(),add=TRUE, type="lower", method="number",order="AOE",
-                         diag=FALSE,tl.pos="n", cl.pos="n")
+                corrplot(M(),order=input$rodermethod, method=input$method,type="upper",tl.pos = "lt")
+                corrplot(M(),add=TRUE, type="lower",
+                         method="number",order=input$rodermethod,
+                         diag=FALSE,
+                         tl.pos="n", cl.pos="n")
         }) 
        
          ### Factor Retention
@@ -216,22 +220,20 @@ shinyServer(function(input, output) {
                 return(test)
         }) 
         output$textfa <- renderTable({print(PatMat_ci())},rownames = T)
-        output$factcor <- renderTable({ 
-                # plus ci
-                return(as.data.frame(unclass(farst()$Phi))) ### print
-        },rownames = T) # Ci ?
-        output$downloadSave_PatMat <- downloadHandler(
-                filename = "PatternMatrix.csv",
+        output$downloadSave_PatMat <- downloadHandler(filename = "PatternMatrix.csv",content = function(file) {
+                        write.csv(PatMat_ci(),file,row.names = T)
+                })
+        FactCorr <- reactive({
+                FactCorr <- as.data.frame(unclass(farst()$Phi))
+                return(FactCorr)
+        })
+        output$factcor <- renderTable({print(FactCorr())},rownames = T) # Ci ?
+        output$downloadSave_FactorCorr <- downloadHandler(
+                filename = "FactorCorr.csv",
                 content = function(file) {
-                        write.csv(PatMat_ci(),file,row.names = F)
+                        write.csv(SumTable(),file,row.names = T)
                 }
         )
-        #output$downloadSave_FacCorr <- downloadHandler(
-        #        filename = "FactorCorr.csv",
-        #        content = function(file) {
-        #                write.csv(SumTable(),file,row.names = F)
-        #        }
-        #)
         ### Factor Bargraph
         output$BFig <- renderPlot({
                 order <- itemorder2()
@@ -244,22 +246,8 @@ shinyServer(function(input, output) {
         })
         ### Factor Diagram
         output$Diag <- renderPlot({
-                #
                 return(fa.diagram(farst()))
         })
-        
-        ### Download dump:
-        #output$downloadDump <- downloadHandler(
-        #        filename = "Rdata.R",
-        #        content = function(con) {
-        #                
-        #                assign(input$name, Dataset()[,input$vars,drop=FALSE])
-        #                dump(input$name, con)
-        #        }
-        #)
-        
-        ### Download save:
-        
 })
 
 

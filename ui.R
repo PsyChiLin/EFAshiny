@@ -33,7 +33,7 @@ shinyUI(fluidPage(
                 #tabPanel("Exploration"),
                 tabPanel("Data Explorations",
                          sidebarPanel(
-                                 numericInput('nobs', "Number of Observations", 300,min = 1),
+                                 numericInput('nobs', "Number of Observations",263,min = 1),
                                  br(),
                                  numericInput("binsnum","Number of bins",10),
                                  br(),
@@ -42,7 +42,7 @@ shinyUI(fluidPage(
                                  selectInput("method","Display Methods",
                                              c("circle", "square", "ellipse",
                                                "number", "shade","color", "pie")),
-                                 selectInput("method","Reorder Methods",
+                                 selectInput("rodermethod","Reorder Methods",
                                              c("original", "AOE", "FPC",
                                                "hclust", "alphabet"),"AOE"),
                                  downloadLink('downloadSave_NaR', 'Download NA Report'),
@@ -86,7 +86,7 @@ shinyUI(fluidPage(
                         downloadLink('downloadSave_FactorCorr', 'Download Factor Correlations')),
                         mainPanel(navbarPage("",
                                    tabPanel("Patten Matrix", tableOutput("textfa")),
-                                   tabPanel("Factors correlation",tableOutput("factcor"))))
+                                   tabPanel("Factors Correlations",tableOutput("factcor"))))
                         ),
                 tabPanel("Diagram",
                          mainPanel(plotOutput("Diag"))),

@@ -15,12 +15,10 @@ runGitHub( "EFAshiny", "PsyChiLin")
 
 ##### Article -- Main arguments : SPSS Users
 
-##### 1. Download Results (Especially Table)
+##### 1. Correlation Matrix as Input
 
-##### 2. Correlation Matrix
+##### 2. Correlation CI ?
 
-##### 3. Correlation CI
+##### 3. FactoMineR
 
-##### 4. FactoMineR
-
-##### 5. Adjust Plot
+##### 4. Adjust Plot
