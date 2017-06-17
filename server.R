@@ -10,6 +10,7 @@ source("bargraph.R")
 source("printLoadings.R")
 source("theme_default.R")
 source("stackbar.R")
+source("my_summary.R")
 #source("fa.diagram.ext.R")
 
 shinyServer(function(input, output) {
@@ -74,12 +75,31 @@ shinyServer(function(input, output) {
                 if (is.null(input$vars) || length(input$vars)==0) return(NULL)
                 return(Dataset()[,input$vars,drop=FALSE])
         },rownames = T)
-        
+        output$downloadSave_SelectData <- downloadHandler(
+                filename = "SelectedData.csv",
+                content = function(file) {
+                        write.csv(Dataset()[,input$vars,drop=FALSE], file,row.names=FALSE)
+                }
+        )
         ### Data Exploration
         
+        # NA detetcion
+        NaR <- reactive({
+                dta <- Dataset()[,input$vars,drop=FALSE]
+                NAreport <- as.data.frame(apply(apply(dta,2,is.na),2,sum)/input$nobs)
+                colnames(NAreport) <- "NA Ratio"
+                return(NAreport)})
+        output$na_table <- renderTable({print(NaR())},rownames = T)
+        output$downloadSave_NaR <- downloadHandler(
+                filename = "NaReport.csv",
+                content = function(file) {
+                        write.csv(NaR(),file,row.names = T)
+                }
+        )
         # Reactive D
         D <- reactive({
                 if (is.null(input$vars) || length(input$vars)==0){D <- NULL} else{     D <- Dataset()[,input$vars,drop=FALSE]}
+                D <- na.omit(D)
                 return(D)
         })
         # Reactive M
@@ -89,22 +109,27 @@ shinyServer(function(input, output) {
                 if(input$cortype == "polychoric"){M <- polychoric(D())$rho}
                 return(M)
         })
-        output$sum_table <- renderTable({
-                my_summary <- function(x) {
-                        funs <- c(mean, sd, skewness, kurtosis)
-                        sapply(funs, function(f)f(x, na.rm = TRUE))
-                }
+        # Reactive Summary For Download
+        SumTable <- reactive({
                 dta_desc <- apply(D(),2,my_summary)
                 row.names(dta_desc) <- c("Mean","SD","Skewness","Kurtosis")
                 rst <- as.data.frame(t(dta_desc))
-                round(rst,3)
-        }, rownames = T)
+                rst <- round(rst,3)
+                return(rst)
+        })
+        output$sum_table <- renderTable({print(SumTable())}, rownames = T)
+        output$downloadSave_summary <- downloadHandler(
+                filename = "Summary.csv",
+                content = function(file) {
+                        write.csv(SumTable(),file,row.names = T)
+                }
+        )
         # distribution of itmes
         output$itemdist <- renderPlot({
                 dtalong <- melt(D())
                 colnames(dtalong) <- c("Item", "Response")
                 ggplot(dtalong, aes(x = Response, fill = Item))+
-                        geom_histogram()+
+                        geom_histogram(bins = input$binsnum)+
                         facet_wrap(~Item)+
                         theme_default()+
                         labs(list(y = "Count"))
@@ -171,7 +196,7 @@ shinyServer(function(input, output) {
                 o3 <- as.data.frame(o2)
                 return(row.names(o3))
         }) # For stack MuST be TRUE
-        output$textfa <- renderTable({
+        PatMat_ci <- reactive({
                 farst <- farst()
                 f <- list()
                 for (i in 1:input$nfactors){f[[i]] <- cbind(farst$cis$ci[,i],farst$cis$means[,i],farst$cis$ci[,i+input$nfactors])}
@@ -186,15 +211,27 @@ shinyServer(function(input, output) {
                 manc <- do.call(c,nam)        
                 colnames(test)[1:I(input$nfactors *3)] <- manc
                 colnames(test)[I(input$nfactors *3+1):I(input$nfactors *3+3)] <- c("h2","u2","com")
-                
                 order <- itemorder()
-                return(test[c(order),])
-        },rownames = T)
+                test <- test[c(order),]
+                return(test)
+        }) 
+        output$textfa <- renderTable({print(PatMat_ci())},rownames = T)
         output$factcor <- renderTable({ 
                 # plus ci
                 return(as.data.frame(unclass(farst()$Phi))) ### print
-        },rownames = T)
-        
+        },rownames = T) # Ci ?
+        output$downloadSave_PatMat <- downloadHandler(
+                filename = "PatternMatrix.csv",
+                content = function(file) {
+                        write.csv(PatMat_ci(),file,row.names = F)
+                }
+        )
+        #output$downloadSave_FacCorr <- downloadHandler(
+        #        filename = "FactorCorr.csv",
+        #        content = function(file) {
+        #                write.csv(SumTable(),file,row.names = F)
+        #        }
+        #)
         ### Factor Bargraph
         output$BFig <- renderPlot({
                 order <- itemorder2()
@@ -212,28 +249,16 @@ shinyServer(function(input, output) {
         })
         
         ### Download dump:
-        
-        output$downloadDump <- downloadHandler(
-                filename = "Rdata.R",
-                content = function(con) {
-                        
-                        assign(input$name, Dataset()[,input$vars,drop=FALSE])
-                        
-                        dump(input$name, con)
-                }
-        )
+        #output$downloadDump <- downloadHandler(
+        #        filename = "Rdata.R",
+        #        content = function(con) {
+        #                
+        #                assign(input$name, Dataset()[,input$vars,drop=FALSE])
+        #                dump(input$name, con)
+        #        }
+        #)
         
         ### Download save:
-        
-        output$downloadSave <- downloadHandler(
-                filename = "Rdata.RData",
-                content = function(con) {
-                        
-                        assign(input$name, Dataset()[,input$vars,drop=FALSE])
-                        
-                        save(list=input$name, file=con)
-                }
-        )
         
 })
 

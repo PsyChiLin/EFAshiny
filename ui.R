@@ -26,25 +26,35 @@ shinyUI(fluidPage(
                         # Variable selection:
                         htmlOutput("varselect"),
                         br(),
-                        textInput("name","Dataset name:","Data"),
-                        downloadLink('downloadSave', 'Download RData')
+                        #textInput("name","Dataset name:","Data"),
+                        downloadLink('downloadSave_SelectData', 'Download Selected Data')
                         ),
                         mainPanel(tableOutput("table"))),
                 #tabPanel("Exploration"),
                 tabPanel("Data Explorations",
                          sidebarPanel(
                                  numericInput('nobs', "Number of Observations", 300,min = 1),
+                                 br(),
+                                 numericInput("binsnum","Number of bins",10),
+                                 br(),
                                  selectInput("cortype","Correlations Methods",
                                              c("Pearson", "tetrachoric", "polychoric")),
                                  selectInput("method","Display Methods",
                                              c("circle", "square", "ellipse",
-                                               "number", "shade","color", "pie"))
+                                               "number", "shade","color", "pie")),
+                                 selectInput("method","Reorder Methods",
+                                             c("original", "AOE", "FPC",
+                                               "hclust", "alphabet"),"AOE"),
+                                 downloadLink('downloadSave_NaR', 'Download NA Report'),
+                                 br(),
+                                 downloadLink('downloadSave_summary', 'Download Summary Table')
                         ),
                         mainPanel(navbarPage("",
+                                             tabPanel("NA Report",tableOutput("na_table")),
                                              tabPanel("Summary",tableOutput("sum_table")),
                                              #tabPanel("NA detection"),
                                              tabPanel("Distribution", plotOutput("itemdist")),
-                                             tabPanel("Response Pattern",plotOutput("itemplot")),
+                                             tabPanel("Response",plotOutput("itemplot")),
                                              tabPanel("Correlation Matrix", plotOutput("distPlot"))))
                 ),
                 tabPanel("Retention",
@@ -70,8 +80,10 @@ shinyUI(fluidPage(
                                       "bentlerQ", "geominQ","biquartimin","cluster"),
                                     selected = "Promax"),
                         numericInput("bsnum","Number of Bootstraps",20, min = 20),
-                        checkboxInput("sorting", "Sort", T)),
-                        #numericInput("cutv","Cutoff Threshold", 0.3, min = 0,max = 1)),
+                        checkboxInput("sorting", "Sort", T),
+                        downloadLink('downloadSave_PatMat', 'Download Pattern Matrix'),
+                        br(),
+                        downloadLink('downloadSave_FactorCorr', 'Download Factor Correlations')),
                         mainPanel(navbarPage("",
                                    tabPanel("Patten Matrix", tableOutput("textfa")),
                                    tabPanel("Factors correlation",tableOutput("factcor"))))
