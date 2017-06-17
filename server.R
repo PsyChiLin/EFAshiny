@@ -231,7 +231,7 @@ shinyServer(function(input, output) {
         output$downloadSave_FactorCorr <- downloadHandler(
                 filename = "FactorCorr.csv",
                 content = function(file) {
-                        write.csv(SumTable(),file,row.names = T)
+                        write.csv(FactCorr(),file,row.names = T)
                 }
         )
         ### Factor Bargraph
