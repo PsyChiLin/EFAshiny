@@ -3,7 +3,7 @@ shinyUI(fluidPage(
         #theme = "bootstrap.css",
         # Header:
         #headerPanel(img(src="mish.png",)),
-        titlePanel(title=div(img(src="mish.png", height = 40, width = 40),"Identify Latent Factors using Exploratory Factor Analysis")),
+        titlePanel(title=div(img(src="mish.png", height = 40, width = 40),"Identify Latent Stuctures using the Exploratory Factor Analysis")),
         # Input in sidepanel:
         tabsetPanel("Argument",
                 tabPanel("Read Data",
@@ -57,7 +57,7 @@ shinyUI(fluidPage(
                                               tabPanel("Very Simple Structure")))),
                 tabPanel("Extraction and Rotation", 
                         sidebarPanel(
-                        numericInput('nfactors', "Number of Factors", 3,min = 1),
+                        numericInput('nfactors', "Number of Factors", 6,min = 1),
                         selectInput("fm","Factor Extraction Methods",
                                     c("pa", "ml", "minres","uls", "wls",
                                       "gls", "minchi","minrank"),
@@ -69,8 +69,9 @@ shinyUI(fluidPage(
                                       "Promax", "oblimin", "simplimax",
                                       "bentlerQ", "geominQ","biquartimin","cluster"),
                                     selected = "Promax"),
-                        numericInput("bsnum","Number of Bootstraps",200, min = 20)
-                        ),
+                        numericInput("bsnum","Number of Bootstraps",20, min = 20),
+                        checkboxInput("sorting", "Sort", T)),
+                        #numericInput("cutv","Cutoff Threshold", 0.3, min = 0,max = 1)),
                         mainPanel(navbarPage("",
                                    tabPanel("Patten Matrix", tableOutput("textfa")),
                                    tabPanel("Factors correlation",tableOutput("factcor"))))
@@ -78,7 +79,12 @@ shinyUI(fluidPage(
                 tabPanel("Diagram",
                          mainPanel(plotOutput("Diag"))),
                 tabPanel("Bargraph",
-                         mainPanel(plotOutput("LFig"))),
+                         sidebarPanel(
+                                 textInput("highcol","Color of Postive Loadings",value = "blue"),
+                                 textInput("lowcol","Color of Negative Loadings",value = "red"),
+                                 checkboxInput("sorting2", "Sort", T)
+                         ),
+                         mainPanel(plotOutput("BFig"))),
                 tabPanel("StackedBar",
                          mainPanel(plotOutput("SFig"))))
 ))

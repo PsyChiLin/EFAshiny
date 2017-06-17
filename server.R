@@ -4,10 +4,13 @@ library(psych)
 library(reshape2)
 library(ggplot2)
 library(moments)
+library(grid)
 source("faplot.R")
-## VSS
-### Style
-### correlation matrix
+source("bargraph.R")
+source("printLoadings.R")
+source("theme_default.R")
+source("stackbar.R")
+#source("fa.diagram.ext.R")
 
 shinyServer(function(input, output) {
         
@@ -103,33 +106,40 @@ shinyServer(function(input, output) {
                 ggplot(dtalong, aes(x = Response, fill = Item))+
                         geom_histogram()+
                         facet_wrap(~Item)+
-                        theme_bw()+
+                        theme_default()+
                         labs(list(y = "Count"))
         })
         # Item Response
         output$itemplot <- renderPlot({
-                dtbllist <- apply(D(),2,table)
-                dtbl <- do.call(rbind, dtbllist)
-                dtbll <- melt(dtbl)
-                names(dtbll) <- c("Item","Response","Ratio")
-                dtbll$Ratio <- dtbll$Ratio/input$nobs
+                dtbl <- apply(D(),2,table)
+                d <- D()
+                #dtbl <- apply(D1,2,table)
+                if (class(dtbl) == "list"){
+                        dtbl <- do.call(rbind, dtbl)
+                        dtbll <- melt(dtbl)
+                        names(dtbll) <- c("Item","Response","Ratio")
+                        dtbll$Ratio <- dtbll$Ratio/input$nobs}
+                else {
+                        dtbll <- melt(dtbl)
+                        names(dtbll) <- c("Response","Item","Ratio")
+                        dtbll$Ratio <- dtbll$Ratio/input$nobs}
                 ggplot(dtbll,aes(x = reorder(Item, Ratio, max), 
                                  y = Ratio, ymin = 0.25, ymax = Ratio, color = Item))+
                         geom_pointrange()+
                         geom_hline(yintercept = 0.25, linetype = "dotted")+
-                        facet_grid(.~ Response)+
+                        facet_grid(. ~ Response)+
                         coord_flip()+
                         labs(list(x = "Item"))+
-                        theme_bw()
+                        theme_default()
         })
         # Correlation Matrix
         output$distPlot <- renderPlot({
-                corrplot(M(),order="AOE", method=input$method,type="upper",tl.pos="d")
+                corrplot(M(),order="AOE", method=input$method,type="upper",tl.pos = "lt")
                 corrplot(M(),add=TRUE, type="lower", method="number",order="AOE",
                          diag=FALSE,tl.pos="n", cl.pos="n")
-        })
-        
-        ### Factor Retention
+        }) 
+       
+         ### Factor Retention
         output$nfPlot <- renderPlot({
                 faplot(M(),n.obs = input$nobs,quant = input$qpa, fm = input$fm, n.iter = input$npasim)
                 #VSS(sim.item(nvar=24),fm="minres",plot = F)[,c(1,2,3,6,7,8,11)]
@@ -143,8 +153,25 @@ shinyServer(function(input, output) {
                             max.iter = 100000,n.iter = input$bsnum)
                 return(farst)
         })
-        
-        output$textfa <- renderTable({ 
+        itemorder <- reactive({
+                o1 <- farst()
+                o2 <- printLoadings(o1$cis$means,sort = input$sorting,cutoff = 0)
+                o3 <- as.data.frame(o2)
+                return(row.names(o3))
+        }) # for pattren matrix
+        itemorder2 <- reactive({
+                o1 <- farst()
+                o2 <- printLoadings(o1$cis$means,sort = input$sorting2)
+                o3 <- as.data.frame(o2)
+                return(row.names(o3))
+        }) # for bargraph
+        itemorder3 <- reactive({
+                o1 <- farst()
+                o2 <- printLoadings(o1$cis$means,sort = T)
+                o3 <- as.data.frame(o2)
+                return(row.names(o3))
+        }) # For stack MuST be TRUE
+        output$textfa <- renderTable({
                 farst <- farst()
                 f <- list()
                 for (i in 1:input$nfactors){f[[i]] <- cbind(farst$cis$ci[,i],farst$cis$means[,i],farst$cis$ci[,i+input$nfactors])}
@@ -159,16 +186,26 @@ shinyServer(function(input, output) {
                 manc <- do.call(c,nam)        
                 colnames(test)[1:I(input$nfactors *3)] <- manc
                 colnames(test)[I(input$nfactors *3+1):I(input$nfactors *3+3)] <- c("h2","u2","com")
-                return(test)
+                
+                order <- itemorder()
+                return(test[c(order),])
         },rownames = T)
-        
         output$factcor <- renderTable({ 
                 # plus ci
                 return(as.data.frame(unclass(farst()$Phi))) ### print
         },rownames = T)
         
-        
-        #### Factor Diagram
+        ### Factor Bargraph
+        output$BFig <- renderPlot({
+                order <- itemorder2()
+                return(bargraph(farst(),order = order,highcol = input$highcol,lowcol = input$lowcol))
+        })
+        ### Factor stackBar
+        output$SFig <- renderPlot({
+                order <- itemorder3()
+                return(stackbar(M(),farst(),order = order))
+        })
+        ### Factor Diagram
         output$Diag <- renderPlot({
                 #
                 return(fa.diagram(farst()))
