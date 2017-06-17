@@ -12,14 +12,4 @@ library(shiny)
 runGitHub( "EFAshiny", "PsyChiLin") 
 ```
 
-Upload Data and Download Results
-
-Main arguments : SPSS Users
-
-Factor loading SE
-
-Analysis Flow and Diagnotic plots (check CF and CP book)
-
-FactoMineR
-
-Link GITHUB: OK
+Temp Link : <https://psychilin.shinyapps.io/EFAshiny/> Article -- Main arguments : SPSS Users 1. Download Results (Especially Table) 2. Detect NA 3. Correlation CI 4. FactoMineR 5. Adjust Plot

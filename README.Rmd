@@ -25,4 +25,4 @@ Article -- Main arguments : SPSS Users
 2. Detect NA 
 3. Correlation CI
 4. FactoMineR
-5. Adjust Plot 
+5. Adjust Plot
