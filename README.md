@@ -17,7 +17,7 @@ runGitHub( "EFAshiny", "PsyChiLin")
 
 ##### 1. Download Results (Especially Table)
 
-##### 2. Detect NA
+##### 2. Correlation Matrix
 
 ##### 3. Correlation CI
 
