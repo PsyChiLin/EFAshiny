@@ -193,13 +193,13 @@ shinyServer(function(input, output) {
                 o2 <- printLoadings(o1$cis$means,sort = input$sorting2)
                 o3 <- as.data.frame(o2)
                 return(row.names(o3))
-        }) # for bargraph
-        itemorder3 <- reactive({
-                o1 <- farst()
-                o2 <- printLoadings(o1$cis$means,sort = T)
-                o3 <- as.data.frame(o2)
-                return(row.names(o3))
-        }) # For stack MuST be TRUE
+        }) # for bargraph and stackedbar
+        #itemorder3 <- reactive({
+        #        o1 <- farst()
+        #       o2 <- printLoadings(o1$cis$means,sort = T)
+        #        o3 <- as.data.frame(o2)
+        #        return(row.names(o3))
+        #}) # For stack MuST be TRUE
         PatMat_ci <- reactive({
                 farst <- farst()
                 f <- list()
@@ -231,7 +231,6 @@ shinyServer(function(input, output) {
         output$downloadSave_FactorCorr <- downloadHandler(filename = "FactorCorr.csv",content = function(file) {
                         write.csv(FactCorr(),file,row.names = T)
                 })
-        
         ### Factor Bargraph
         output$BFig <- renderPlot({
                 order <- itemorder2()
@@ -239,8 +238,8 @@ shinyServer(function(input, output) {
         })
         ### Factor stackBar
         output$SFig <- renderPlot({
-                order <- itemorder3()
-                return(stackbar(M(),farst(),order = order))
+                order <- itemorder2()
+                return(stackbar(M(),farst(),order = order,highcol = input$highcol,lowcol = input$lowcol))
         })
         ### Factor Diagram
         output$Diag <- renderPlot({

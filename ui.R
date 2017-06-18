@@ -101,13 +101,15 @@ shinyUI(fluidPage(
 
                          ),
                          mainPanel(plotOutput("Diag"))),
-                tabPanel("Bargraph",
+                tabPanel("Visualizations",
                          sidebarPanel(
                                  textInput("highcol","Color of Postive Loadings",value = "blue"),
                                  textInput("lowcol","Color of Negative Loadings",value = "red"),
                                  checkboxInput("sorting2", "Sort", T)
                          ),
-                         mainPanel(plotOutput("BFig"))),
-                tabPanel("StackedBar",
-                         mainPanel(plotOutput("SFig"))))
+                         mainPanel(navbarPage("",
+                                              tabPanel("Bargraph",plotOutput("BFig")),
+                                              tabPanel("StackedBar",plotOutput("SFig"))))
+                         )
+               )
 ))

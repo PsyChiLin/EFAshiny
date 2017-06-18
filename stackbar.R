@@ -1,4 +1,4 @@
-stackbar <- function(CorMat,PatMat,order){
+stackbar <- function(CorMat,PatMat,order,highcol, lowcol){
         corrs.m <- melt(CorMat,value.name="Correlation")
         corrs.m$Var1 <- factor(corrs.m$Var1, levels =c(order))
         corrs.m$Var2 <- factor(corrs.m$Var2, levels =c(order))
@@ -10,7 +10,10 @@ stackbar <- function(CorMat,PatMat,order){
                       axis.title.x=element_blank(), 
                       axis.title.y=element_blank()) +
                 #set correlation fill gradient
-                scale_fill_gradient(low="white", high="red") + 
+                scale_fill_gradient2(high = highcol,
+                                     mid = "white",
+                                     low = lowcol, 
+                                     midpoint=0) + 
                 guides(fill=F) #omit unnecessary gradient legend
         loadings.m <-melt(unclass(PatMat$cis$means),value.name="Loading")
         colnames(loadings.m)[1:2] <- c("Item","Factor")
