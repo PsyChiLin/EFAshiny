@@ -61,8 +61,9 @@ shinyUI(fluidPage(
                          sidebarPanel(
                                  numericInput('qpa',"Quantile of Parallel analysis", 0.99 , min = 0 , max = 1,step = 0.1),
                                  numericInput("npasim","Number of simulated analyses to perform",20,min = 1, step = 10),
+                                 br(),
                                  numericInput("maxn", "Max Number of Factor For VSS",4,min = 1),
-                                 downloadLink('downloadSave_nfTable ', 'Download VSS Table')),
+                                 downloadLink('downloadSave_nfTable', 'Download VSS Table')),
                          mainPanel(navbarPage("",
                                               tabPanel("Sree Plot",plotOutput("nfPlot")),
                                               tabPanel("Very Simple Structure",tableOutput("nfTable"))))),

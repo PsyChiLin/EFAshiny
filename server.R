@@ -172,7 +172,7 @@ shinyServer(function(input, output) {
         })
         output$nfTable <- renderTable({print(VssTable())},rownames = F)
         output$downloadSave_nfTable <- downloadHandler(filename = "Vss_Table.csv",content = function(file) {
-                write.csv(nfTable(),file,row.names = F)
+                write.csv(VssTable(),file,row.names = F)
         })
         ### Factor Extraction and Rotation
         # reactive factor analysis Results
