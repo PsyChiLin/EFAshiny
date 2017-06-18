@@ -1,5 +1,6 @@
 
-### EFAshiny[<https://psychilin.shinyapps.io/EFAshiny/>]
+[EFAshiny](https://psychilin.shinyapps.io/EFAshiny/)
+----------------------------------------------------
 
 ##### An user-friendly Shiny APP for EFA users who have some experiences with SPSS.
 
@@ -10,24 +11,22 @@ library(shiny)
 runGitHub( "EFAshiny", "PsyChiLin") 
 ```
 
-### Temp Link :
+### Article
 
-#### Article
+#### 1.SPSS Users
 
-##### 1.SPSS Users
+#### 2.Users-Friendly and Correct
 
-##### 2.Users-Friendly and Correct
+#### 3.Two Example
 
-##### 3.Two Example
+##### 1.Scale Data (item level)
 
-###### 1.Scale Data (item level)
+##### 2.Neuroimaging Data (fNIRS Resting Data)
 
-###### 2.Neuroimaging Data (fNIRS Resting Data)
+### Shiny Note :
 
-#### Shiny Note :
+#### 1. Correlation Matrix as Input ?
 
-##### 1. Correlation Matrix as Input ?
+#### 2. Correlation CI ?
 
-##### 2. Correlation CI ?
-
-##### 3. How to adjust Plot Margin
+#### 3. How to adjust Plot Margin
