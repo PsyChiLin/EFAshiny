@@ -59,15 +59,16 @@ shinyUI(fluidPage(
                 ),
                 tabPanel("Retention",
                          sidebarPanel(
-                                 numericInput('qpa',"Quantile of Parallel analysis", 0.99 , min = 0 , max = 1),
-                                 numericInput("npasim","Number of simulated analyses to perform",20,min = 1)
-                                 ),
+                                 numericInput('qpa',"Quantile of Parallel analysis", 0.99 , min = 0 , max = 1,step = 0.1),
+                                 numericInput("npasim","Number of simulated analyses to perform",20,min = 1, step = 10),
+                                 numericInput("maxn", "Max Number of Factor For VSS",4,min = 1),
+                                 downloadLink('downloadSave_nfTable ', 'Download VSS Table')),
                          mainPanel(navbarPage("",
                                               tabPanel("Sree Plot",plotOutput("nfPlot")),
-                                              tabPanel("Very Simple Structure")))),
+                                              tabPanel("Very Simple Structure",tableOutput("nfTable"))))),
                 tabPanel("Extraction and Rotation", 
                         sidebarPanel(
-                        numericInput('nfactors', "Number of Factors", 6,min = 1),
+                        numericInput('nfactors', "Number of Factors", 2,min = 1),
                         selectInput("fm","Factor Extraction Methods",
                                     c("pa", "ml", "minres","uls", "wls",
                                       "gls", "minchi","minrank"),
@@ -79,7 +80,7 @@ shinyUI(fluidPage(
                                       "Promax", "oblimin", "simplimax",
                                       "bentlerQ", "geominQ","biquartimin","cluster"),
                                     selected = "Promax"),
-                        numericInput("bsnum","Number of Bootstraps",20, min = 20),
+                        numericInput("bsnum","Number of Bootstraps",20, min = 20,step = 100),
                         checkboxInput("sorting", "Sort", T),
                         downloadLink('downloadSave_PatMat', 'Download Pattern Matrix'),
                         br(),
@@ -89,6 +90,15 @@ shinyUI(fluidPage(
                                    tabPanel("Factors Correlations",tableOutput("factcor"))))
                         ),
                 tabPanel("Diagram",
+                         sidebarPanel(
+                                 numericInput('cutt', "CutOff Value", 0.33,min = 0,step = 0.1), 
+                                 checkboxInput("so", "Sort", T),
+                                 checkboxInput("errarr", "Errors Arrows", T),
+                                 checkboxInput("sim", "Simple Structure", T),
+                                 #numericInput('rs', "size of rectangles",0.15,min = 0,step = 0.01),
+                                 numericInput('es', "size of ellipses",0.05,min = 0,step = 0.01)
+
+                         ),
                          mainPanel(plotOutput("Diag"))),
                 tabPanel("Bargraph",
                          sidebarPanel(

@@ -65,9 +65,7 @@ shinyServer(function(input, output) {
         })
         # Select variables:
         output$varselect <- renderUI({
-                
                 if (identical(Dataset(), '') || identical(Dataset(),data.frame())) return(NULL)
-                
                 # Variable selection:    
                 selectInput("vars", "Variables to use:",
                             names(Dataset()), names(Dataset()), multiple =TRUE)            
@@ -77,12 +75,8 @@ shinyServer(function(input, output) {
                 if (is.null(input$vars) || length(input$vars)==0) return(NULL)
                 return(Dataset()[,input$vars,drop=FALSE])
         },rownames = T)
-        output$downloadSave_SelectData <- downloadHandler(
-                filename = "SelectedData.csv",
-                content = function(file) {
-                        write.csv(Dataset()[,input$vars,drop=FALSE], file,row.names=FALSE)
-                }
-        )
+        output$downloadSave_SelectData <- downloadHandler(filename = "SelectedData.csv",content = function(file) {write.csv(Dataset()[,input$vars,drop=FALSE], file,row.names=FALSE)
+                })
         ### Data Exploration
         
         # NA detetcion
@@ -92,12 +86,9 @@ shinyServer(function(input, output) {
                 colnames(NAreport) <- "NA Ratio"
                 return(NAreport)})
         output$na_table <- renderTable({print(NaR())},rownames = T)
-        output$downloadSave_NaR <- downloadHandler(
-                filename = "NaReport.csv",
-                content = function(file) {
+        output$downloadSave_NaR <- downloadHandler(filename = "NaReport.csv",content = function(file) {
                         write.csv(NaR(),file,row.names = T)
-                }
-        )
+                })
         # Reactive D
         D <- reactive({
                 if (is.null(input$vars) || length(input$vars)==0){D <- NULL} else{     D <- Dataset()[,input$vars,drop=FALSE]}
@@ -120,12 +111,9 @@ shinyServer(function(input, output) {
                 return(rst)
         })
         output$sum_table <- renderTable({print(SumTable())}, rownames = T)
-        output$downloadSave_summary <- downloadHandler(
-                filename = "Summary.csv",
-                content = function(file) {
+        output$downloadSave_summary <- downloadHandler(filename = "Summary.csv",content = function(file) {
                         write.csv(SumTable(),file,row.names = T)
-                }
-        )
+                })
         # distribution of itmes
         output$itemdist <- renderPlot({
                 dtalong <- melt(D())
@@ -145,7 +133,10 @@ shinyServer(function(input, output) {
                         dtbl <- do.call(rbind, dtbl)
                         dtbll <- melt(dtbl)
                         names(dtbll) <- c("Item","Response","Ratio")
-                        dtbll$Ratio <- dtbll$Ratio/input$nobs}
+                        dtbll$Ratio <- dtbll$Ratio/input$nobs
+                        if (length(levels(as.factor(dtbll$Response))) > 20) {
+                                stop("More than 20 levels response. Continuous response data Could not be shwon in this plot ")
+                        }}
                 else {
                         dtbll <- melt(dtbl)
                         names(dtbll) <- c("Response","Item","Ratio")
@@ -169,11 +160,20 @@ shinyServer(function(input, output) {
         }) 
        
          ### Factor Retention
-        output$nfPlot <- renderPlot({
-                faplot(M(),n.obs = input$nobs,quant = input$qpa, fm = input$fm, n.iter = input$npasim)
-                #VSS(sim.item(nvar=24),fm="minres",plot = F)[,c(1,2,3,6,7,8,11)]
+        output$nfPlot <- renderPlot({faplot(M(),n.obs = input$nobs,quant = input$qpa, fm = input$fm, n.iter = input$npasim)})
+        VssTable <- reactive({
+                Vs<- VSS(M(),n = input$maxn,
+                         #rotate = "promax", fm = "ml",
+                         plot = F, n.obs = input$nobs)
+                mapvss <- data.frame(nFactor = row.names(Vs$vss.stats),VSS1 = Vs$cfit.1, VSS2 = Vs$cfit.2, MAP = Vs$map)
+                otherindex <- Vs$vss.stats[,c(1:14)]
+                VssTable <- cbind(mapvss,otherindex)
+                return(VssTable)
         })
-        
+        output$nfTable <- renderTable({print(VssTable())},rownames = F)
+        output$downloadSave_nfTable <- downloadHandler(filename = "Vss_Table.csv",content = function(file) {
+                write.csv(nfTable(),file,row.names = F)
+        })
         ### Factor Extraction and Rotation
         # reactive factor analysis Results
         farst <- reactive({
@@ -228,12 +228,10 @@ shinyServer(function(input, output) {
                 return(FactCorr)
         })
         output$factcor <- renderTable({print(FactCorr())},rownames = T) # Ci ?
-        output$downloadSave_FactorCorr <- downloadHandler(
-                filename = "FactorCorr.csv",
-                content = function(file) {
+        output$downloadSave_FactorCorr <- downloadHandler(filename = "FactorCorr.csv",content = function(file) {
                         write.csv(FactCorr(),file,row.names = T)
-                }
-        )
+                })
+        
         ### Factor Bargraph
         output$BFig <- renderPlot({
                 order <- itemorder2()
@@ -246,7 +244,15 @@ shinyServer(function(input, output) {
         })
         ### Factor Diagram
         output$Diag <- renderPlot({
-                return(fa.diagram(farst()))
+                return(fa.diagram(farst(),
+                                  simple = input$sim,
+                                  cut = input$cutt,
+                                  sort = input$so,
+                                  errors = input$errarr,
+                                  main = " ",
+                                  #rsize = input$rs,
+                                  e.size = input$es))
+               
         })
 })
 
