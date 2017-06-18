@@ -103,8 +103,8 @@ shinyUI(fluidPage(
                          mainPanel(plotOutput("Diag"))),
                 tabPanel("Visualizations",
                          sidebarPanel(
-                                 textInput("highcol","Color of Postive Loadings",value = "blue"),
-                                 textInput("lowcol","Color of Negative Loadings",value = "red"),
+                                 textInput("highcol","Color of Postive Loadings",value = "red"),
+                                 textInput("lowcol","Color of Negative Loadings",value = "blue"),
                                  checkboxInput("sorting2", "Sort", T)
                          ),
                          mainPanel(navbarPage("",
