@@ -203,20 +203,36 @@ shinyServer(function(input, output) {
         PatMat_ci <- reactive({
                 farst <- farst()
                 f <- list()
-                for (i in 1:input$nfactors){f[[i]] <- cbind(farst$cis$ci[,i],farst$cis$means[,i],farst$cis$ci[,i+input$nfactors])}
-                fd <- do.call(cbind,f)
-                test <- cbind(fd,
-                              melt(unclass(farst$communality)), # some problems
-                              melt(unclass(farst$uniquenesses)),
-                              melt(unclass(farst$complexity)))
-                nam <- list()        
-                aa <- names(as.data.frame(unclass(farst$cis$means)))
-                for (i in 1:input$nfactors){nam[[i]] <- c(paste0(aa[i],"_Lower"),aa[i],paste0(aa[i],"_Upper"))}       
-                manc <- do.call(c,nam)        
-                colnames(test)[1:I(input$nfactors *3)] <- manc
-                colnames(test)[I(input$nfactors *3+1):I(input$nfactors *3+3)] <- c("h2","u2","com")
-                order <- itemorder()
-                test <- test[c(order),]
+                if(input$nfactors != 1){
+                        for (i in 1:input$nfactors){f[[i]] <- cbind(farst$cis$ci[,i],farst$cis$means[,i],farst$cis$ci[,i+input$nfactors])}
+                        fd <- do.call(cbind,f)
+                        test <- cbind(fd,
+                                      melt(unclass(farst$communality)), # some problems
+                                      melt(unclass(farst$uniquenesses)),
+                                      melt(unclass(farst$complexity)))
+                        nam <- list()        
+                        aa <- names(as.data.frame(unclass(farst$cis$means)))
+                        for (i in 1:input$nfactors){nam[[i]] <- c(paste0(aa[i],"_Lower"),aa[i],paste0(aa[i],"_Upper"))}       
+                        manc <- do.call(c,nam)        
+                        colnames(test)[1:I(input$nfactors *3)] <- manc
+                        colnames(test)[I(input$nfactors *3+1):I(input$nfactors *3+3)] <- c("h2","u2","com")
+                        order <- itemorder()
+                        test <- test[c(order),]
+                }
+                if (input$nfactors == 1){
+                        f<- cbind(farst$cis$ci[,1],farst$cis$means[,1],farst$cis$ci[,2])
+                        test <- cbind(f,
+                                      melt(unclass(farst$communality)), # some problems
+                                      melt(unclass(farst$uniquenesses)),
+                                      melt(unclass(farst$complexity)))
+                        nam <- list()        
+                        aa <- names(as.data.frame(unclass(farst$cis$means)))
+                        nam <- c(paste0(aa[1],"_Lower"),aa[1],paste0(aa[1],"_Upper"))      
+                        colnames(test)[1:I(1*3)] <- nam
+                        colnames(test)[I(1*3+1):I(1*3+3)] <- c("h2","u2","com")
+                        if(input$sorting == T){test <- test[order(test[,2],decreasing = T),]}
+                        
+                }
                 return(test)
         }) 
         output$textfa <- renderTable({print(PatMat_ci())},rownames = T)
