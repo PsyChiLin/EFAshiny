@@ -6,14 +6,8 @@ library(ggplot2)
 library(moments)
 library(grid)
 library(gridExtra)
-
-source("faplot.R")
-source("bargraph.R")
-source("printLoadings.R")
-source("theme_default.R")
-source("stackbar.R")
-source("my_summary.R")
-#source("fa.diagram.ext.R")
+file.sources = list.files(pattern="functions/*.R")
+sapply(file.sources,source)
 
 shinyServer(function(input, output) {
         
