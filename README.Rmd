@@ -20,7 +20,6 @@ runGitHub( "EFAshiny", "PsyChiLin")
 ```
 
 ### Shiny Note :  
-#### 1. Correlation Matrix as Input ?
-#### 2. Correlation CI ?
-#### 3. Factor Correlation Plots ?
-#### 4. How to adjust Plot Margin
+#### 1. Correlation CI ?
+#### 2. Factor Correlation Plots ?
+#### 3. How to adjust Plot Margin (and Stackedbar two plot fitting)

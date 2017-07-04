@@ -18,11 +18,10 @@ shinyUI(fluidPage(
                         # Upload data:
                         fileInput("file", "Upload data-file:"),
                         #correlation matrix or
-                        #radioButtons('datatype', 'Type of Data',
-                        #             c("Raw Data Frame",
-                        #               "Correlation Matrix"),
-                        #             "Raw Data Frame"),
-                        #checkboxInput('corrrm', 'Correlation Matrix ?', FALSE),
+                        radioButtons('datatype', 'Type of Data',
+                                     c("Raw Data Frame",
+                                       "Correlation Matrix"),
+                                     "Raw Data Frame"),
                         # Variable selection:
                         htmlOutput("varselect"),
                         br(),

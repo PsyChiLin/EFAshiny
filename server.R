@@ -48,19 +48,16 @@ shinyServer(function(input, output) {
                         # User has not uploaded a file yet
                         return(data.frame())
                 }
-                
                 args <- grep(paste0("^",input$readFunction,"__"), names(input), value = TRUE)
-                
                 argList <- list()
-                for (i in seq_along(args))
-                {
-                        argList[[i]] <- eval(parse(text=input[[args[i]]]))
-                }
+                for (i in seq_along(args)){argList[[i]] <- eval(parse(text=input[[args[i]]]))}
                 names(argList) <- gsub(paste0("^",input$readFunction,"__"),"",args)
-                
                 argList <- argList[names(argList) %in% ArgNames()]
-                
                 Dataset <- as.data.frame(do.call(input$readFunction,c(list(input$file$datapath),argList)))
+                if (input$datatype == "Correlation Matrix"){
+                        row.names(Dataset) <- Dataset[,1]
+                        Dataset <- Dataset[,-1]
+                }
                 return(Dataset)
         })
         # Select variables:
@@ -68,15 +65,22 @@ shinyServer(function(input, output) {
                 if (identical(Dataset(), '') || identical(Dataset(),data.frame())) return(NULL)
                 # Variable selection:    
                 selectInput("vars", "Variables to use:",
-                            names(Dataset()), names(Dataset()), multiple =TRUE)            
+                            names(Dataset()), names(Dataset()), multiple =TRUE)
+                       
         })
         # Show table:
         output$table <- renderTable({
-                if (is.null(input$vars) || length(input$vars)==0) return(NULL)
-                return(Dataset()[,input$vars,drop=FALSE])
+                if (input$datatype == "Raw Data Frame"){
+                        if (is.null(input$vars) || length(input$vars)==0) return(NULL)
+                        return(Dataset()[,input$vars,drop=FALSE])
+                }
+                if (input$datatype == "Correlation Matrix"){
+                        if (is.null(input$vars) || length(input$vars)==0) return(NULL)
+                        return(Dataset()[input$vars,input$vars,drop=FALSE])
+                }
         },rownames = T)
-        output$downloadSave_SelectData <- downloadHandler(filename = "SelectedData.csv",content = function(file) {write.csv(Dataset()[,input$vars,drop=FALSE], file,row.names=FALSE)
-                })
+        
+        output$downloadSave_SelectData <- downloadHandler(filename = "SelectedData.csv",content = function(file) {write.csv(Dataset()[,input$vars,drop=FALSE], file,row.names=FALSE)})
         ### Data Exploration
         
         # NA detetcion
@@ -85,25 +89,34 @@ shinyServer(function(input, output) {
                 NAreport <- as.data.frame(apply(apply(dta,2,is.na),2,sum)/input$nobs)
                 colnames(NAreport) <- "NA Ratio"
                 return(NAreport)})
-        output$na_table <- renderTable({print(NaR())},rownames = T)
+        output$na_table <- renderTable({
+                if (input$datatype == "Correlation Matrix") { stop("Your input is a correlation matrix. Could not detect the NA response.")}
+                print(NaR())
+                },rownames = T)
         output$downloadSave_NaR <- downloadHandler(filename = "NaReport.csv",content = function(file) {
                         write.csv(NaR(),file,row.names = T)
                 })
         # Reactive D
         D <- reactive({
-                if (is.null(input$vars) || length(input$vars)==0){D <- NULL} else{     D <- Dataset()[,input$vars,drop=FALSE]}
+                if (is.null(input$vars) || length(input$vars)==0){
+                        D <- NULL}
+                else{if(input$datatype == "Correlation Matrix"){D <- Dataset()[input$vars,input$vars,drop=FALSE]}else{D <- Dataset()[,input$vars,drop=FALSE]}}
                 D <- na.omit(D)
                 return(D)
         })
         # Reactive M
         M <- reactive({
-                if(input$cortype == "Pearson") {M <- cor(as.matrix(D()))} 
-                if(input$cortype == "tetrachoric"){M <- tetrachoric(D())$rho}
-                if(input$cortype == "polychoric"){M <- polychoric(D())$rho}
+                if(input$datatype == "Correlation Matrix"){M <- as.matrix(D())}
+                if(input$datatype == "Raw Data Frame"){
+                        if(input$cortype == "Pearson") {M <- cor(as.matrix(D()))} 
+                        if(input$cortype == "tetrachoric"){M <- tetrachoric(D())$rho}
+                        if(input$cortype == "polychoric"){M <- polychoric(D())$rho}
+                }
                 return(M)
         })
         # Reactive Summary For Download
         SumTable <- reactive({
+                if (input$datatype == "Correlation Matrix") { stop("Your input is a correlation matrix. Could not show the response summary of each item.")}
                 dta_desc <- apply(D(),2,my_summary)
                 row.names(dta_desc) <- c("Mean","SD","Skewness","Kurtosis")
                 rst <- as.data.frame(t(dta_desc))
@@ -116,6 +129,7 @@ shinyServer(function(input, output) {
                 })
         # distribution of itmes
         output$itemdist <- renderPlot({
+                if (input$datatype == "Correlation Matrix") { stop("Your input is a correlation matrix. Could not show the response distribution of each item.")}
                 dtalong <- melt(D())
                 colnames(dtalong) <- c("Item", "Response")
                 ggplot(dtalong, aes(x = Response, fill = Item))+
@@ -126,6 +140,7 @@ shinyServer(function(input, output) {
         })
         # Item Response
         output$itemplot <- renderPlot({
+                if (input$datatype == "Correlation Matrix") { stop("Your input is a correlation matrix. Could not show the response distribution of each item.")}
                 dtbl <- apply(D(),2,table)
                 d <- D()
                 #dtbl <- apply(D1,2,table)
