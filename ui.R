@@ -44,6 +44,8 @@ shinyUI(fluidPage(
                                  selectInput("rodermethod","Reorder Methods",
                                              c("original", "AOE", "FPC",
                                                "hclust", "alphabet"),"AOE"),
+                                 numericInput("ploth1", "Height of the Plot",800,min = 1),
+                                 numericInput("plotw1", "Width of the Plot",800,min = 1),
                                  downloadLink('downloadSave_NaR', 'Download NA Report'),
                                  br(),
                                  downloadLink('downloadSave_summary', 'Download Summary Table')
@@ -62,6 +64,8 @@ shinyUI(fluidPage(
                                  numericInput("npasim","Number of simulated analyses to perform",20,min = 1, step = 10),
                                  br(),
                                  numericInput("maxn", "Max Number of Factor For VSS",4,min = 1),
+                                 numericInput("ploth2", "Height of the Plot",300,min = 1),
+                                 numericInput("plotw2", "Width of the Plot",700,min = 1),
                                  downloadLink('downloadSave_nfTable', 'Download VSS Table')),
                          mainPanel(navbarPage("",
                                               tabPanel("Sree Plot",plotOutput("nfPlot")),
@@ -96,7 +100,9 @@ shinyUI(fluidPage(
                                  checkboxInput("errarr", "Errors Arrows", T),
                                  checkboxInput("sim", "Simple Structure", T),
                                  #numericInput('rs', "size of rectangles",0.15,min = 0,step = 0.01),
-                                 numericInput('es', "size of ellipses",0.05,min = 0,step = 0.01)
+                                 numericInput('es', "size of ellipses",0.05,min = 0,step = 0.01),
+                                 numericInput("ploth3", "Height of the Plot",500,min = 1),
+                                 numericInput("plotw3", "Width of the Plot",700,min = 1)
 
                          ),
                          mainPanel(plotOutput("Diag"))),
@@ -104,7 +110,9 @@ shinyUI(fluidPage(
                          sidebarPanel(
                                  textInput("highcol","Color of Postive Loadings",value = "red"),
                                  textInput("lowcol","Color of Negative Loadings",value = "blue"),
-                                 checkboxInput("sorting2", "Sort", T)
+                                 checkboxInput("sorting2", "Sort", T),
+                                 numericInput("ploth4", "Height of the Plot",500,min = 1),
+                                 numericInput("plotw4", "Width of the Plot",700,min = 1)
                          ),
                          mainPanel(navbarPage("",
                                               tabPanel("Bargraph",plotOutput("BFig")),

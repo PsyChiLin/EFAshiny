@@ -12,7 +12,7 @@ faplot <- function(data,n.obs = NULL,quant,fm,n.iter){
                 geom_point(aes(size = variable))+
                 geom_line()+
                 theme_bw()+
-                scale_x_discrete(labels = c(seq(1,15)))+
+                scale_x_discrete(labels = c(seq(1,ncol(data))))+
                 scale_linetype_manual(values=c(1,2,2),name = "",
                                       labels = c("Actual Data",paste("Parallel Analysis :",quant)))+
                 scale_size_manual(values=c(3,1,1),name = "",

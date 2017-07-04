@@ -128,7 +128,7 @@ shinyServer(function(input, output) {
                         write.csv(SumTable(),file,row.names = T)
                 })
         # distribution of itmes
-        output$itemdist <- renderPlot({
+        observe(output$itemdist <- renderPlot({
                 if (input$datatype == "Correlation Matrix") { stop("Your input is a correlation matrix. Could not show the response distribution of each item.")}
                 dtalong <- melt(D())
                 colnames(dtalong) <- c("Item", "Response")
@@ -137,9 +137,9 @@ shinyServer(function(input, output) {
                         facet_wrap(~Item)+
                         theme_default()+
                         labs(list(y = "Count"))
-        })
+        },height = input$ploth1,width = input$plotw1))
         # Item Response
-        output$itemplot <- renderPlot({
+        observe(output$itemplot <- renderPlot({
                 if (input$datatype == "Correlation Matrix") { stop("Your input is a correlation matrix. Could not show the response distribution of each item.")}
                 dtbl <- apply(D(),2,table)
                 d <- D()
@@ -164,18 +164,18 @@ shinyServer(function(input, output) {
                         coord_flip()+
                         labs(list(x = "Item"))+
                         theme_default()
-        })
+        },height = input$ploth1,width = input$plotw1))
         # Correlation Matrix
-        output$distPlot <- renderPlot({
+        observe(output$distPlot <- renderPlot({
                 corrplot(M(),order=input$rodermethod, method=input$method,type="upper",tl.pos = "lt")
                 corrplot(M(),add=TRUE, type="lower",
                          method="number",order=input$rodermethod,
                          diag=FALSE,
                          tl.pos="n", cl.pos="n")
-        }) 
+        },height = input$ploth1,width = input$plotw1)) 
        
          ### Factor Retention
-        output$nfPlot <- renderPlot({faplot(M(),n.obs = input$nobs,quant = input$qpa, fm = input$fm, n.iter = input$npasim)})
+        observe(output$nfPlot <- renderPlot({faplot(M(),n.obs = input$nobs,quant = input$qpa, fm = input$fm, n.iter = input$npasim)},height = input$ploth2,width = input$plotw2))
         VssTable <- reactive({
                 Vs<- VSS(M(),n = input$maxn,
                          #rotate = "promax", fm = "ml",
@@ -262,18 +262,8 @@ shinyServer(function(input, output) {
         output$downloadSave_FactorCorr <- downloadHandler(filename = "FactorCorr.csv",content = function(file) {
                         write.csv(FactCorr(),file,row.names = T)
                 })
-        ### Factor Bargraph
-        output$BFig <- renderPlot({
-                order <- itemorder2()
-                return(bargraph(farst(),order = order,highcol = input$highcol,lowcol = input$lowcol))
-        })
-        ### Factor stackBar
-        output$SFig <- renderPlot({
-                order <- itemorder2()
-                return(stackbar(M(),farst(),order = order,highcol = input$highcol,lowcol = input$lowcol))
-        })
         ### Factor Diagram
-        output$Diag <- renderPlot({
+        observe(output$Diag <- renderPlot({
                 return(fa.diagram(farst(),
                                   simple = input$sim,
                                   cut = input$cutt,
@@ -282,8 +272,19 @@ shinyServer(function(input, output) {
                                   main = " ",
                                   #rsize = input$rs,
                                   e.size = input$es))
-               
-        })
+                
+        },height = input$ploth3,width = input$plotw3))
+        ### Factor Bargraph
+        observe( output$BFig <- renderPlot({
+                order <- itemorder2()
+                return(bargraph(farst(),order = order,highcol = input$highcol,lowcol = input$lowcol))
+        },height = input$ploth4,width = input$plotw4))
+        ### Factor stackBar
+        observe(output$SFig <- renderPlot({
+                order <- itemorder2()
+                return(stackbar(M(),farst(),order = order,highcol = input$highcol,lowcol = input$lowcol))
+        },height = input$ploth4,width = input$plotw4))
+       
 })
 
 
