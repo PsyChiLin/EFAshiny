@@ -17,7 +17,7 @@ stackbar <- function(CorMat,PatMat,order,highcol, lowcol){
                 guides(fill=F) #omit unnecessary gradient legend
         loadings.m <-melt(unclass(PatMat$cis$means),value.name="Loading")
         colnames(loadings.m)[1:2] <- c("Item","Factor")
-        loadings.m$Item <- factor(loadings.m$Item, levels =c(order))
+        loadings.m$Item <- factor(loadings.m$Item, levels =c(order),ordered = T)
          p2 <- ggplot(loadings.m, aes(Item, abs(Loading), fill=Factor)) + 
                 geom_bar(stat="identity") + 
                  coord_flip() + 

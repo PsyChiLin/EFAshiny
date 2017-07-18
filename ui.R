@@ -24,6 +24,7 @@ shinyUI(fluidPage(
                                      "Raw Data Frame"),
                         # Variable selection:
                         htmlOutput("varselect"),
+                        htmlOutput("Nselect"),
                         br(),
                         #textInput("name","Dataset name:","Data"),
                         downloadLink('downloadSave_SelectData', 'Download Selected Data')
@@ -32,8 +33,8 @@ shinyUI(fluidPage(
                 #tabPanel("Exploration"),
                 tabPanel("Data Explorations",
                          sidebarPanel(
-                                 numericInput('nobs', "Number of Observations",263,min = 1),
-                                 br(),
+                                 #numericInput('nobs', "Number of Observations",263,min = 1),
+                                 #br(),
                                  numericInput("binsnum","Number of bins",10),
                                  br(),
                                  selectInput("cortype","Correlations Methods",
@@ -44,14 +45,15 @@ shinyUI(fluidPage(
                                  selectInput("rodermethod","Reorder Methods",
                                              c("original", "AOE", "FPC",
                                                "hclust", "alphabet"),"AOE"),
+                                 br(),
                                  numericInput("ploth1", "Height of the Plot",800,min = 1),
                                  numericInput("plotw1", "Width of the Plot",800,min = 1),
-                                 downloadLink('downloadSave_NaR', 'Download NA Report'),
+                                 #downloadLink('downloadSave_NaR', 'Download NA Report'),
                                  br(),
                                  downloadLink('downloadSave_summary', 'Download Summary Table')
                         ),
                         mainPanel(navbarPage("",
-                                             tabPanel("NA Report",tableOutput("na_table")),
+                                             #tabPanel("NA Report",tableOutput("na_table")),
                                              tabPanel("Summary",tableOutput("sum_table")),
                                              #tabPanel("NA detection"),
                                              tabPanel("Distribution", plotOutput("itemdist")),
@@ -64,6 +66,7 @@ shinyUI(fluidPage(
                                  numericInput("npasim","Number of simulated analyses to perform",20,min = 1, step = 10),
                                  br(),
                                  numericInput("maxn", "Max Number of Factor For VSS",4,min = 1),
+                                 br(),
                                  numericInput("ploth2", "Height of the Plot",300,min = 1),
                                  numericInput("plotw2", "Width of the Plot",700,min = 1),
                                  downloadLink('downloadSave_nfTable', 'Download VSS Table')),
@@ -101,6 +104,7 @@ shinyUI(fluidPage(
                                  checkboxInput("sim", "Simple Structure", T),
                                  #numericInput('rs', "size of rectangles",0.15,min = 0,step = 0.01),
                                  numericInput('es', "size of ellipses",0.05,min = 0,step = 0.01),
+                                 br(),
                                  numericInput("ploth3", "Height of the Plot",500,min = 1),
                                  numericInput("plotw3", "Width of the Plot",700,min = 1)
 
@@ -111,6 +115,7 @@ shinyUI(fluidPage(
                                  textInput("highcol","Color of Postive Loadings",value = "red"),
                                  textInput("lowcol","Color of Negative Loadings",value = "blue"),
                                  checkboxInput("sorting2", "Sort", T),
+                                 br(),
                                  numericInput("ploth4", "Height of the Plot",500,min = 1),
                                  numericInput("plotw4", "Width of the Plot",700,min = 1)
                          ),

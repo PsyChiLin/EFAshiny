@@ -6,8 +6,8 @@ library(ggplot2)
 library(moments)
 library(grid)
 library(gridExtra)
-file.sources = list.files(pattern="functions/*.R")
-sapply(file.sources,source)
+file.sources = list.files(path = "functions/",pattern="*.R")
+sapply(paste0("functions/",file.sources),source)
 
 shinyServer(function(input, output) {
         
@@ -52,6 +52,7 @@ shinyServer(function(input, output) {
                         row.names(Dataset) <- Dataset[,1]
                         Dataset <- Dataset[,-1]
                 }
+                Dataset <- na.omit(Dataset)
                 return(Dataset)
         })
         # Select variables:
@@ -62,42 +63,61 @@ shinyServer(function(input, output) {
                             names(Dataset()), names(Dataset()), multiple =TRUE)
                        
         })
+        # Select variables:
+        output$Nselect <- renderUI({
+                if (identical(Dataset(), '') || identical(Dataset(),data.frame())) return(NULL)
+                # Variable selection:    
+                #selectInput("vars", "Variables to use:",
+                #            names(Dataset()), names(Dataset()), multiple =TRUE)
+                sliderInput("Nselect", "Number of Observations to use", 1, dim(Dataset())[1], 256,
+                            step = 1, round = FALSE,
+                            format = NULL, locale = NULL, ticks = TRUE, animate = FALSE,
+                            width = NULL, sep = ",", pre = NULL, post = NULL, timeFormat = NULL,
+                            timezone = NULL, dragRange = TRUE)
+        })
+        
+        # Reactive D
+        D <- reactive({
+                if (is.null(input$vars) || length(input$vars)==0){
+                        D <- NULL}
+                else{if(input$datatype == "Correlation Matrix"){D <- Dataset()[input$vars,input$vars,drop=FALSE]}
+                        else{D <- Dataset()[sample(dim(Dataset())[1],input$Nselect),input$vars,drop=FALSE]}}
+                return(D)
+        })
+
+        #D <- na.omit(D)
         # Show table:
         output$table <- renderTable({
-                if (input$datatype == "Raw Data Frame"){
-                        if (is.null(input$vars) || length(input$vars)==0) return(NULL)
-                        return(Dataset()[,input$vars,drop=FALSE])
-                }
-                if (input$datatype == "Correlation Matrix"){
-                        if (is.null(input$vars) || length(input$vars)==0) return(NULL)
-                        return(Dataset()[input$vars,input$vars,drop=FALSE])
-                }
+                #if (input$datatype == "Raw Data Frame"){
+                #        if (is.null(input$vars) || length(input$vars)==0) return(NULL)
+                #        return(Dataset()[,input$vars,drop=FALSE])
+                #}
+                #if (input$datatype == "Correlation Matrix"){
+                #        if (is.null(input$vars) || length(input$vars)==0) return(NULL)
+                #        return(Dataset()[input$vars,input$vars,drop=FALSE])
+                #}
+                return(D())
+                
         },rownames = T)
         
         output$downloadSave_SelectData <- downloadHandler(filename = "SelectedData.csv",content = function(file) {write.csv(Dataset()[,input$vars,drop=FALSE], file,row.names=FALSE)})
         ### Data Exploration
         
-        # NA detetcion
-        NaR <- reactive({
-                dta <- Dataset()[,input$vars,drop=FALSE]
-                NAreport <- as.data.frame(apply(apply(dta,2,is.na),2,sum)/input$nobs)
-                colnames(NAreport) <- "NA Ratio"
-                return(NAreport)})
-        output$na_table <- renderTable({
-                if (input$datatype == "Correlation Matrix") { stop("Your input is a correlation matrix. Could not detect the NA response.")}
-                print(NaR())
-                },rownames = T)
-        output$downloadSave_NaR <- downloadHandler(filename = "NaReport.csv",content = function(file) {
-                        write.csv(NaR(),file,row.names = T)
-                })
-        # Reactive D
-        D <- reactive({
-                if (is.null(input$vars) || length(input$vars)==0){
-                        D <- NULL}
-                else{if(input$datatype == "Correlation Matrix"){D <- Dataset()[input$vars,input$vars,drop=FALSE]}else{D <- Dataset()[,input$vars,drop=FALSE]}}
-                D <- na.omit(D)
-                return(D)
-        })
+        ## NA detetcion
+        #NaR <- reactive({
+        #        dta <- Dataset()[,input$vars,drop=FALSE]
+        #        NAreport <- as.data.frame(apply(apply(dta,2,is.na),2,sum)/input$Nselect)
+        #        colnames(NAreport) <- "NA Ratio"
+        #        return(NAreport)})
+        #output$na_table <- renderTable({
+        #        if (input$datatype == "Correlation Matrix") { stop("Your input is a correlation matrix. Could not detect the NA response.")}
+        #        print(NaR())
+        #        },rownames = T)
+        #output$downloadSave_NaR <- downloadHandler(filename = "NaReport.csv",content = function(file) {
+        #                write.csv(NaR(),file,row.names = T)
+        #        })
+        
+        
         # Reactive M
         M <- reactive({
                 if(input$datatype == "Correlation Matrix"){M <- as.matrix(D())}
@@ -111,6 +131,7 @@ shinyServer(function(input, output) {
         # Reactive Summary For Download
         SumTable <- reactive({
                 if (input$datatype == "Correlation Matrix") { stop("Your input is a correlation matrix. Could not show the response summary of each item.")}
+                if (!all(sapply(D(),class) %in% c("numeric","integer"))) { stop("All input variables should be numeric or integer")}
                 dta_desc <- apply(D(),2,my_summary)
                 row.names(dta_desc) <- c("Mean","SD","Skewness","Kurtosis")
                 rst <- as.data.frame(t(dta_desc))
@@ -124,6 +145,7 @@ shinyServer(function(input, output) {
         # distribution of itmes
         observe(output$itemdist <- renderPlot({
                 if (input$datatype == "Correlation Matrix") { stop("Your input is a correlation matrix. Could not show the response distribution of each item.")}
+                if (!all(sapply(D(),class) %in% c("numeric","integer"))) { stop("All input variables should be numeric or integer")}
                 dtalong <- melt(D())
                 colnames(dtalong) <- c("Item", "Response")
                 ggplot(dtalong, aes(x = Response, fill = Item))+
@@ -135,6 +157,7 @@ shinyServer(function(input, output) {
         # Item Response
         observe(output$itemplot <- renderPlot({
                 if (input$datatype == "Correlation Matrix") { stop("Your input is a correlation matrix. Could not show the response distribution of each item.")}
+                if (!all(sapply(D(),class) %in% c("numeric","integer"))) { stop("All input variables should be numeric or integer")}
                 dtbl <- apply(D(),2,table)
                 d <- D()
                 #dtbl <- apply(D1,2,table)
@@ -142,14 +165,14 @@ shinyServer(function(input, output) {
                         dtbl <- do.call(rbind, dtbl)
                         dtbll <- melt(dtbl)
                         names(dtbll) <- c("Item","Response","Ratio")
-                        dtbll$Ratio <- dtbll$Ratio/input$nobs
+                        dtbll$Ratio <- dtbll$Ratio/input$Nselect
                         if (length(levels(as.factor(dtbll$Response))) > 20) {
                                 stop("More than 20 levels response. Continuous response data Could not be shwon in this plot ")
                         }}
                 else {
                         dtbll <- melt(dtbl)
                         names(dtbll) <- c("Response","Item","Ratio")
-                        dtbll$Ratio <- dtbll$Ratio/input$nobs}
+                        dtbll$Ratio <- dtbll$Ratio/input$Nselect}
                 ggplot(dtbll,aes(x = reorder(Item, Ratio, max), 
                                  y = Ratio, ymin = 0.25, ymax = Ratio, color = Item))+
                         geom_pointrange()+
@@ -169,11 +192,11 @@ shinyServer(function(input, output) {
         },height = input$ploth1,width = input$plotw1)) 
        
          ### Factor Retention
-        observe(output$nfPlot <- renderPlot({faplot(M(),n.obs = input$nobs,quant = input$qpa, fm = input$fm, n.iter = input$npasim)},height = input$ploth2,width = input$plotw2))
+        observe(output$nfPlot <- renderPlot({faplot(M(),n.obs = input$Nselect,quant = input$qpa, fm = input$fm, n.iter = input$npasim)},height = input$ploth2,width = input$plotw2))
         VssTable <- reactive({
                 Vs<- VSS(M(),n = input$maxn,
                          #rotate = "promax", fm = "ml",
-                         plot = F, n.obs = input$nobs)
+                         plot = F, n.obs = input$Nselect)
                 mapvss <- data.frame(nFactor = row.names(Vs$vss.stats),VSS1 = Vs$cfit.1, VSS2 = Vs$cfit.2, MAP = Vs$map)
                 otherindex <- Vs$vss.stats[,c(1:14)]
                 VssTable <- cbind(mapvss,otherindex)
@@ -186,7 +209,7 @@ shinyServer(function(input, output) {
         ### Factor Extraction and Rotation
         # reactive factor analysis Results
         farst <- reactive({
-                farst <- fa(M(),input$nfactors,n.obs =  input$nobs,
+                farst <- fa(M(),input$nfactors,n.obs =  input$Nselect,
                             rotate = input$rotate,fm = input$fm,
                             max.iter = 100000,n.iter = input$bsnum)
                 return(farst)
@@ -199,9 +222,9 @@ shinyServer(function(input, output) {
         }) # for pattren matrix
         itemorder2 <- reactive({
                 o1 <- farst()
-                o2 <- printLoadings(o1$cis$means,sort = input$sorting2)
+                o2 <- printLoadings(o1$cis$means,sort = input$sorting2,cutoff = 0)
                 o3 <- as.data.frame(o2)
-                return(row.names(o3))
+                return(rev(row.names(o3)))
         }) # for bargraph and stackedbar
         #itemorder3 <- reactive({
         #        o1 <- farst()

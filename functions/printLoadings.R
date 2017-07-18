@@ -1,12 +1,20 @@
-printLoadings <- function (x, digits = 2, cutoff = 0, sort = T, ...) {
+printLoadings <- function (x, digits = 2, cutoff = 0, sort = T,decreasing = T, ...) {
         Lambda <- unclass(x)
         p <- nrow(Lambda)
         factors <- ncol(Lambda)
         if (sort) {
+                #mx <- max.col(abs(Lambda))
+                #ind <- cbind(1L:p, mx)
+                #mx[abs(Lambda[ind]) < 0.5] <- factors + 1
+                #Lambda <- Lambda[order(mx, 1L:p), ]
+                L <- list()
                 mx <- max.col(abs(Lambda))
-                ind <- cbind(1L:p, mx)
-                mx[abs(Lambda[ind]) < 0.5] <- factors + 1
-                Lambda <- Lambda[order(mx, 1L:p), ]
+                for (i in 1:factors){
+                        Ltemp <- Lambda[mx == i,]
+                        Ltemp <- Ltemp[order(Ltemp[,i],decreasing = decreasing),]
+                        L[[i]] <- Ltemp
+                }
+                Lambda <- do.call(rbind,L)
         }
         cat("\nLoadings:\n")
         fx <- format(round(Lambda, digits))
