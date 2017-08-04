@@ -19,7 +19,7 @@ library(shiny)
 runGitHub( "EFAshiny", "PsyChiLin") 
 ```
 
-### Shiny Note :  
+### Shiny Progress Note :  
 #### 1. Correlation CI ?
 #### 2. Factor Correlation Plots ?
 #### 3. Stackedbar two plot fitting ?
