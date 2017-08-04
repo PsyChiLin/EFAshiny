@@ -24,3 +24,4 @@ runGitHub( "EFAshiny", "PsyChiLin")
 #### 2. Factor Correlation Plots ?
 #### 3. Stackedbar two plot fitting ?
 #### 4. Is adjusting plot margin on hand a good chioce ?
+#### 5. Step by Step Tutorial

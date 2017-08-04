@@ -222,16 +222,14 @@ shinyServer(function(input, output) {
         }) # for pattren matrix
         itemorder2 <- reactive({
                 o1 <- farst()
-                o2 <- printLoadings(o1$cis$means,sort = input$sorting2,cutoff = 0)
+                if (input$nfactors != 1) {o2 <- printLoadings(o1$cis$means,sort = input$sorting2,cutoff = 0)}
+                if (input$nfactors == 1) {
+                        if (input$sorting2 == T) {o2 <- o1$cis$means[order(o1$cis$means[,1],decreasing = T),]}
+                        if (input$sorting2 == F) {o2 <- unclass(o1$cis$means)}
+                }
                 o3 <- as.data.frame(o2)
                 return(rev(row.names(o3)))
         }) # for bargraph and stackedbar
-        #itemorder3 <- reactive({
-        #        o1 <- farst()
-        #       o2 <- printLoadings(o1$cis$means,sort = T)
-        #        o3 <- as.data.frame(o2)
-        #        return(row.names(o3))
-        #}) # For stack MuST be TRUE
         PatMat_ci <- reactive({
                 farst <- farst()
                 f <- list()
@@ -292,9 +290,9 @@ shinyServer(function(input, output) {
                 
         },height = input$ploth3,width = input$plotw3))
         ### Factor Bargraph
-        observe( output$BFig <- renderPlot({
+        observe(output$BFig <- renderPlot({
                 order <- itemorder2()
-                return(bargraph(farst(),order = order,highcol = input$highcol,lowcol = input$lowcol))
+                return(bargraph(farst(),order = order,nf = input$nfactors,highcol = input$highcol,lowcol = input$lowcol,ci = input$barci))
         },height = input$ploth4,width = input$plotw4))
         ### Factor stackBar
         observe(output$SFig <- renderPlot({

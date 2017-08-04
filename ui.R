@@ -115,6 +115,7 @@ shinyUI(fluidPage(
                                  textInput("highcol","Color of Postive Loadings",value = "red"),
                                  textInput("lowcol","Color of Negative Loadings",value = "blue"),
                                  checkboxInput("sorting2", "Sort", T),
+                                 checkboxInput("barci","Confidence Interval",T),
                                  br(),
                                  numericInput("ploth4", "Height of the Plot",500,min = 1),
                                  numericInput("plotw4", "Width of the Plot",700,min = 1)
