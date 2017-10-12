@@ -18,10 +18,3 @@ library(devtools)
 library(shiny)
 runGitHub( "EFAshiny", "PsyChiLin") 
 ```
-
-### Shiny Progress Note :  
-#### 1. Correlation CI ?
-#### 2. Factor Correlation Plots ?
-#### 3. Stackedbar two plot fitting ?
-#### 4. Is adjusting plot margin on hand a good chioce ?
-#### 5. Step by Step Tutorial
