@@ -7,6 +7,7 @@ library(moments)
 library(grid)
 library(gridExtra)
 library(shinythemes)
+options(shiny.sanitize.errors = FALSE)
 file.sources = list.files(path = "functions/",pattern="*.R")
 sapply(paste0("functions/",file.sources),source)
 

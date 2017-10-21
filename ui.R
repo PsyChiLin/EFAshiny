@@ -1,4 +1,5 @@
 library(shiny)
+library(shinythemes)
 shinyUI(fluidPage(
         theme = shinytheme("flatly"),
         #theme = "bootstrap.css",
