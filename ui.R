@@ -1,13 +1,14 @@
 library(shiny)
 shinyUI(fluidPage(
+        theme = shinytheme("flatly"),
         #theme = "bootstrap.css",
         # Header:
         #headerPanel(img(src="mish.png",)),
-        titlePanel(title=div(img(src="mish.png", height = 40, width = 40),"Identify Latent Stuctures using the Exploratory Factor Analysis")),
+        #titlePanel(title=div(img(src="mish.png", height = 40, width = 40),"Identify Latent Stuctures using the Exploratory Factor Analysis")),
         # Input in sidepanel:
-        tabsetPanel("Argument",
+        navbarPage("EFAshiny",inverse = F, fluid = T,#type = "pills",
                 tabPanel("Read Data",
-                        sidebarPanel(
+                        sidebarPanel(width = 3,
                         # HTML('<style type="text/css">.row-fluid .span4{width: 26%;}</style>'),
                         # Select filetype:
                         selectInput("readFunction", "Function to read data:", c("read.csv","read.table")),
@@ -31,8 +32,8 @@ shinyUI(fluidPage(
                         ),
                         mainPanel(tableOutput("table"))),
                 #tabPanel("Exploration"),
-                tabPanel("Data Explorations",
-                         sidebarPanel(
+                tabPanel("Explorations",
+                         sidebarPanel(width = 3,
                                  #numericInput('nobs', "Number of Observations",263,min = 1),
                                  #br(),
                                  numericInput("binsnum","Number of bins",10),
@@ -52,7 +53,7 @@ shinyUI(fluidPage(
                                  br(),
                                  downloadLink('downloadSave_summary', 'Download Summary Table')
                         ),
-                        mainPanel(navbarPage("",
+                        mainPanel(tabsetPanel("",
                                              #tabPanel("NA Report",tableOutput("na_table")),
                                              tabPanel("Summary",tableOutput("sum_table")),
                                              #tabPanel("NA detection"),
@@ -61,7 +62,7 @@ shinyUI(fluidPage(
                                              tabPanel("Correlation Matrix", plotOutput("distPlot"))))
                 ),
                 tabPanel("Retention",
-                         sidebarPanel(
+                         sidebarPanel(width = 3,
                                  numericInput('qpa',"Quantile of Parallel analysis", 0.99 , min = 0 , max = 1,step = 0.1),
                                  numericInput("npasim","Number of simulated analyses to perform",20,min = 1, step = 10),
                                  br(),
@@ -70,11 +71,11 @@ shinyUI(fluidPage(
                                  numericInput("ploth2", "Height of the Plot",300,min = 1),
                                  numericInput("plotw2", "Width of the Plot",700,min = 1),
                                  downloadLink('downloadSave_nfTable', 'Download VSS Table')),
-                         mainPanel(navbarPage("",
+                         mainPanel(tabsetPanel("",
                                               tabPanel("Sree Plot",plotOutput("nfPlot")),
                                               tabPanel("Very Simple Structure",tableOutput("nfTable"))))),
                 tabPanel("Extraction and Rotation", 
-                        sidebarPanel(
+                        sidebarPanel(width = 3,
                         numericInput('nfactors', "Number of Factors", 2,min = 1),
                         selectInput("fm","Factor Extraction Methods",
                                     c("pa", "ml", "minres","uls", "wls",
@@ -92,12 +93,12 @@ shinyUI(fluidPage(
                         downloadLink('downloadSave_PatMat', 'Download Pattern Matrix'),
                         br(),
                         downloadLink('downloadSave_FactorCorr', 'Download Factor Correlations')),
-                        mainPanel(navbarPage("",
+                        mainPanel(tabsetPanel("",
                                    tabPanel("Patten Matrix", tableOutput("textfa")),
                                    tabPanel("Factors Correlations",tableOutput("factcor"))))
                         ),
                 tabPanel("Diagram",
-                         sidebarPanel(
+                         sidebarPanel(width = 3,
                                  numericInput('cutt', "CutOff Value", 0.33,min = 0,step = 0.1), 
                                  checkboxInput("so", "Sort", T),
                                  checkboxInput("errarr", "Errors Arrows", T),
@@ -111,7 +112,7 @@ shinyUI(fluidPage(
                          ),
                          mainPanel(plotOutput("Diag"))),
                 tabPanel("Visualizations",
-                         sidebarPanel(
+                         sidebarPanel(width = 3,
                                  textInput("highcol","Color of Postive Loadings",value = "red"),
                                  textInput("lowcol","Color of Negative Loadings",value = "blue"),
                                  checkboxInput("sorting2", "Sort", T),
@@ -120,9 +121,23 @@ shinyUI(fluidPage(
                                  numericInput("ploth4", "Height of the Plot",500,min = 1),
                                  numericInput("plotw4", "Width of the Plot",700,min = 1)
                          ),
-                         mainPanel(navbarPage("",
+                         mainPanel(tabsetPanel("",
                                               tabPanel("Bargraph",plotOutput("BFig")),
                                               tabPanel("StackedBar",plotOutput("SFig"))))
+                         ),
+                br(),
+                br(),
+                br(),
+                tabPanel("Help"),
+                tabPanel("About",
+                         mainPanel(h4("Developed by :"),
+                                   h5("Department of Psychology, National Taiwan University, Taiwan"),
+                                   helpText(a("Chi-Lin Yu",href="https://github.com/PsyChiLin/ggerp")),
+                                   h5("Institute of Education, National Cheng Kung University, Taiwan"),
+                                   helpText(a("Ching-Fan Sheu",href = "http://www.ccunix.ccu.edu.tw/~psycfs/")),
+                                   br(),
+                                   h4("Example Data :"),
+                                   helpText(a("Rosenberg Self-Esteem Scale", href = "https://www.dropbox.com/s/hpksg1zev5021z1/RSE.zip?dl=0"))
                          )
-               )
-))
+                          )
+)))
