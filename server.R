@@ -9,7 +9,9 @@ library(gridExtra)
 library(shinythemes)
 options(shiny.sanitize.errors = FALSE)
 file.sources = list.files(path = "functions/",pattern="*.R")
+RSE <- read.csv("data/RSE_naomit.csv")
 sapply(paste0("functions/",file.sources),source)
+
 
 shinyServer(function(input, output) {
         
@@ -42,7 +44,7 @@ shinyServer(function(input, output) {
         Dataset <- reactive({
                 if (is.null(input$file)) {
                         # User has not uploaded a file yet
-                        return(data.frame())
+                        return(RSE[,1:10])
                 }
                 args <- grep(paste0("^",input$readFunction,"__"), names(input), value = TRUE)
                 argList <- list()
@@ -55,8 +57,10 @@ shinyServer(function(input, output) {
                         Dataset <- Dataset[,-1]
                 }
                 Dataset <- na.omit(Dataset)
+                
                 return(Dataset)
         })
+        #if (is.null(Dataset)){Dataset <- RSE}
         # Select variables:
         output$varselect <- renderUI({
                 if (identical(Dataset(), '') || identical(Dataset(),data.frame())) return(NULL)
