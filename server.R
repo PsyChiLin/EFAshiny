@@ -8,6 +8,7 @@ library(grid)
 library(gridExtra)
 library(shinythemes)
 library(EFAutilities)
+library(EGA)
 options(shiny.sanitize.errors = FALSE)
 file.sources = list.files(path = "functions/",pattern="*.R")
 RSE <- read.csv("data/RSE_naomit.csv")
@@ -76,7 +77,7 @@ shinyServer(function(input, output) {
                 # Variable selection:    
                 #selectInput("vars", "Variables to use:",
                 #            names(Dataset()), names(Dataset()), multiple =TRUE)
-                sliderInput("Nselect", "Number of Observations to use", 1, dim(Dataset())[1], 256,
+                sliderInput("Nselect", "Number of Observations to use", 1, dim(Dataset())[1], 512,
                             step = 1, round = FALSE,
                             format = NULL, locale = NULL, ticks = TRUE, animate = FALSE,
                             width = NULL, sep = ",", pre = NULL, post = NULL, timeFormat = NULL,
@@ -198,7 +199,8 @@ shinyServer(function(input, output) {
                          tl.pos="n", cl.pos="n")
         },height = input$ploth1,width = input$plotw1)) 
          ### Factor Retention
-        observe(output$nfPlot <- renderPlot({faplot(M(),n.obs = input$Nselect,quant = input$qpa, fm = input$fm, n.iter = input$npasim)},height = input$ploth2,width = input$plotw2))
+        observe(output$nfPlot <- renderPlot({faplot(M(),n.obs = input$Nselect,quant = input$qpa, fm = input$fm, n.iter = input$npasim)},
+                                            height = input$ploth2,width = input$plotw2))
         VssTable <- reactive({
                 Vs<- VSS(M(),n = input$maxn,
                          #rotate = "promax", fm = "ml",
@@ -208,6 +210,11 @@ shinyServer(function(input, output) {
                 VssTable <- cbind(mapvss,otherindex)
                 return(VssTable)
         })
+        observe(output$EGAplot <- renderPlot({bootEGA(data = D(), n = input$npasim, 
+                                                      medianStructure = TRUE, 
+                                                      plot.MedianStructure = TRUE, 
+                                                      ncores = 4)},
+                                             height = input$ploth2,width = input$plotw2))
         output$nfTable <- renderTable({print(VssTable())},rownames = F)
         output$downloadSave_nfTable <- downloadHandler(filename = "Vss_Table.csv",content = function(file) {
                 write.csv(VssTable(),file,row.names = F)
