@@ -7,6 +7,7 @@ library(moments)
 library(grid)
 library(gridExtra)
 library(shinythemes)
+library(EFAutilities)
 options(shiny.sanitize.errors = FALSE)
 file.sources = list.files(path = "functions/",pattern="*.R")
 RSE <- read.csv("data/RSE_naomit.csv")
@@ -196,7 +197,6 @@ shinyServer(function(input, output) {
                          diag=FALSE,
                          tl.pos="n", cl.pos="n")
         },height = input$ploth1,width = input$plotw1)) 
-       
          ### Factor Retention
         observe(output$nfPlot <- renderPlot({faplot(M(),n.obs = input$Nselect,quant = input$qpa, fm = input$fm, n.iter = input$npasim)},height = input$ploth2,width = input$plotw2))
         VssTable <- reactive({
@@ -305,7 +305,17 @@ shinyServer(function(input, output) {
                 order <- itemorder2()
                 return(stackbar(M(),farst(),order = order,highcol = input$highcol,lowcol = input$lowcol))
         },height = input$ploth4,width = input$plotw4))
-       
+        ### SE Investigation
+        q <- reactive({efa(x=D(), factors=input$nfactors, dist='ordinal',fm='ml',rotation='CF-quartimax', merror='YES')})
+        v <- reactive({efa(x=D(), factors=input$nfactors, dist='ordinal',fm='ml',rotation='CF-varimax', merror='YES')})
+        output$PointTable <- renderTable(print(PointT(q(),v(),D())),rownames = T)
+        output$SETable <- renderTable(print(SET(q(),v(),D())),rownames = T)
+        observe(output$SEFig <- renderPlot({
+                #order <- itemorder2()
+                return(SEplot(q(),v(),D()))
+        },height = input$ploth5,width = input$plotw5))
+
+        
 })
 
 

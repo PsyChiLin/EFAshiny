@@ -126,10 +126,19 @@ shinyUI(fluidPage(
                                               tabPanel("Bargraph",plotOutput("BFig")),
                                               tabPanel("StackedBar",plotOutput("SFig"))))
                          ),
+                tabPanel("Investigation of Zhang & Preacher (2015)",
+                         sidebarPanel(width = 3,
+                                      numericInput("ploth5", "Height of the Plot",500,min = 1),
+                                      numericInput("plotw5", "Width of the Plot",700,min = 1)
+                                      ),
+                         mainPanel(tabsetPanel("",
+                                      tabPanel("Point Estimate",tableOutput("PointTable")),
+                                      tabPanel("Standard Errors Estimate",tableOutput("SETable")),
+                                      tabPanel("Standard Errors Plot",plotOutput("SEFig"))))
+                ),
+                         
                 br(),
                 br(),
-                br(),
-                tabPanel("Help"),
                 tabPanel("About",
                          mainPanel(h4("Developed by :"),
                                    h5("Department of Psychology, National Taiwan University, Taiwan"),
