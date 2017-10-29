@@ -3,8 +3,8 @@ title:
 account: psychilin
 server: shinyapps.io
 appId: 180501
-bundleId: 1050202
+bundleId: 1050504
 url: https://psychilin.shinyapps.io/EFAshiny/
-when: 1509246408.16584
+when: 1509276023.4571
 asMultiple: FALSE
 asStatic: FALSE

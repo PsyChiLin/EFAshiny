@@ -213,7 +213,7 @@ shinyServer(function(input, output) {
         observe(output$EGAplot <- renderPlot({bootEGA(data = D(), n = input$npasim, 
                                                       medianStructure = TRUE, 
                                                       plot.MedianStructure = TRUE, 
-                                                      ncores = 8)},
+                                                      ncores = 4)},
                                              height = input$ploth2,width = input$plotw2))
         output$nfTable <- renderTable({print(VssTable())},rownames = F)
         output$downloadSave_nfTable <- downloadHandler(filename = "Vss_Table.csv",content = function(file) {
