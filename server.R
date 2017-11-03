@@ -80,7 +80,17 @@ shinyServer(function(input, output) {
                             names(Dataset()), names(Dataset()), multiple =TRUE)
                        
         })
-        
+        output$Nselect <- renderUI({
+                #if (identical(Dataset(), '') || identical(Dataset(),data.frame())) return(NULL)
+                # Variable selection:    
+                #selectInput("vars", "Variables to use:",
+                #            names(Dataset()), names(Dataset()), multiple =TRUE)
+                sliderInput("Nselect", "Sample Size", 1, dim(Dataset())[1] ,dim(Dataset())[1],
+                            step = 1, round = FALSE,
+                            format = NULL, locale = NULL, ticks = TRUE, animate = FALSE,
+                            width = NULL, sep = ",", pre = NULL, post = NULL, timeFormat = NULL,
+                            timezone = NULL, dragRange = TRUE)
+        })
        
         # Reactive D
         D <- reactive({
@@ -91,7 +101,7 @@ shinyServer(function(input, output) {
                 return(as.data.frame(D))
         })
        
-        
+        #sort(sample(1:dim(Dataset())[1],input$Nselect))
         #D <- na.omit(D)
         # Show table:
         output$table <- renderTable({
@@ -107,7 +117,7 @@ shinyServer(function(input, output) {
                 
         },rownames = T)
         
-        output$downloadSave_SelectData <- downloadHandler(filename = "SelectedData.csv",content = function(file) {write.csv(Dataset()[,input$vars,drop=FALSE], file,row.names=FALSE)})
+        output$downloadSave_SelectData <- downloadHandler(filename = "SelectedData.csv",content = function(file) {write.csv(D()[,input$vars,drop=FALSE], file,row.names=FALSE)})
         ### Data Exploration
         
         ## NA detetcion
@@ -124,17 +134,7 @@ shinyServer(function(input, output) {
         #                write.csv(NaR(),file,row.names = T)
         #        })
         
-        output$Nselect <- renderUI({
-                #if (identical(Dataset(), '') || identical(Dataset(),data.frame())) return(NULL)
-                # Variable selection:    
-                #selectInput("vars", "Variables to use:",
-                #            names(Dataset()), names(Dataset()), multiple =TRUE)
-                sliderInput("Nselect", "Sample Size", 1, 512,100,
-                            step = 1, round = FALSE,
-                            format = NULL, locale = NULL, ticks = TRUE, animate = FALSE,
-                            width = NULL, sep = ",", pre = NULL, post = NULL, timeFormat = NULL,
-                            timezone = NULL, dragRange = TRUE)
-        })
+       
         # Reactive M
         M <- reactive({
                 if(input$datatype == "Correlation Matrix"){M <- as.matrix(D())}
@@ -213,35 +213,50 @@ shinyServer(function(input, output) {
                          tl.pos="n", cl.pos="n")
         },height = input$ploth1,width = input$plotw1)) 
          ### Factor Retention
-        #ArgNames <- reactive({
-        #        Names <- names(formals(input$readFunction)[-1])
-        #        Names <- Names[Names!="..."]
-        #        return(Names)
-        #})
-        # Argument selector:
-        #output$FRmethod_PA <- renderUI({
-        #        numericInput('qpa',"Quantile of Parallel analysis", 0.99 , min = 0 , max = 1,step = 0.1)
-        #        numericInput("npasim","Number of simulated analyses to perform",200,min = 1, step = 10)
-        #        #selectInput("arg","Argument:",ArgNames())
-        #})
-        # Arg text field:
-        #output$ArgText <- renderUI({
-        #        fun__arg <- paste0(input$readFunction,"__",input$arg)
-        #        if (is.null(input$arg)) return(NULL)
-        #        Defaults <- formals(input$readFunction)
-        #        if (is.null(input[[fun__arg]]))
-        #        {
-        #                textInput(fun__arg, label = "Enter value:", value = deparse(Defaults[[input$arg]])) 
-        #        } else {
-        #                textInput(fun__arg, label = "Enter value:", value = input[[fun__arg]]) 
-        #        }
-        #})
+
         # Select variables:
         
-        observe(output$nfPlot <- renderPlot({faplot(M(),n.obs = input$Nselect,quant = input$qpa, fm = input$fm, n.iter = input$npasim)},
+        output$Nselect <- renderUI({
+                #if (identical(Dataset(), '') || identical(Dataset(),data.frame())) return(NULL)
+                # Variable selection:    
+                #selectInput("vars", "Variables to use:",
+                #            names(Dataset()), names(Dataset()), multiple =TRUE)
+                sliderInput("Nselect", "Sample Size", 1, dim(D())[1] ,dim(D())[1],
+                            step = 1, round = FALSE,
+                            format = NULL, locale = NULL, ticks = TRUE, animate = FALSE,
+                            width = NULL, sep = ",", pre = NULL, post = NULL, timeFormat = NULL,
+                            timezone = NULL, dragRange = TRUE)
+        })
+        
+        # Reactive D
+        D2 <- reactive({
+                if (is.null(input$vars) || length(input$vars)==0){
+                        D2 <- NULL}
+                else{if(input$datatype == "Correlation Matrix"){D2 <- Dataset()[input$vars,input$vars,drop=FALSE]}
+                        else{D2 <- Dataset()[sort(sample(1:dim(Dataset())[1],input$Nselect)),input$vars,drop=FALSE]}}
+                return(as.data.frame(D2))
+        })
+        
+        
+        # Reactive M
+        M2 <- reactive({
+                if(input$datatype == "Correlation Matrix"){M2 <- as.matrix(D2())}
+                if(input$datatype == "Raw Data"){
+                        if(input$cortype == "Pearson") {M2 <- cor(as.matrix(D2()))} 
+                        if(input$cortype == "tetrachoric"){M2 <- tetrachoric(D2())$rho}
+                        if(input$cortype == "polychoric"){M2 <- polychoric(D2())$rho}
+                }
+                return(M2)
+        })
+        
+        
+        observe(output$nfPlot <- renderPlot({faplot(M2(),
+                                                    n.obs = input$Nselect,
+                                                    quant = as.numeric(input$qpa), fm = input$fm,
+                                                    n.iter = input$npasim)},
                                             height = input$ploth2,width = input$plotw2))
         VssTable <- reactive({
-                Vs<- VSS(M(),n = input$maxn,
+                Vs<- VSS(M2(),n = input$maxn,
                          #rotate = "promax", fm = "ml",
                          plot = F, n.obs = input$Nselect)
                 mapvss <- data.frame(nFactor = row.names(Vs$vss.stats),VSS1 = Vs$cfit.1, VSS2 = Vs$cfit.2, MAP = Vs$map)
@@ -261,7 +276,7 @@ shinyServer(function(input, output) {
         ### Factor Extraction and Rotation
         # reactive factor analysis Results
         farst <- reactive({
-                farst <- fa(M(),input$nfactors,n.obs =  input$Nselect,
+                farst <- fa(M2(),input$nfactors,n.obs =  input$Nselect,
                             rotate = input$rotate,fm = input$fm,
                             max.iter = 100000,n.iter = input$bsnum)
                 return(farst)
@@ -349,7 +364,7 @@ shinyServer(function(input, output) {
         ### Factor stackBar
         observe(output$SFig <- renderPlot({
                 order <- itemorder2()
-                return(stackbar(M(),farst(),order = order,highcol = input$highcol,lowcol = input$lowcol))
+                return(stackbar(M2(),farst(),order = order,highcol = input$highcol,lowcol = input$lowcol))
         },height = input$ploth4,width = input$plotw4))
         ### SE Investigation
         q <- reactive({efa(x=D(), factors=input$nfactors, dist='ordinal',fm='ml',rotation='CF-quartimax', merror='YES')})
@@ -363,5 +378,27 @@ shinyServer(function(input, output) {
 
         
 })
-
+#ArgNames <- reactive({
+#        Names <- names(formals(input$readFunction)[-1])
+#        Names <- Names[Names!="..."]
+#        return(Names)
+#})
+# Argument selector:
+#output$FRmethod_PA <- renderUI({
+#        numericInput('qpa',"Quantile of Parallel analysis", 0.99 , min = 0 , max = 1,step = 0.1)
+#        numericInput("npasim","Number of simulated analyses to perform",200,min = 1, step = 10)
+#        #selectInput("arg","Argument:",ArgNames())
+#})
+# Arg text field:
+#output$ArgText <- renderUI({
+#        fun__arg <- paste0(input$readFunction,"__",input$arg)
+#        if (is.null(input$arg)) return(NULL)
+#        Defaults <- formals(input$readFunction)
+#        if (is.null(input[[fun__arg]]))
+#        {
+#                textInput(fun__arg, label = "Enter value:", value = deparse(Defaults[[input$arg]])) 
+#        } else {
+#                textInput(fun__arg, label = "Enter value:", value = input[[fun__arg]]) 
+#        }
+#})
 

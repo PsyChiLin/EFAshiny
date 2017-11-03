@@ -79,8 +79,10 @@ shinyUI(fluidPage(
                                                   "Scree Plot and Parallel Analysis"),
                                       conditionalPanel(
                                               condition = "input.FRmethod == 'Scree Plot and Parallel Analysis'",
-                                              numericInput('qpa',"Quantile of Parallel analysis", 0.99 , min = 0 , max = 1,step = 0.1),
-                                              numericInput("npasim","Number of simulated analyses to perform",200,min = 1, step = 10),
+                                              #numericInput('qpa',"Quantile of Parallel analysis", 0.99 , min = 0 , max = 1,step = 0.1),
+                                              radioButtons('qpa',"Quantile of Parallel analysis",
+                                                           c(0.99,0.95,0.5),0.99),
+                                              numericInput("npasim","Number of simulated analyses to perform",200,min = 1, step = 100),
                                               #br(),
                                               #htmlOutput("Nselect"),
                                               br(),
