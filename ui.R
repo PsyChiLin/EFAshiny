@@ -34,6 +34,7 @@ shinyUI(fluidPage(
                                      "Raw Data"),
                         # Variable selection:
                         htmlOutput("varselect"),
+                        #htmlOutput("Nselect"),
                         br(),
                         #textInput("name","Dataset name:","Data"),
                         downloadLink('downloadSave_SelectData', 'Download Selected Data')
@@ -71,19 +72,63 @@ shinyUI(fluidPage(
                 ),
                 tabPanel("Factor Retention",
                          sidebarPanel(width = 3,
-                                 numericInput('qpa',"Quantile of Parallel analysis", 0.99 , min = 0 , max = 1,step = 0.1),
-                                 numericInput("npasim","Number of simulated analyses to perform",200,min = 1, step = 10),
-                                 br(),
-                                 numericInput("maxn", "Max Number of Factor For VSS",4,min = 1),
-                                 htmlOutput("Nselect"),
-                                 br(),
-                                 numericInput("ploth2", " Plot Height",300,min = 1),
-                                 numericInput("plotw2", " Plot Width",700,min = 1),
-                                 downloadLink('downloadSave_nfTable', 'Download VSS Table')),
-                         mainPanel(tabsetPanel("",
-                                              tabPanel("Sree Plot",plotOutput("nfPlot")),
-                                              tabPanel("Very Simple Structure",tableOutput("nfTable")),
-                                              tabPanel("Exploratory Graph Analysis",plotOutput("EGAplot"))))),
+                                      selectInput("FRmethod", "Method of Factor Retention", 
+                                                  c("Scree Plot and Parallel Analysis",
+                                                    "Numeric Rules",
+                                                    "Exploratory Graph Analysis"),
+                                                  "Scree Plot and Parallel Analysis"),
+                                      conditionalPanel(
+                                              condition = "input.FRmethod == 'Scree Plot and Parallel Analysis'",
+                                              numericInput('qpa',"Quantile of Parallel analysis", 0.99 , min = 0 , max = 1,step = 0.1),
+                                              numericInput("npasim","Number of simulated analyses to perform",200,min = 1, step = 10),
+                                              #br(),
+                                              #htmlOutput("Nselect"),
+                                              br(),
+                                              numericInput("ploth2", " Plot Height",300,min = 1),
+                                              numericInput("plotw2", " Plot Width",700,min = 1)
+                                      ),
+                                      conditionalPanel(
+                                              condition = "input.FRmethod == 'Numeric Rules'",
+                                              numericInput("maxn", "Max Number of Factor For Estimation",4,min = 1)
+                                              #br(),
+                                              #htmlOutput("Nselect")
+                                              #numericInput('qpa',"Quantile of Parallel analysis", 0.99 , min = 0 , max = 1,step = 0.1),
+                                              #numericInput("npasim","Number of simulated analyses to perform",200,min = 1, step = 10),
+                                              #numericInput("ploth2", " Plot Height",300,min = 1),
+                                              #numericInput("plotw2", " Plot Width",700,min = 1)
+                                      ),
+                                      conditionalPanel(
+                                              condition = "input.FRmethod == 'Exploratory Graph Analysis'",
+                                              numericInput("npasim","Number of simulated analyses to perform",10,min = 1,max = 1000, step = 10),
+                                              br(),
+                                              #htmlOutput("Nselect"),
+                                              #br(),
+                                              numericInput("ploth2", " Plot Height",300,min = 1),
+                                              numericInput("plotw2", " Plot Width",700,min = 1)
+                                      ),
+                                      htmlOutput("Nselect")
+                                      #sliderInput("Nselect", "Sample Size", 1, dim(D())[1],dim(D())[1],step = 1)
+                                      ),
+                                      #            format = NULL, locale = NULL, ticks = TRUE, animate = FALSE,
+                                      #             width = NULL, sep = ",", pre = NULL, post = NULL, timeFormat = NULL,
+                                      #            timezone = NULL, dragRange = TRUE)
+                                     
+                                 #downloadLink('downloadSave_nfTable', 'Download VSS Table')),
+                         mainPanel(conditionalPanel(
+                                 condition = "input.FRmethod == 'Scree Plot and Parallel Analysis'",
+                                 plotOutput("nfPlot")),
+                                 conditionalPanel(
+                                         condition = "input.FRmethod == 'Numeric Rules'",
+                                         tableOutput("nfTable")),
+                                 conditionalPanel(
+                                         condition = "input.FRmethod == 'Exploratory Graph Analysis'",
+                                         plotOutput("EGAplot"))
+                                 
+                                 )),
+                        # mainPanel(tabsetPanel("",
+                        #                      tabPanel("Sree Plot",plotOutput("nfPlot")),
+                        #                     tabPanel("Very Simple Structure",tableOutput("nfTable")),
+                        #                      tabPanel("Exploratory Graph Analysis",plotOutput("EGAplot"))))),
                 tabPanel("Extraction and Rotation", 
                         sidebarPanel(width = 3,
                         numericInput('nfactors', "Number of Factors", 2,min = 1),
