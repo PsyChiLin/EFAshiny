@@ -9,6 +9,7 @@ library(gridExtra)
 library(shinythemes)
 library(EFAutilities)
 library(EGA)
+
 options(shiny.sanitize.errors = FALSE)
 file.sources = list.files(path = "functions/",pattern="*.R")
 RSE <- read.csv("data/RSE_naomit.csv")
@@ -20,40 +21,48 @@ shinyServer(function(input, output) {
         ### Read Data 
         
         # Argument names:
-        ArgNames <- reactive({
-                Names <- names(formals(input$readFunction)[-1])
-                Names <- Names[Names!="..."]
-                return(Names)
-        })
+        #ArgNames <- reactive({
+        #        Names <- names(formals(input$readFunction)[-1])
+        #        Names <- Names[Names!="..."]
+        #        return(Names)
+        #})
         # Argument selector:
-        output$ArgSelect <- renderUI({
-                if (length(ArgNames())==0) return(NULL)
-                selectInput("arg","Argument:",ArgNames())
-        })
+        #output$ArgSelect <- renderUI({
+        #        if (length(ArgNames())==0) return(NULL)
+        #        selectInput("arg","Argument:",ArgNames())
+        #})
         # Arg text field:
-        output$ArgText <- renderUI({
-                fun__arg <- paste0(input$readFunction,"__",input$arg)
-                if (is.null(input$arg)) return(NULL)
-                Defaults <- formals(input$readFunction)
-                if (is.null(input[[fun__arg]]))
-                {
-                        textInput(fun__arg, label = "Enter value:", value = deparse(Defaults[[input$arg]])) 
-                } else {
-                        textInput(fun__arg, label = "Enter value:", value = input[[fun__arg]]) 
-                }
-        })
+        #output$ArgText <- renderUI({
+        #        fun__arg <- paste0(input$readFunction,"__",input$arg)
+        #        if (is.null(input$arg)) return(NULL)
+        #        Defaults <- formals(input$readFunction)
+        #        if (is.null(input[[fun__arg]]))
+        #        {
+        #                textInput(fun__arg, label = "Enter value:", value = deparse(Defaults[[input$arg]])) 
+        #        } else {
+        #                textInput(fun__arg, label = "Enter value:", value = input[[fun__arg]]) 
+        #        }
+        #})
         # Data import:
         Dataset <- reactive({
                 if (is.null(input$file)) {
                         # User has not uploaded a file yet
-                        return(RSE[,1:10])
+                        return(RSE[1:512,1:10])
                 }
-                args <- grep(paste0("^",input$readFunction,"__"), names(input), value = TRUE)
-                argList <- list()
-                for (i in seq_along(args)){argList[[i]] <- eval(parse(text=input[[args[i]]]))}
-                names(argList) <- gsub(paste0("^",input$readFunction,"__"),"",args)
-                argList <- argList[names(argList) %in% ArgNames()]
-                Dataset <- as.data.frame(do.call(input$readFunction,c(list(input$file$datapath),argList)))
+                if (input$dataformat == "txt"){
+                        if (input$hdr == "TRUE"){ Dataset <- read.table(input$file$datapath, header = T)}
+                        if (input$hdr == "FALSE"){ Dataset <- read.table(input$file$datapath, header = F)}
+                }
+                if (input$dataformat == "csv"){
+                        if (input$hdr == "TRUE"){ Dataset <- read.csv(input$file$datapath, header = T)}
+                        if (input$hdr == "FALSE"){ Dataset <- read.csv(input$file$datapath, header = F)}
+                }
+                #args <- grep(paste0("^",read.csv,"__"), names(input), value = TRUE)
+                #argList <- list()
+                #for (i in seq_along(args)){argList[[i]] <- eval(parse(text=input[[args[i]]]))}
+                #names(argList) <- gsub(paste0("^",input$readFunction,"__"),"",args)
+                #argList <- argList[names(argList) %in% ArgNames()]
+                #Dataset <- as.data.frame(do.call(read.csv,c(list(input$file$datapath),header = ifelse(input$hdr == "TRUE",T,F) )))
                 if (input$datatype == "Correlation Matrix"){
                         row.names(Dataset) <- Dataset[,1]
                         Dataset <- Dataset[,-1]
@@ -71,26 +80,15 @@ shinyServer(function(input, output) {
                             names(Dataset()), names(Dataset()), multiple =TRUE)
                        
         })
-        # Select variables:
-        output$Nselect <- renderUI({
-                if (identical(Dataset(), '') || identical(Dataset(),data.frame())) return(NULL)
-                # Variable selection:    
-                #selectInput("vars", "Variables to use:",
-                #            names(Dataset()), names(Dataset()), multiple =TRUE)
-                sliderInput("Nselect", "Number of Observations to use", 1, dim(Dataset())[1], 512,
-                            step = 1, round = FALSE,
-                            format = NULL, locale = NULL, ticks = TRUE, animate = FALSE,
-                            width = NULL, sep = ",", pre = NULL, post = NULL, timeFormat = NULL,
-                            timezone = NULL, dragRange = TRUE)
-        })
+
         
         # Reactive D
         D <- reactive({
                 if (is.null(input$vars) || length(input$vars)==0){
                         D <- NULL}
                 else{if(input$datatype == "Correlation Matrix"){D <- Dataset()[input$vars,input$vars,drop=FALSE]}
-                        else{D <- Dataset()[sample(dim(Dataset())[1],input$Nselect),input$vars,drop=FALSE]}}
-                return(D)
+                        else{D <- Dataset()[,input$vars,drop=FALSE]}}
+                return(as.data.frame(D))
         })
 
         #D <- na.omit(D)
@@ -129,7 +127,7 @@ shinyServer(function(input, output) {
         # Reactive M
         M <- reactive({
                 if(input$datatype == "Correlation Matrix"){M <- as.matrix(D())}
-                if(input$datatype == "Raw Data Frame"){
+                if(input$datatype == "Raw Data"){
                         if(input$cortype == "Pearson") {M <- cor(as.matrix(D()))} 
                         if(input$cortype == "tetrachoric"){M <- tetrachoric(D())$rho}
                         if(input$cortype == "polychoric"){M <- polychoric(D())$rho}
@@ -138,13 +136,15 @@ shinyServer(function(input, output) {
         })
         # Reactive Summary For Download
         SumTable <- reactive({
-                if (input$datatype == "Correlation Matrix") { stop("Your input is a correlation matrix. Could not show the response summary of each item.")}
+                if (input$datatype == "Correlation Matrix") {stop("The numeric summary is not applicable for a corrleation matrix input.")}
                 if (!all(sapply(D(),class) %in% c("numeric","integer"))) { stop("All input variables should be numeric or integer")}
+                if (input$datatype == "Raw Data"){
                 dta_desc <- apply(D(),2,my_summary)
                 row.names(dta_desc) <- c("Mean","SD","Skewness","Kurtosis")
                 rst <- as.data.frame(t(dta_desc))
                 rst <- round(rst,3)
                 return(rst)
+                }
         })
         output$sum_table <- renderTable({print(SumTable())}, rownames = T)
         output$downloadSave_summary <- downloadHandler(filename = "Summary.csv",content = function(file) {
@@ -152,19 +152,22 @@ shinyServer(function(input, output) {
                 })
         # distribution of itmes
         observe(output$itemdist <- renderPlot({
-                if (input$datatype == "Correlation Matrix") { stop("Your input is a correlation matrix. Could not show the response distribution of each item.")}
+                if (input$datatype == "Correlation Matrix") {stop("The distribution plot is not applicable for a corrleation matrix input.")}
                 if (!all(sapply(D(),class) %in% c("numeric","integer"))) { stop("All input variables should be numeric or integer")}
-                dtalong <- melt(D())
-                colnames(dtalong) <- c("Item", "Response")
-                ggplot(dtalong, aes(x = Response, fill = Item))+
-                        geom_histogram(bins = input$binsnum)+
-                        facet_wrap(~Item)+
-                        theme_default()+
-                        labs(list(y = "Count"))
+                #if (input$datatype == "Raw Data"){
+                        dtalong <- melt(D())
+                        colnames(dtalong) <- c("Item", "Response")
+                        ggplot(dtalong, aes(x = Response, fill = Item))+
+                                geom_histogram(bins = 10)+
+                                facet_wrap(~Item)+
+                                theme_default()+
+                                labs(list(y = "Count"))
+                #}
+                
         },height = input$ploth1,width = input$plotw1))
         # Item Response
         observe(output$itemplot <- renderPlot({
-                if (input$datatype == "Correlation Matrix") { stop("Your input is a correlation matrix. Could not show the response distribution of each item.")}
+                if (input$datatype == "Correlation Matrix") { stop("The numeric summary is not applicable for a corrleation matrix input.")}
                 if (!all(sapply(D(),class) %in% c("numeric","integer"))) { stop("All input variables should be numeric or integer")}
                 dtbl <- apply(D(),2,table)
                 d <- D()
@@ -192,13 +195,25 @@ shinyServer(function(input, output) {
         },height = input$ploth1,width = input$plotw1))
         # Correlation Matrix
         observe(output$distPlot <- renderPlot({
-                corrplot(M(),order=input$rodermethod, method=input$method,type="upper",tl.pos = "lt")
+                corrplot(M(),order=input$rodermethod, method="ellipse",type="upper",tl.pos = "lt")
                 corrplot(M(),add=TRUE, type="lower",
-                         method="number",order=input$rodermethod,
+                         method="number",order="hclust",
                          diag=FALSE,
                          tl.pos="n", cl.pos="n")
         },height = input$ploth1,width = input$plotw1)) 
          ### Factor Retention
+        # Select variables:
+        output$Nselect <- renderUI({
+                if (identical(Dataset(), '') || identical(Dataset(),data.frame())) return(NULL)
+                # Variable selection:    
+                #selectInput("vars", "Variables to use:",
+                #            names(Dataset()), names(Dataset()), multiple =TRUE)
+                sliderInput("Nselect", "Sample Size", 1, dim(Dataset())[1], 512,
+                            step = 1, round = FALSE,
+                            format = NULL, locale = NULL, ticks = TRUE, animate = FALSE,
+                            width = NULL, sep = ",", pre = NULL, post = NULL, timeFormat = NULL,
+                            timezone = NULL, dragRange = TRUE)
+        })
         observe(output$nfPlot <- renderPlot({faplot(M(),n.obs = input$Nselect,quant = input$qpa, fm = input$fm, n.iter = input$npasim)},
                                             height = input$ploth2,width = input$plotw2))
         VssTable <- reactive({
