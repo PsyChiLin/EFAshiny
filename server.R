@@ -48,7 +48,9 @@ shinyServer(function(input, output) {
                 if (is.null(input$file)) {
                         # User has not uploaded a file yet
                         set.seed(100)
-                        return(RSE[sort(sample(1: 46546, 256)),1:10])
+                        dst <- RSE[sort(sample(1: 46546, 256)),1:10]
+                        row.names(dst) <- 1:256
+                        return(dst)
                         # 
                 }
                 if (input$dataformat == "txt"){
