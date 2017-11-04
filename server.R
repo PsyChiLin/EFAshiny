@@ -76,7 +76,7 @@ shinyServer(function(input, output) {
         output$varselect <- renderUI({
                 if (identical(Dataset(), '') || identical(Dataset(),data.frame())) return(NULL)
                 # Variable selection:    
-                selectInput("vars", "Variables to use:",
+                selectInput("vars", "Variables to include:",
                             names(Dataset()), names(Dataset()), multiple =TRUE)
                        
         })
@@ -259,12 +259,15 @@ shinyServer(function(input, output) {
                 Vs<- VSS(M2(),n = input$maxn,
                          #rotate = "promax", fm = "ml",
                          plot = F, n.obs = input$Nselect)
-                mapvss <- data.frame(nFactor = row.names(Vs$vss.stats),VSS1 = Vs$cfit.1, VSS2 = Vs$cfit.2, MAP = Vs$map)
-                otherindex <- Vs$vss.stats[,c(1:14)]
+                mapvss <- data.frame(nFactor = row.names(Vs$vss.stats),
+                                     #VSS1 = Vs$cfit.1,
+                                     #VSS2 = Vs$cfit.2,
+                                     MAP = Vs$map)
+                otherindex <- Vs$vss.stats[,c(6:8,11)]
                 VssTable <- cbind(mapvss,otherindex)
                 return(VssTable)
         })
-        observe(output$EGAplot <- renderPlot({bootEGA(data = D(), n = input$npasim, 
+        observe(output$EGAplot <- renderPlot({bootEGA(data = D2(), n = input$npasim, 
                                                       medianStructure = TRUE, 
                                                       plot.MedianStructure = TRUE, 
                                                       ncores = 4)},
@@ -309,7 +312,8 @@ shinyServer(function(input, output) {
                                       melt(unclass(farst$complexity)))
                         nam <- list()        
                         aa <- names(as.data.frame(unclass(farst$cis$means)))
-                        for (i in 1:input$nfactors){nam[[i]] <- c(paste0(aa[i],"_Lower"),aa[i],paste0(aa[i],"_Upper"))}       
+                        #for (i in 1:input$nfactors){nam[[i]] <- c(paste0(aa[i],"_LB"),aa[i],paste0(aa[i],"_UB"))} 
+                        for (i in 1:input$nfactors){nam[[i]] <- c("LB",aa[i],"UB")} 
                         manc <- do.call(c,nam)        
                         colnames(test)[1:I(input$nfactors *3)] <- manc
                         colnames(test)[I(input$nfactors *3+1):I(input$nfactors *3+3)] <- c("h2","u2","com")
@@ -367,14 +371,27 @@ shinyServer(function(input, output) {
                 return(stackbar(M2(),farst(),order = order,highcol = input$highcol,lowcol = input$lowcol))
         },height = input$ploth4,width = input$plotw4))
         ### SE Investigation
-        q <- reactive({efa(x=D(), factors=input$nfactors, dist='ordinal',fm='ml',rotation='CF-quartimax', merror='YES')})
-        v <- reactive({efa(x=D(), factors=input$nfactors, dist='ordinal',fm='ml',rotation='CF-varimax', merror='YES')})
-        output$PointTable <- renderTable(print(PointT(q(),v(),D())),rownames = T)
-        output$SETable <- renderTable(print(SET(q(),v(),D())),rownames = T)
+        q <- reactive({
+                return(efa(covmat =M2(), n.obs = input$Nselect,
+                           factors=input$nfactors, 
+                           #dist='ordinal',fm='ml',
+                           rotation='CF-quartimax', 
+                           merror='YES'))})
+        v <- reactive({return(efa(covmat =M2(),n.obs = input$Nselect, 
+                                  factors=input$nfactors, 
+                                  #dist='ordinal',fm='ml',
+                                  rotation='CF-varimax',   
+                                  merror='YES'))})
+        output$PointTable <- renderTable(print(PointT_new(q(),v(),M2(),nbf = input$nfactors)),rownames = T)
+        #output$SETable <- renderTable(print(SET(q(),v(),D())),rownames = T)
+        #print(q())
+        #print(v())
         observe(output$SEFig <- renderPlot({
-                #order <- itemorder2()
-                return(SEplot(q(),v(),D()))
-        },height = input$ploth5,width = input$plotw5))
+               # rst <-SEplot(q(),v(),D2(),nbf = input$nfactors)
+                return(SEplot(q(),v(),M2(),nbf = input$nfactors))
+        },
+        height = input$ploth4,
+        width = input$plotw4))
 
         
 })

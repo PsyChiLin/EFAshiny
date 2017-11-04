@@ -8,7 +8,10 @@ shinyUI(fluidPage(
         #titlePanel(title=div(img(src="mish.png", height = 40, width = 40),"Identify Latent Stuctures using the Exploratory Factor Analysis")),
         # Input in sidepanel:
         navbarPage("EFAshiny",inverse = F, fluid = T,#type = "pills",
-                   tabPanel("Introduction"),
+                   tabPanel("Introduction",
+                            br(),
+                            h4("Example Data :"),
+                            helpText(a("Rosenberg Self-Esteem Scale", href = "https://www.dropbox.com/s/hpksg1zev5021z1/RSE.zip?dl=0"))),
                    tabPanel("Demo"),
                    tabPanel("Data Input",
                         sidebarPanel(width = 3,
@@ -34,6 +37,7 @@ shinyUI(fluidPage(
                                      "Raw Data"),
                         # Variable selection:
                         htmlOutput("varselect"),
+                        numericInput('nobs', "Number of Observations",263,min = 1),
                         #htmlOutput("Nselect"),
                         br(),
                         #textInput("name","Dataset name:","Data"),
@@ -43,7 +47,7 @@ shinyUI(fluidPage(
                 #tabPanel("Exploration"),
                 tabPanel("Data Summary",
                          sidebarPanel(width = 3,
-                                 #numericInput('nobs', "Number of Observations",263,min = 1),
+                                 
                                  #br(),
                                  #numericInput("binsnum","Number of bins",10),
                                  #br(),
@@ -145,7 +149,7 @@ shinyUI(fluidPage(
                                       "Promax", "oblimin", "simplimax",
                                       "bentlerQ", "geominQ","biquartimin","cluster"),
                                     selected = "Promax"),
-                        numericInput("bsnum","Number of Bootstraps",20, min = 20,step = 100),
+                        numericInput("bsnum","Number of Bootstraps",200, min = 20,step = 100),
                         checkboxInput("sorting", "Sort", T),
                         downloadLink('downloadSave_PatMat', 'Download Pattern Matrix'),
                         br(),
@@ -170,29 +174,50 @@ shinyUI(fluidPage(
                          mainPanel(plotOutput("Diag"))),
                 tabPanel("Factor Loadings",
                          sidebarPanel(width = 3,
-                                 textInput("highcol","Color of Postive Loadings",value = "red"),
-                                 textInput("lowcol","Color of Negative Loadings",value = "blue"),
-                                 checkboxInput("sorting2", "Sort", T),
-                                 checkboxInput("barci","Confidence Interval",T),
-                                 br(),
-                                 numericInput("ploth4", " Plot Height",500,min = 1),
-                                 numericInput("plotw4", " Plot Width",700,min = 1)
-                         ),
-                         mainPanel(tabsetPanel("",
-                                              tabPanel("Bargraph",plotOutput("BFig")),
-                                              tabPanel("StackedBar",plotOutput("SFig"))))
-                         ),
-                tabPanel("Investigation of Zhang & Preacher (2015)",
-                         sidebarPanel(width = 3,
-                                      numericInput("ploth5", " Plot Height",500,min = 1),
-                                      numericInput("plotw5", " Plot Width",700,min = 1)
+                                      selectInput("FLplot", "Factor Loadings Visualizations", 
+                                                  c("Factor Loadings and Correlation Matrix",
+                                                    "Bootstrapping Factor Loadings",
+                                                    "SE and Factor Loadings"),
+                                                  "Bootstrapping Factor Loadings"),
+                                      conditionalPanel(
+                                              condition = "input.FLplot == 'Factor Loadings and Correlation Matrix'",
+                                              checkboxInput("sorting2", "Sort", T),
+                                              br(),
+                                              numericInput("ploth4", " Plot Height",500,min = 1),
+                                              numericInput("plotw4", " Plot Width",700,min = 1)
                                       ),
-                         mainPanel(tabsetPanel("",
-                                      tabPanel("Point Estimate",tableOutput("PointTable")),
-                                      tabPanel("Standard Errors Estimate",tableOutput("SETable")),
-                                      tabPanel("Standard Errors Plot",plotOutput("SEFig"))))
-                ),
-                         
+                                      conditionalPanel(
+                                              condition = "input.FLplot == 'Bootstrapping Factor Loadings'",
+                                              textInput("highcol","Color of Postive Loadings",value = "red"),
+                                              textInput("lowcol","Color of Negative Loadings",value = "blue"),
+                                              checkboxInput("sorting2", "Sort", T),
+                                              checkboxInput("barci","Confidence Interval",T),
+                                              br(),
+                                              numericInput("ploth4", " Plot Height",500,min = 1),
+                                              numericInput("plotw4", " Plot Width",700,min = 1)
+                                      ),
+                                      conditionalPanel(
+                                              condition = "input.FLplot == 'SE and Factor Loadings'",
+                                              br(),
+                                              numericInput("ploth4", " Plot Height",500,min = 1),
+                                              numericInput("plotw4", " Plot Width",700,min = 1)
+                                      )
+                         ),
+                         mainPanel(
+                                 conditionalPanel(
+                                         condition = "input.FLplot == 'Factor Loadings and Correlation Matrix'",
+                                         plotOutput("SFig")),
+                                 conditionalPanel(
+                                         condition = "input.FLplot == 'Bootstrapping Factor Loadings'",
+                                         plotOutput("BFig")),
+                                 conditionalPanel(
+                                         condition = "input.FLplot== 'SE and Factor Loadings'",
+                                         tabsetPanel("",
+                                                     tabPanel("SE Figure",plotOutput("SEFig")),
+                                                     tabPanel("Point Estimation",tableOutput("PointTable"))))
+                                         #plotOutput())
+                                 #
+                         )),
                 br(),
                 br(),
                 tabPanel("Authors",
@@ -200,10 +225,19 @@ shinyUI(fluidPage(
                                    h5("Department of Psychology, National Taiwan University, Taiwan"),
                                    helpText(a("Chi-Lin Yu",href="https://github.com/PsyChiLin/ggerp")),
                                    h5("Institute of Education, National Cheng Kung University, Taiwan"),
-                                   helpText(a("Ching-Fan Sheu",href = "http://140.116.183.121/~sheu/")),
-                                   br(),
-                                   h4("Example Data :"),
-                                   helpText(a("Rosenberg Self-Esteem Scale", href = "https://www.dropbox.com/s/hpksg1zev5021z1/RSE.zip?dl=0"))
+                                   helpText(a("Ching-Fan Sheu",href = "http://140.116.183.121/~sheu/"))
                          )
                           )
 )))
+
+
+#tabPanel("Investigation of Zhang & Preacher (2015)",
+#         sidebarPanel(width = 3,
+#                      numericInput("ploth5", " Plot Height",500,min = 1),
+#                      numericInput("plotw5", " Plot Width",700,min = 1)
+#                      ),
+#         mainPanel(tabsetPanel("",
+#                      tabPanel("Point Estimate",tableOutput("PointTable")),
+#                      tabPanel("Standard Errors Estimate",tableOutput("SETable")),
+#                      tabPanel("Standard Errors Plot",plotOutput("SEFig"))))
+#),
