@@ -38,7 +38,7 @@ SEplot <- function(q,v,data, nbf){
                 vm$Var1 <- colnames(data)
                 qv <- rbind(qm,vm)
                 colnames(qv)[1:3] <-c("Item","Factor","SE") 
-                qv$Item <- factor(qv$Item, levels = colnames(D))
+                qv$Item <- factor(qv$Item, levels = colnames(data))
                 Fig <- ggplot(qv, aes(x = Item, y = SE, col = Method))+
                         geom_point()+
                         facet_grid(Factor~.)+

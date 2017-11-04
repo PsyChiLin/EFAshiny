@@ -37,7 +37,10 @@ shinyUI(fluidPage(
                                      "Raw Data"),
                         # Variable selection:
                         htmlOutput("varselect"),
-                        numericInput('nobs', "Number of Observations",263,min = 1),
+                        conditionalPanel(
+                                condition = "input.datatype == 'Correlation Matrix'",
+                                numericInput('nobs', "Number of Observations",144,min = 1)
+                        ),
                         #htmlOutput("Nselect"),
                         br(),
                         #textInput("name","Dataset name:","Data"),
@@ -112,7 +115,10 @@ shinyUI(fluidPage(
                                               numericInput("ploth2", " Plot Height",300,min = 1),
                                               numericInput("plotw2", " Plot Width",700,min = 1)
                                       ),
-                                      htmlOutput("Nselect")
+                                      conditionalPanel(
+                                           condition = "input.datatype == 'Raw Data'",
+                                           htmlOutput("Nselect")
+                                      )
                                       #sliderInput("Nselect", "Sample Size", 1, dim(D())[1],dim(D())[1],step = 1)
                                       ),
                                       #            format = NULL, locale = NULL, ticks = TRUE, animate = FALSE,

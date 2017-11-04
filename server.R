@@ -47,7 +47,9 @@ shinyServer(function(input, output) {
         Dataset <- reactive({
                 if (is.null(input$file)) {
                         # User has not uploaded a file yet
-                        return(RSE[1:512,1:10])
+                        set.seed(100)
+                        return(RSE[sort(sample(1: 46546, 256)),1:10])
+                        # 
                 }
                 if (input$dataformat == "txt"){
                         if (input$hdr == "TRUE"){ Dataset <- read.table(input$file$datapath, header = T)}
@@ -85,7 +87,9 @@ shinyServer(function(input, output) {
                 # Variable selection:    
                 #selectInput("vars", "Variables to use:",
                 #            names(Dataset()), names(Dataset()), multiple =TRUE)
-                sliderInput("Nselect", "Sample Size", 1, dim(Dataset())[1] ,dim(Dataset())[1],
+                if (input$datatype == "Correlation Matrix"){nobss = input$nobs}
+                if (input$datatype == "Raw Data"){nobss = dim(Dataset())[1] }
+                sliderInput("Nselect", "Sample Size", 1, nobss , nobss,
                             step = 1, round = FALSE,
                             format = NULL, locale = NULL, ticks = TRUE, animate = FALSE,
                             width = NULL, sep = ",", pre = NULL, post = NULL, timeFormat = NULL,
@@ -177,34 +181,34 @@ shinyServer(function(input, output) {
                 
         },height = input$ploth1,width = input$plotw1))
         # Item Response
-        observe(output$itemplot <- renderPlot({
-                if (input$datatype == "Correlation Matrix") { stop("The numeric summary is not applicable for a corrleation matrix input.")}
-                if (!all(sapply(D(),class) %in% c("numeric","integer"))) { stop("All input variables should be numeric or integer")}
-                dtbl <- apply(D(),2,table)
-                d <- D()
-                #dtbl <- apply(D1,2,table)
-                if (class(dtbl) == "list"){
-                        dtbl <- do.call(rbind, dtbl)
-                        dtbll <- melt(dtbl)
-                        names(dtbll) <- c("Item","Response","Ratio")
-                        dtbll$Ratio <- dtbll$Ratio/input$Nselect
-                        if (length(levels(as.factor(dtbll$Response))) > 20) {
-                                stop("More than 20 levels response. Continuous response data Could not be shwon in this plot ")
-                        }}
-                else {
-                        dtbll <- melt(dtbl)
-                        names(dtbll) <- c("Response","Item","Ratio")
-                        dtbll$Ratio <- dtbll$Ratio/input$Nselect}
-                ggplot(dtbll,aes(x = reorder(Item, Ratio, max), 
-                                 y = Ratio, ymin = 0.25, ymax = Ratio, color = Item))+
-                        geom_pointrange()+
-                        geom_hline(yintercept = 0.25, linetype = "dotted")+
-                        facet_grid(. ~ Response)+
-                        coord_flip()+
-                        labs(list(x = "Item"))+
-                        theme_default()
-        },height = input$ploth1,width = input$plotw1))
-        # Correlation Matrix
+#         observe(output$itemplot <- renderPlot({
+#                 if (input$datatype == "Correlation Matrix") { stop("The numeric summary is not applicable for a corrleation matrix input.")}
+#                 if (!all(sapply(D(),class) %in% c("numeric","integer"))) { stop("All input variables should be numeric or integer")}
+#                 dtbl <- apply(D(),2,table)
+#                 d <- D()
+#                 #dtbl <- apply(D1,2,table)
+#                 if (class(dtbl) == "list"){
+#                         dtbl <- do.call(rbind, dtbl)
+#                         dtbll <- melt(dtbl)
+#                         names(dtbll) <- c("Item","Response","Ratio")
+#                         dtbll$Ratio <- dtbll$Ratio/input$Nselect
+#                         if (length(levels(as.factor(dtbll$Response))) > 20) {
+#                                 stop("More than 20 levels response. Continuous response data Could not be shwon in this plot ")
+#                         }}
+#                 else {
+#                         dtbll <- melt(dtbl)
+#                         names(dtbll) <- c("Response","Item","Ratio")
+#                         dtbll$Ratio <- dtbll$Ratio/input$Nselect}
+#                 ggplot(dtbll,aes(x = reorder(Item, Ratio, max), 
+#                                  y = Ratio, ymin = 0.25, ymax = Ratio, color = Item))+
+#                         geom_pointrange()+
+#                         geom_hline(yintercept = 0.25, linetype = "dotted")+
+#                         facet_grid(. ~ Response)+
+#                         coord_flip()+
+#                         labs(list(x = "Item"))+
+#                         theme_default()
+#         },height = input$ploth1,width = input$plotw1))
+#         # Correlation Matrix
         observe(output$distPlot <- renderPlot({
                 corrplot(M(),order=input$rodermethod, method="ellipse",type="upper",tl.pos = "lt")
                 corrplot(M(),add=TRUE, type="lower",
@@ -240,7 +244,7 @@ shinyServer(function(input, output) {
         
         # Reactive M
         M2 <- reactive({
-                if(input$datatype == "Correlation Matrix"){M2 <- as.matrix(D2())}
+                if(input$datatype == "Correlation Matrix"){M2 <- M()}
                 if(input$datatype == "Raw Data"){
                         if(input$cortype == "Pearson") {M2 <- cor(as.matrix(D2()))} 
                         if(input$cortype == "tetrachoric"){M2 <- tetrachoric(D2())$rho}
@@ -251,14 +255,14 @@ shinyServer(function(input, output) {
         
         
         observe(output$nfPlot <- renderPlot({faplot(M2(),
-                                                    n.obs = input$Nselect,
+                                                    n.obs = ifelse(input$datatype == "Correlation Matrix",input$nobs,input$Nselect),
                                                     quant = as.numeric(input$qpa), fm = input$fm,
                                                     n.iter = input$npasim)},
                                             height = input$ploth2,width = input$plotw2))
         VssTable <- reactive({
                 Vs<- VSS(M2(),n = input$maxn,
                          #rotate = "promax", fm = "ml",
-                         plot = F, n.obs = input$Nselect)
+                         plot = F, n.obs = ifelse(input$datatype == "Correlation Matrix",input$nobs,input$Nselect))
                 mapvss <- data.frame(nFactor = row.names(Vs$vss.stats),
                                      #VSS1 = Vs$cfit.1,
                                      #VSS2 = Vs$cfit.2,
@@ -279,7 +283,7 @@ shinyServer(function(input, output) {
         ### Factor Extraction and Rotation
         # reactive factor analysis Results
         farst <- reactive({
-                farst <- fa(M2(),input$nfactors,n.obs =  input$Nselect,
+                farst <- fa(M2(),input$nfactors,n.obs =  ifelse(input$datatype == "Correlation Matrix",input$nobs,input$Nselect),
                             rotate = input$rotate,fm = input$fm,
                             max.iter = 100000,n.iter = input$bsnum)
                 return(farst)
@@ -372,12 +376,12 @@ shinyServer(function(input, output) {
         },height = input$ploth4,width = input$plotw4))
         ### SE Investigation
         q <- reactive({
-                return(efa(covmat =M2(), n.obs = input$Nselect,
+                return(efa(covmat =M2(), n.obs = ifelse(input$datatype == "Correlation Matrix",input$nobs,input$Nselect),
                            factors=input$nfactors, 
                            #dist='ordinal',fm='ml',
                            rotation='CF-quartimax', 
                            merror='YES'))})
-        v <- reactive({return(efa(covmat =M2(),n.obs = input$Nselect, 
+        v <- reactive({return(efa(covmat =M2(),n.obs = ifelse(input$datatype == "Correlation Matrix",input$nobs,input$Nselect), 
                                   factors=input$nfactors, 
                                   #dist='ordinal',fm='ml',
                                   rotation='CF-varimax',   

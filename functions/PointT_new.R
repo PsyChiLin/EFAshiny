@@ -26,8 +26,11 @@ PointT_new <- function(q,v,data, nbf){
                 }
                 
                 vdf_new <- vdf[,as.numeric(unlist(collist))]
-                colnames(vdf_new) <- paste0("F",c(1:nbf))
-                Pointtable <- cbind(qdf,vdf_new)
+                colnames(vdf_new) <- paste0("F",c(1:nbf),"_CF-varimax")
+                qdf_new <- qdf
+                colnames(qdf_new) <- paste0("F",c(1:nbf),"_CF-quartimax")
+                Pointtable <- cbind(qdf_new[,1:nbf],vdf_new)
+                #colnames(Pointtable) <- 
                 row.names(Pointtable ) <- colnames(data)
 #                 qm <- melt(q$rotatedse)
 #                 qm$Method <- "CF-quartimax"
