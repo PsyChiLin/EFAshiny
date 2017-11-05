@@ -273,7 +273,9 @@ shinyServer(function(input, output) {
                 VssTable <- cbind(mapvss,otherindex)
                 return(VssTable)
         })
-        observe(output$EGAplot <- renderPlot({bootEGA(data = D2(), n = input$npasim, 
+        observe(output$EGAplot <- renderPlot({
+                if(input$datatype == "Correlation Matrix"){stop("The EGA is not applicable for a corrleation matrix input.")}
+                bootEGA(data = D2(), n = input$npasim, 
                                                       medianStructure = TRUE, 
                                                       plot.MedianStructure = TRUE, 
                                                       ncores = 4)},
