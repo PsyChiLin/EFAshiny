@@ -15,7 +15,7 @@ shinyUI(fluidPage(
                    tabPanel("Demo",
                             sidebarPanel(width = 4,
                                          h4("This Package is for ....")),
-                            mainPanel(div(img(src="Demo_FLbootCI.png", height = 500, width = 700)))),
+                            mainPanel(div(img(src="demo1.png", height = 500, width = 600)))),  # More ??
                    tabPanel("Data Input",
                         sidebarPanel(width = 3,
                         # HTML('<style type="text/css">.row-fluid .span4{width: 26%;}</style>'),
@@ -197,8 +197,8 @@ shinyUI(fluidPage(
                                       ),
                                       conditionalPanel(
                                               condition = "input.FLplot == 'Bootstrapping Factor Loadings'",
-                                              textInput("highcol","Color of Postive Loadings",value = "red"),
-                                              textInput("lowcol","Color of Negative Loadings",value = "blue"),
+                                              textInput("highcol","Color of Postive Loadings",value = "firebrick"),
+                                              textInput("lowcol","Color of Negative Loadings",value = "chartreuse4"),
                                               checkboxInput("sorting2", "Sort", T),
                                               checkboxInput("barci","Confidence Interval",T),
                                               br(),
@@ -236,7 +236,7 @@ shinyUI(fluidPage(
                                    h5("Institute of Education, National Cheng Kung University, Taiwan"),
                                    helpText(a("Ching-Fan Sheu",href = "http://140.116.183.121/~sheu/"))
                          )
-                          )
+                )
 )))
 
 
