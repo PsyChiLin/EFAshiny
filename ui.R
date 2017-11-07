@@ -13,7 +13,7 @@ shinyUI(fluidPage(
                    tabPanel("Introduction",
                             sidebarPanel(width = 4,
                                          h4("Welcome to EFAshiny !",align = "center" ),
-                                         strong("EFAshiny"),("is a easy-to-use tool that provides reasonable flow to implement exploratory factor analysis (EFA) and facilitate proper interpretation offactors."),
+                                         strong("EFAshiny"),("implements exploratory factor analysis (EFA) to facilitate proper interpretation offactors."),
                                          br(),
                                          h5("The features of EFAshiny included : "),
                                          tags$li((strong("Quick data summary"))),
