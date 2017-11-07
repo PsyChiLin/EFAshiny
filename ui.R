@@ -37,7 +37,7 @@ shinyUI(fluidPage(
                                                   tabPanel("References",
                                                            br(),
                                                            tags$li("Chang, W., Cheng, J., Allaire, J. J., Xie, Y., & McPherson, J. (2017). shiny: Web application framework for R."),
-                                                           tags$li("Comrey, A. L., & Lee, H. B. (2013). A first course in factor analysis. Psychology Press."),
+                                                           tags$li("Bartholomew, D.J., Knott, M., Irini Moustaki, I. (2011). Latent Variable Models and Factor Analysis. A Unified Approach. Wiley."),
                                                            tags$li("Golino, H. F., & Epskamp, S. (2017). Exploratory graph analysis: A new approach for estimating the number of dimensions in psychological research. PloS one, 12(6)."),
                                                            tags$li("Henson, R. K., & Roberts, J. K. (2006). Use of exploratory factor analysis in published research: Common errors and some comment on improved practice. Educational and Psychological measurement, 66(3), 393-416."),
                                                            tags$li("Revelle, W. (2014). psych: Procedures for personality and psychological research. Northwestern University, Evanston. R package version, 1(1)."),
