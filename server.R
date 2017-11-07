@@ -1,3 +1,7 @@
+if(!require(pacman)){
+        install.packages("pacman")
+        library(pacman)
+}
 library(pacman)
 pacman::p_load(shiny, corrplot, psych, reshape2, ggplot2, moments,
                grid, gridExtra, shinythemes, EFAutilities, EGA)
