@@ -1,10 +1,22 @@
-if(!require(pacman)){
-        install.packages("pacman")
-        library(pacman)
-}
-library(pacman)
-pacman::p_load(shiny, corrplot, psych, reshape2, ggplot2, moments,
-               grid, gridExtra, shinythemes, EFAutilities, EGA)
+#if(!require(pacman)){
+#        install.packages("pacman")
+#        library(pacman)
+#}
+#library(pacman)
+#pacman::p_load(shiny, corrplot, psych, reshape2, ggplot2, moments,
+#               grid, gridExtra, shinythemes, EFAutilities, EGA)
+library(shiny)
+library(corrplot)
+library(psych)
+library(reshape2)
+library(ggplot2)
+library(moments)
+library(grid)
+library(gridExtra)
+library(shinythemes)
+library(EFAutilities)
+library(EGA)
+
 
 options(shiny.sanitize.errors = FALSE)
 file.sources = list.files(path = "functions/",pattern="*.R")

@@ -1,3 +1,22 @@
+#if(!require(pacman)){
+#        install.packages("pacman")
+#        library(pacman)
+#}
+#library(pacman)
+#pacman::p_load(shiny, corrplot, psych, reshape2, ggplot2, moments,
+#               grid, gridExtra, shinythemes, EFAutilities, EGA)
+library(shiny)
+library(corrplot)
+library(psych)
+library(reshape2)
+library(ggplot2)
+library(moments)
+library(grid)
+library(gridExtra)
+library(shinythemes)
+library(EFAutilities)
+library(EGA)
+
 shinyUI(fluidPage(
         theme = shinytheme("flatly"),
         #theme = "bootstrap.css",
@@ -13,9 +32,9 @@ shinyUI(fluidPage(
                    tabPanel("Introduction",
                             sidebarPanel(width = 4,
                                          h4("Welcome to EFAshiny !",align = "center" ),
-                                         strong("EFAshiny"),("is a easy-to-use tool that provides reasonable flow to implement exploratory factor analysis (EFA) and facilitate proper interpretation offactors."),
+                                         strong("EFAshiny"),("is a easy-to-use tool that provides reasonable flow to implement exploratory factor analysis (EFA) and facilitate interpretation of factors."),
                                          br(),
-                                         h5("The features of EFAshiny included : "),
+                                         h5("The features of EFAshiny include : "),
                                          tags$li((strong("Quick data summary"))),
                                          tags$li(strong("Graphical and numerical retention methods")),
                                          tags$li(strong("Lots of extraction and rotation methods")),
@@ -24,11 +43,11 @@ shinyUI(fluidPage(
                                          #h5("Examples of EFAshiny are shown in left panel."),
                                          br(),
                                          p("Upload your own data to start the analyses."),
-                                         p("If these is no data to upload, we provide default demonstrations of in every single step by using the dataset of",
+                                         p("A default demonstration uses a data set on",
                                            span(helpText(a("Rosenberg Self-Esteem Scale (Rosenberg, 1965).",
                                                            href = "https://www.dropbox.com/s/hpksg1zev5021z1/RSE.zip?dl=0")))),
                                          br(),
-                                         h4("Enjoy your EFAshiny journey!",align = "center")
+                                         h4("Have fun with EFAshiny!",align = "center")
                                          ),
                             mainPanel(tabsetPanel("",
                                                   tabPanel("Demo",div(img(src="Demo_Full.png", height = 550, width = 650))),
