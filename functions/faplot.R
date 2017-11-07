@@ -2,6 +2,7 @@ faplot <- function(data,n.obs = NULL,quant,fm,n.iter){
         library(reshape2)
         library(ggplot2)
         library(psych)
+        #Sys.sleep(2)
         PArst <-  suppressMessages(fa.parallel(x =  data, n.obs = n.obs,fa = "pc", 
                                                quant = quant,fm = fm, plot = FALSE,n.iter = n.iter))
         #PArst$nfact

@@ -264,10 +264,13 @@ shinyServer(function(input, output) {
         })
         
         
-        observe(output$nfPlot <- renderPlot({faplot(M2(),
-                                                    n.obs = ifelse(input$datatype == "Correlation Matrix",input$nobs,input$Nselect),
-                                                    quant = as.numeric(input$qpa), fm = input$fm,
-                                                    n.iter = input$npasim)},
+        observe(output$nfPlot <- renderPlot({
+                try(
+                faplot(M2(),
+                                                          n.obs = ifelse(input$datatype == "Correlation Matrix",input$nobs,input$Nselect),
+                                                          quant = as.numeric(input$qpa), fm = input$fm,
+                                                          n.iter = input$npasim))
+                },
                                             height = input$ploth2,width = input$plotw2))
         VssTable <- reactive({
                 Vs<- VSS(M2(),n = input$maxn,
