@@ -44,9 +44,10 @@ shinyUI(fluidPage(
                                          #h5("Examples of EFAshiny are shown in left panel."),
                                          br(),
                                          p("Upload your own data to start the analyses."),
-                                         p("A default demonstration uses a data set on",
-                                           span(helpText(a("Rosenberg Self-Esteem Scale (Rosenberg, 1965).",
-                                                           href = "https://www.dropbox.com/s/hpksg1zev5021z1/RSE.zip?dl=0")))),
+                                         p("A default demonstration uses a",
+                                           helpText(a("Rosenberg Self-Esteem Scale",
+                                                      href = "https://www.dropbox.com/s/hpksg1zev5021z1/RSE.zip?dl=0")),
+                                           "dataset."),
                                          br(),
                                          h4("Have fun with EFAshiny!",align = "center")
                                          ),
