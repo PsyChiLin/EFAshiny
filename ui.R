@@ -82,8 +82,8 @@ shinyUI(fluidPage(
                          sidebarPanel(width = 3,
                                       selectInput("FRmethod", "Method of Factor Retention", 
                                                   c("Scree Plot and Parallel Analysis",
-                                                    "Exploratory Graph Analysis",
-                                                    "Numeric Rules"),
+                                                    "Numeric Rules",
+                                                    "Exploratory Graph Analysis"),
                                                   "Scree Plot and Parallel Analysis"),
                                       conditionalPanel(
                                               condition = "input.FRmethod == 'Scree Plot and Parallel Analysis'",
