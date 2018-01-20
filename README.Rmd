@@ -1,5 +1,8 @@
 ---
-output: rmarkdown::github_document
+output: 
+        html_document:
+        keep_md: true
+        fig_caption: yes
 ---
 ```{r, echo = FALSE}
 knitr::opts_chunk$set(collapse=TRUE, 
@@ -8,14 +11,21 @@ knitr::opts_chunk$set(collapse=TRUE,
                       fig.path = "README_figs/README-")
 ```
 
-## [EFAshiny](https://psychilin.shinyapps.io/EFAshiny/)
-##### An user-friendly Shiny APP for EFA users who have some experiences with SPSS.
+## EFAshiny
+`EFAshiny` is an user-friendly Shiny APP for EFA users who have some experiences with SPSS.
 <!-- README.md is generated from README.Rmd. Please edit that file -->
 
+#### Installation
+
+https://psychilin.shinyapps.io/EFAshiny/
 
 ```{r, eval=FALSE}
 library(devtools)
 library(shiny)
-runGitHub( "EFAshiny", "PsyChiLin") 
+runGitHub("EFAshiny", "PsyChiLin") 
 ```
 
+
+see ref{figurelabel}
+
+![captions \label{figurelabel}](rmdfigs/Demo.png)

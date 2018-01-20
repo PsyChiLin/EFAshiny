@@ -1,12 +1,19 @@
 
-[EFAshiny](https://psychilin.shinyapps.io/EFAshiny/)
-----------------------------------------------------
+EFAshiny
+--------
 
-##### An user-friendly Shiny APP for EFA users who have some experiences with SPSS.
+`EFAshiny` is an user-friendly Shiny APP for EFA users who have some experiences with SPSS. <!-- README.md is generated from README.Rmd. Please edit that file -->
 
-<!-- README.md is generated from README.Rmd. Please edit that file -->
+#### Installation
+
+<https://psychilin.shinyapps.io/EFAshiny/>
+
 ``` r
 library(devtools)
 library(shiny)
-runGitHub( "EFAshiny", "PsyChiLin") 
+runGitHub("EFAshiny", "PsyChiLin") 
 ```
+
+see ref{figurelabel}
+
+![captions ](rmdfigs/Demo.png)
