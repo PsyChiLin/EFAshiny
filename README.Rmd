@@ -102,9 +102,9 @@ Although users still have to determine the number of factors upon their own deci
 ## Data
 
 ## References
-Cattell, R. B. (1966). The scree test for the number of factors. Multivar Behav Res, 1(2), 245-276.
-Golino, H. F., & Epskamp, S. (2017). Exploratory graph analysis: A new approach for estimating the number of dimensions in psychological research. PloS one, 12(6), e0174035.
-Horn, J. L. (1965). A rationale and test for the number of factors in factor analysis. Psychometrika, 30(2), 179-185.
-Velicer, W. F. (1976). Determining the number of components from the matrix of partial correlations. Psychometrika, 41(3), 321-327.
+- Cattell, R. B. (1966). The scree test for the number of factors. Multivar Behav Res, 1(2), 245-276.
+- Golino, H. F., & Epskamp, S. (2017). Exploratory graph analysis: A new approach for estimating the number of dimensions in psychological research. PloS one, 12(6), e0174035.
+- Horn, J. L. (1965). A rationale and test for the number of factors in factor analysis. Psychometrika, 30(2), 179-185.
+- Velicer, W. F. (1976). Determining the number of components from the matrix of partial correlations. Psychometrika, 41(3), 321-327.
 
 ## Authors
