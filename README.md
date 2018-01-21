@@ -1,6 +1,6 @@
 
 <!-- README.md is generated from README.Rmd. Please edit that file -->
-\[![Build Status](https://travis-ci.org/PsyChiLin/EFAshiny.svg?branch=master)\]
+![Build Status](https://travis-ci.org/PsyChiLin/EFAshiny.svg?branch=master)
 
 [EFAshiny](https://psychilin.shinyapps.io/EFAshiny/)
 ====================================================
