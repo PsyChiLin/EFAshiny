@@ -246,7 +246,7 @@ shinyServer(function(input, output) {
         observe(output$BFig <- renderPlot({
                 order <- itemorder2()
                 return(bargraph(farst(),order = order,nf = input$nfactors,highcol = input$highcol,lowcol = input$lowcol,ci = input$barci))
-        },height = input$ploth4,width = input$plotw4))
+        },height = input$ploth5,width = input$plotw5))
         ### Factor stackBar
         observe(output$SFig <- renderPlot({
                 order <- itemorder2()
@@ -266,8 +266,8 @@ shinyServer(function(input, output) {
                                   merror='YES'))})
         output$PointTable <- renderTable(print(PointT_new(q(),v(),M2(),nbf = input$nfactors)),rownames = T)
         observe(output$SEFig <- renderPlot({return(SEplot(q(),v(),M2(),nbf = input$nfactors))},
-        height = input$ploth4,
-        width = input$plotw4))
+        height = input$ploth6,
+        width = input$plotw6))
 
         
 })

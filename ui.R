@@ -178,14 +178,14 @@ shinyUI(fluidPage(
                                               checkboxInput("sorting2", "Sort", T),
                                               checkboxInput("barci","Confidence Interval",T),
                                               br(),
-                                              numericInput("ploth4", " Plot Height",500,min = 1),
-                                              numericInput("plotw4", " Plot Width",700,min = 1)
+                                              numericInput("ploth5", " Plot Height",500,min = 1),
+                                              numericInput("plotw5", " Plot Width",700,min = 1)
                                       ),
                                       conditionalPanel(
                                               condition = "input.FLplot == 'SE and Factor Loadings'",
                                               br(),
-                                              numericInput("ploth4", " Plot Height",500,min = 1),
-                                              numericInput("plotw4", " Plot Width",700,min = 1)
+                                              numericInput("ploth6", " Plot Height",500,min = 1),
+                                              numericInput("plotw6", " Plot Width",700,min = 1)
                                       )
                          ),
                          mainPanel(
