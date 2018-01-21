@@ -17,8 +17,8 @@ Key features include:
 
 The intended user of [`EFAshiny`](https://psychilin.shinyapps.io/EFAshiny/) is a behavioral science researcher who seeks an easy way to analyze and visualize item-level scales or datasets with a set of associated variables using EFA.
 
-Installation
-------------
+Getting Started
+---------------
 
 #### 1. Shiny APP version (recommended)
 
@@ -26,12 +26,18 @@ If you want to use the `EFAshiny`, installation is not required. The application
 
 #### 2. Github version
 
-To run `EFAshiny` on your R locally, you have to intsall [`shiny`](https://cran.r-project.org/web/packages/shiny/shiny.pdf) and [`devtools`](https://cran.r-project.org/web/packages/devtools/devtools.pdf).
+To run `EFAshiny` on your R locally, you have to intsall [`shiny`](https://cran.r-project.org/web/packages/shiny/shiny.pdf) and [`devtools`](https://cran.r-project.org/web/packages/devtools/devtools.pdf). <br /> Then, intsall `EFAshiny` from Github.
 
 ``` r
-library(shiny)
-library(devtools)
-runGitHub("EFAshiny", "PsyChiLin") 
+#install.packages("shiny")
+#install.packages("devtools")
+install_github("PsyChiLin/EFAshiny")
+```
+
+To launch the app:
+
+``` r
+EFAshiny::EFAshiny()
 ```
 
 Tutorial
