@@ -1,3 +1,5 @@
+#' EFAshiny
+#'
 #' EFAshiny is an user-friendly shiny application for exploratory factor analysis
 #' 
 #' @import shiny
@@ -9,5 +11,5 @@
 #'   EFAshiny()
 #' }
 EFAshiny <- function() {
-  shiny::runApp()
+  shiny::runApp(system.file("bn",package = 'EFAshiny'))
 }
