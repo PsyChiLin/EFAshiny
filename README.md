@@ -1,5 +1,7 @@
 
 <!-- README.md is generated from README.Rmd. Please edit that file -->
+\[![Build Status](https://travis-ci.org/PsyChiLin/EFAshiny.svg?branch=master)\]
+
 [EFAshiny](https://psychilin.shinyapps.io/EFAshiny/)
 ====================================================
 
@@ -31,7 +33,7 @@ To run `EFAshiny` on your R locally, you have to intsall [`shiny`](https://cran.
 ``` r
 #install.packages("shiny")
 #install.packages("devtools")
-install_github("PsyChiLin/EFAshiny")
+devtools::install_github("PsyChiLin/EFAshiny")
 ```
 
 To launch the app:
@@ -43,11 +45,11 @@ EFAshiny::EFAshiny()
 Tutorial
 --------
 
-#### 0. Exploratory Factor Analysis
+#### 1. Exploratory Factor Analysis
 
 `EFAshiny` adopts exploratory factor analysis (EFA, Bartholomew, Knott, & Moustaki, 2011), a widely used method to investigate the underlying factor structure that can be used to explain the correlations in a set of observed indicators, as the major procedure in the application. EFA can be useful in lots of situations. For example, it can be used to conceptualize new constructs, to develop instruments, to select items as a short form scale, or to organize observed variables into meaningful subgroups. Major procedures of EFA included correlation coefficients calculation, number of factors determination, factor extraction, and factor rotation. In addition to the aforementioned steps of EFA, data explorations should be conducted before using EFA, and interpreting the results after using EFA is also an important step. Since that EFA is helpful to account for the relationship between numerous variables, its use has permeated fields from psychology to business, education and clinical domain.
 
-#### 1. Introduction
+#### 2. Introduction
 
 When you open [`EFAshiny`](https://psychilin.shinyapps.io/EFAshiny/), the interface will be shown.<br />
 
@@ -59,7 +61,7 @@ In the `Introduction` tab, you can see the main features for `EFAshiny`, a demo 
 
 ![Introduction](rmdfigs/Introduction.png)
 
-#### 2. Data Input
+#### 3. Data Input
 
 The data sets that required the implementations of EFA are typically in a wide format, i.e., one observation per row.<br /> They are composed of a set of responses in one or more psychometric tests in Likert scale.<br /> In the `Data Input` tab, users can upload the data.
 
@@ -73,7 +75,7 @@ If no data is uploaded, `EFAshiny` will use the [Rosenberg Self-Esteem Scale](ht
 
 ![DataInput](rmdfigs/DataInput.png)
 
-#### 3. Data Summary
+#### 4. Data Summary
 
 After uploading the data, the exploratory data analysis should be conducted.<br /> In `Data Summary` tab, three types of explorations are provided.
 
@@ -86,7 +88,7 @@ Note that the provided correlation matrix is the basis of EFA, which is a proced
 
 ![DataSummaryy](rmdfigs/DataSummary.png)
 
-#### 3. Factor Retention
+#### 5. Factor Retention
 
 One of the central idea of the EFA is to represent a set of observed variables by a smaller number of factors. Thus, selecting how many factors to retain is a critical decision. <br /> In `Factor Retention` tab, a set of indices to determine numbers of factor are provided.
 
@@ -102,7 +104,7 @@ In addition, **Sample Size** is another option for users to validate the results
 
 ![FactorRetention](rmdfigs/FactorRetention.png)
 
-#### 4. Extraction and Rotation
+#### 6. Extraction and Rotation
 
 The major step of EFA is to extract and rotate the factors structure, further estimating the factor loadings.<br /> In `Extraction and Rotation` tab, several factor extraction and rotation methods are available, and the boostrapping for estimating confidence intervals of factor loadings is also provided to aide in interpretations.
 
@@ -114,13 +116,13 @@ By providing plenty of factor extraction methods, rotation methods, and useful i
 
 ![ExtractionRotation](rmdfigs/ExtractionRotation.png)
 
-#### 5. Diagram
+#### 7. Diagram
 
 For EFA results, the fundamental visualizations is plotting the relationship between factors and indicators.<br /> In `Diagram` tab, the path diagram representation is provided by using `psych` R package (Revelle, 2017).<br /> It has the structure that all factors and indicators are represented as a bigger or smaller node, and all loadings with absolute values greater than some thresholds (e.g. 0.3) are represented as a line.<br /> Through the graphical representations with flexible plotting options, users can easily understand the factor structure.
 
 ![Diagram](rmdfigs/Diagram.png)
 
-#### 6. Factor Loadings
+#### 8. Factor Loadings
 
 In `Factor Loadings` tab, EFAshiny provides useful visualization of factor loadings to facilitate proper interpretations of extracted factors.
 
@@ -132,7 +134,7 @@ In addition to providing a table of loadings for EFA results, users can automati
 
 ![FactorLoading](rmdfigs/FactorLoading.png)
 
-#### 7. Summarized Steps
+#### 9. Summarized Steps
 
 We summarize, in six concrete steps, our provided flow in `EFAshiny` for performing EFA.
 
