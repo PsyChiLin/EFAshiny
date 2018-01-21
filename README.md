@@ -1,10 +1,24 @@
 
-EFAshiny
-========
+<!-- README.md is generated from README.Rmd. Please edit that file -->
+[EFAshiny](https://psychilin.shinyapps.io/EFAshiny/)
+====================================================
 
-`EFAshiny` is an user-friendly Shiny APP for EFA users who have some experiences with SPSS. <!-- README.md is generated from README.Rmd. Please edit that file -->
+[`EFAshiny`](https://psychilin.shinyapps.io/EFAshiny/) is an user-friendly application for exploratory factor analysis (EFA; Bartholomew, Knott, & Moustaki, 2011). The graphical user interface in shiny (Chang, Cheng, Allaire, Xie, & McPherson, 2017) is designed to free users from scripting in R by wrapping together various packages, such as [`ggplot2`](https://cran.r-project.org/web/packages/ggplot2/ggplot2.pdf) (Wickham, 2016) and [`psych`](https://cran.r-project.org/web/packages/psych/psych.pdf) (Revelle, 2017) R packages, for data management, factor analysis, and graphics. Easy-to-follow analysis flow and reasonable default settings avoiding common errors (Henson & Roberts, 2006) are provided. Results of analysis in tables and graphs are presented on-line and can be exported.
 
-Note: cite shiny Henson, R. K., & Roberts, J. K. (2006). Use of exploratory factor analysis in published research: Common errors and some comment on improved practice. Educational and Psychological measurement, 66(3), 393-416. Rosenberg, M. (1965). Rosenberg self-esteem scale (RSE). Acceptance and commitment therapy. Measures package, 61, 52. Wickham, H. (2016). ggplot2: elegant graphics for data analysis. Springer. \#\# Installation
+Key features include:
+
+-   Easy-to-follow analysis flow
+-   Quick data summary
+-   Graphical and numerical retention methods
+-   Lots of extraction and rotation methods
+-   Confidence intervals of factor loadings
+-   Visualizations of factor loadings
+-   Default arguments suggested by current research
+
+The intended user of [`EFAshiny`](https://psychilin.shinyapps.io/EFAshiny/) is a behavioral science researcher who seeks an easy way to analyze and visualize item-level scales or datasets with a set of associated variables using EFA.
+
+Installation
+------------
 
 #### 1. Shiny APP version (recommended)
 
@@ -12,7 +26,7 @@ If you want to use the `EFAshiny`, installation is not required. The application
 
 #### 2. Github version
 
-To run `EFAshiny` on your R locally, you have to intsall `shiny` and `devtools`.
+To run `EFAshiny` on your R locally, you have to intsall [`shiny`](https://cran.r-project.org/web/packages/shiny/shiny.pdf) and [`devtools`](https://cran.r-project.org/web/packages/devtools/devtools.pdf).
 
 ``` r
 library(shiny)
@@ -29,7 +43,7 @@ Tutorial
 
 #### 1. Introduction
 
-When you open `EFAshiny`, the interface will be shown.<br />
+When you open [`EFAshiny`](https://psychilin.shinyapps.io/EFAshiny/), the interface will be shown.<br />
 
 -   **Upper Panel**: The upper panel show 7 main tabs for the EFA procedure. The order of the tabs from left to right is the suggested flow. Users can easily switch the step of the EFA by simply clicking the tabs.
 -   **Left Panel**: The left panel is used to control the analysis setting or change the arguments.
@@ -41,7 +55,7 @@ In the `Introduction` tab, you can see the main features for `EFAshiny`, a demo 
 
 #### 2. Data Input
 
-The data sets that required the implementations of EFA are typically in a wide format, i.e., one observation per row.<br /> They are composed of a set of responses in one or more psychometric tests (e.g. 10, 20, 30 items) in Likert scale (e.g. 3, 4, 5, 7).<br /> In the `Data Input` tab, users can upload the data.
+The data sets that required the implementations of EFA are typically in a wide format, i.e., one observation per row.<br /> They are composed of a set of responses in one or more psychometric tests in Likert scale.<br /> In the `Data Input` tab, users can upload the data.
 
 -   **Upload data-file**: Users can upload their data by browsing their computer.
 -   **Data Format**: Two kinds of data can be uploaded, including csv and txt.
@@ -49,7 +63,7 @@ The data sets that required the implementations of EFA are typically in a wide f
 -   **Type of Data**: Two data types for EFA are available, including the typcial subject by variable raw data and the correlation matrix data type.
 -   **Variables to include**: User can choose the variables they want to include in the further steps. Simply delete the variable name from the console.
 
-If no data is uploaded, `EFAshiny` will use the [Rosenberg Self-Esteem Scale](%22https://www.dropbox.com/s/hpksg1zev5021z1/RSE.zip?dl=0%22) dataset to perform the default demostrations.
+If no data is uploaded, `EFAshiny` will use the [Rosenberg Self-Esteem Scale](https://github.com/PsyChiLin/EFAshiny/blob/master/RSE/RSE.csv) dataset to perform the default demostrations.
 
 ![DataInput](rmdfigs/DataInput.png)
 
@@ -128,9 +142,10 @@ By following this analysis flow in `EFAshiny`, users without any knowledge of pr
 Data
 ----
 
-The dataset we adopted for demonstration is the responses of the 10-items Rosenberg Self-Esteem Scale (RSE; Rosenberg, 1965; 1989) from 47974 participants via an online platform for psychological research (available through <http://personality-testing.info/_rawdata/>). The RSE is one of the most widely used measures of self-esteem in psychological research (Marsh, Scalas, & Nagengast, 2010). It also received more psychometric validations than other related instruments (Byrne, 1996; Gray-Little et al., 1997; Wylie, 1989), evidencing its widespread use. The RSE was recorded in 1 to 4 Likert scale, where higher scores indicated higher agreements for the items (1=strongly disagree, 2=disagree, 3=agree, and 4=strongly agree). Previous studies suggested that the RSE could be treat as a one factor un-dimensional scale (REF), which simply assessed a positive self-evaluation construct, or a two factor bi-dimensional scale (REF), where one factor is proposed to assess positive self-esteem (e.g. “I feel that I have a number of good qualities.”) with another measuring negative self-esteem (e.g. At times I think I am no good at all.). The data set is stored in a comma-separated values (csv) file called RSE.csv. The data set could be read into the EFAshiny as a data frame object with 46546 rows (excluded 1428 participants with no response using list-wise deletion) by 10 columns. Ten columns indicated one variable each for item 1 to 10, gender, age, source, country, respectively (Table 1, Q1~Q10的敘述). Because of its popularity, the present study selected the data of RSE as the example to demonstrate our EFAshiny application. Prior to any data exploration or analysis, we should first upload the data to the EFAshiny, allowing the application to read it. Two core options, including “read.csv” and “read.table” were implemented in the EFAshiny for users to read two most widely used data storage formats, text document (txt) file and csv file. Arguments, which allow users to adjust by hand for better reading the data, would display accordingly. For example, “header” argument indicated whether the file contains the names of the variables as its first line (and the default is TRUE). Furthermore, variables those are embedded in the uploaded dataset but not considered to use in further analysis could be un-selected in the interface by using “delete” or “backspace”. For example, we deleted four variables (i.e., gender, age, source, and country), because those were not the targets in the present EFA demonstration. Moreover, EFAshiny also included the options for users to choose the sample size ranging from 1 to the entire dataset (e.g. 47974 in the RSE dataset). By using this option, users could check the reliability of further analysis. The uploaded (and selected) data table would be printed on the main console of the EFAshiny. Figure 1 demonstrated
+The dataset for demonstration is the 10-items Rosenberg Self-Esteem Scale (RSE; Rosenberg, 1965) via [an online platform for psychological research](http://personality-testing.info/_rawdata/). The RSE was recorded in 1 to 4 Likert scale, where higher scores indicated higher agreements for the items (1=strongly disagree, 2=disagree, 3=agree, and 4=strongly agree). Previous studies suggested that the RSE could be treat as a one factor un-dimensional scale, which simply assessed a positive self-evaluation construct, or a two factor bi-dimensional scale, where one factor is proposed to assess positive self-esteem (e.g. I feel that I have a number of good qualities) with another measuring negative self-esteem (e.g. At times I think I am no good at all). `EFAshiny` already implements a 256 participants RSE data as a built-in dataset, but [RSE.csv](https://github.com/PsyChiLin/EFAshiny/blob/master/RSE/RSE.csv) with [codebook](https://github.com/PsyChiLin/EFAshiny/blob/master/RSE/codebook.txt) can also be directly downloaded.
 
-Rosenberg, M. (1965). Rosenberg self-esteem scale (RSE). Acceptance and commitment therapy. Measures package, 61, 52. \#\# References
+References
+----------
 
 -   Bartholomew, D.J., Knott, M., Irini Moustaki, I. (2011). Latent Variable Models and Factor Analysis. A Unified Approach. Wiley.
 -   Cattell, R. B. (1966). The scree test for the number of factors. Multivar Behav Res, 1(2), 245-276.
@@ -146,3 +161,5 @@ Rosenberg, M. (1965). Rosenberg self-esteem scale (RSE). Acceptance and commitme
 
 Authors
 -------
+
+[**Chi-Lin Yu**](https://github.com/PsyChiLin) : Department of Psychology, National Taiwan University, Taiwan<br /> [**Ching-Fan Sheu**](http://140.116.183.121/~sheu/) : Institute of Education, National Cheng Kung University, Taiwan<br /> <br /> If you have a question, comment, concern or code contribution about `EFAshiny`, please send us an email at <psychilinyu@gmail.com>.

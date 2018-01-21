@@ -21,7 +21,7 @@ shinyUI(fluidPage(
                                          p("Upload your own data to start the analyses."),
                                          p("A default demonstration uses a",
                                            helpText(a("Rosenberg Self-Esteem Scale",
-                                                      href = "https://www.dropbox.com/s/hpksg1zev5021z1/RSE.zip?dl=0")),
+                                                      href = "https://github.com/PsyChiLin/EFAshiny/blob/master/RSE/RSE.csv")),
                                            "dataset."),
                                          br(),
                                          h4("Have fun with EFAshiny!",align = "center")
