@@ -27,7 +27,7 @@ Key features include:
 
 The intended user of [`EFAshiny`](https://psychilin.shinyapps.io/EFAshiny/) is a behavioral science researcher who seeks an easy way to analyze and visualize item-level scales or datasets with a set of associated variables using EFA.
 
-## Installation
+## Getting Started
 
 #### 1. Shiny APP version (recommended)
 If you want to use the `EFAshiny`, installation is not required. The application is deployed on **shinyapps.io** server. <br />
