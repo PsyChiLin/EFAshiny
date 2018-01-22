@@ -1,25 +1,15 @@
 ---
-output: 
-        github_document:
-        keep_md: true
-        fig_caption: true
-        self-contained: no
+title: "A Tutorial to EFAshiny"
+author: "Chi-Lin Yu"
+date: "`r Sys.Date()`"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{A Tutorial to EFAshiny}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
 ---
-```{r, echo = FALSE}
-knitr::opts_chunk$set(collapse=TRUE, 
-                      comment="##", 
-                      fig.retina=2, 
-                      fig.path = "README_figs/README-")
-```
-<!-- README.md is generated from README.Rmd. Please edit that file -->
-![CRAN](http://www.r-pkg.org/badges/version/EFAshiny)
-[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
-[![Build Status](https://travis-ci.org/PsyChiLin/EFAshiny.svg?branch=master)](https://travis-ci.org/PsyChiLin/EFAshiny)
-[![APP Build](https://ci.appveyor.com/api/projects/status/ud2tblafomnka8hm?svg=true)](https://ci.appveyor.com/project/PsyChiLin/efashiny) [![SEMAPHORE](https://semaphoreci.com/api/v1/psychilin/efashiny/branches/master/badge.svg)](https://semaphoreci.com/psychilin/efashiny)
-[![Dependency Status](https://dependencyci.com/github/PsyChiLin/EFAshiny/badge)](https://dependencyci.com/github/PsyChiLin/EFAshiny)
 
-
-# [EFAshiny](https://psychilin.shinyapps.io/EFAshiny/)
+## A Tutorial to EFAshiny
 [`EFAshiny`](https://psychilin.shinyapps.io/EFAshiny/) is an user-friendly application for exploratory factor analysis (EFA; Bartholomew, Knott, & Moustaki, 2011). The graphical user interface in shiny (Chang, Cheng, Allaire, Xie, & McPherson, 2017) is designed to free users from scripting in R by wrapping together various packages for data management, factor analysis, and graphics. Easy-to-follow analysis flow and reasonable default settings avoiding common errors (Henson & Roberts, 2006) are provided. Results of analysis in tables and graphs are presented on-line and can be exported.
 
 Key features include:
@@ -69,7 +59,7 @@ When you open [`EFAshiny`](https://psychilin.shinyapps.io/EFAshiny/), the interf
 
 In the `Introduction` tab, you can see the main features for `EFAshiny`, a demo figure, and some key references.<br />
 
-![Introduction](rmdfigs/Introduction.png)
+<img src="https://github.com/PsyChiLin/EFAshiny/blob/master/rmdfigs/Introduction.png?raw=true" height="400px" />
 
 #### 3. Data Input
 The data sets that required the implementations of EFA are typically in a wide format, i.e., one observation per row.<br />
@@ -84,7 +74,7 @@ In the `Data Input` tab, users can upload the data.
 
 If no data is uploaded, `EFAshiny` will use the [Rosenberg Self-Esteem Scale ](https://github.com/PsyChiLin/EFAshiny/blob/master/RSE/RSE.csv) dataset to perform the default demostrations.
 
-![DataInput](rmdfigs/DataInput.png)
+<img src="https://github.com/PsyChiLin/EFAshiny/blob/master/rmdfigs/DataInput.png?raw=true" height="400px" />
 
 #### 4. Data Summary
 After uploading the data, the exploratory data analysis should be conducted.<br />
@@ -98,7 +88,7 @@ In `Data Summary` tab, three types of explorations are provided.
 Note that the provided correlation matrix is the basis of EFA, which is a procedure that aim to investigate the underlying structure from the correlations between variables, so either calculating or visualizing the correlation matrix will be really important.
 
 
-![DataSummaryy](rmdfigs/DataSummary.png)
+<img src="https://github.com/PsyChiLin/EFAshiny/blob/master/rmdfigs/DataSummary.png?raw=true" height="400px" />
 
 
 #### 5. Factor Retention
@@ -117,7 +107,7 @@ In `Factor Retention` tab, a set of indices to determine numbers of factor are p
 In addition, **Sample Size** is another option for users to validate the results for factor retentions by randomly adjusting different Sample Size.<br />
 Although users still have to determine the number of factors upon their own decisions, `EFAshiny` provides users several indices without worrying on methods implementations.
 
-![FactorRetention](rmdfigs/FactorRetention.png)
+<img src="https://github.com/PsyChiLin/EFAshiny/blob/master/rmdfigs/FactorRetention.png?raw=true" height="400px" />
 
 #### 6. Extraction and Rotation
 
@@ -130,8 +120,7 @@ In `Extraction and Rotation` tab, several factor extraction and rotation methods
 
 By providing plenty of factor extraction methods, rotation methods, and useful interval estimations of factor loadings, `EFAshiny` is not only helpful for EFA newbies, but also flexible for EFA users with many experiences.
 
-![ExtractionRotation](rmdfigs/ExtractionRotation.png)
-
+<img src="https://github.com/PsyChiLin/EFAshiny/blob/master/rmdfigs/ExtractionRotation.png?raw=true" height="400px" />
 
 #### 7. Diagram
 
@@ -140,7 +129,7 @@ In `Diagram` tab, the path diagram representation is provided by using `psych` R
 It has the structure that all factors and indicators are represented as a bigger or smaller node, and all loadings with absolute values greater than some thresholds (e.g. 0.3) are represented as a line.<br />
 Through the graphical representations with flexible plotting options, users can easily understand the factor structure.
 
-![Diagram](rmdfigs/Diagram.png)
+<img src="https://github.com/PsyChiLin/EFAshiny/blob/master/rmdfigs/Diagram.png?raw=true" height="400px" />
 
 #### 8. Factor Loadings
 
@@ -153,7 +142,7 @@ Preacher, 2015), by presenting comparison figure. Users can observe whether the 
 
 In addition to providing a table of loadings for EFA results, users can automatically get the whole picture of the EFA results through these visualizations.
 
-![FactorLoading](rmdfigs/FactorLoading.png)
+<img src="https://github.com/PsyChiLin/EFAshiny/blob/master/rmdfigs/FactorLoading.png?raw=true" height="400px" />
 
 #### 9. Summarized Steps
 
@@ -210,9 +199,6 @@ The dataset for demonstration is the 10-items Rosenberg Self-Esteem Scale (RSE; 
 - Wickham, H. (2016). ggplot2: elegant graphics for data analysis. Springer.
 - Zhang, G., & Preacher, K. J. (2015). Factor rotation and standard errors in exploratory factor analysis. Journal of Educational and Behavioral Statistics, 40(6), 579-603.
 - Zhang, G. (2014). Estimating standard errors in exploratory factor analysis. Multivariate Behavioral Research, 49, 339-353.
-
-
-
 
 ## Authors
 [**Chi-Lin Yu**](https://github.com/PsyChiLin) : Department of Psychology, National Taiwan University, Taiwan<br />

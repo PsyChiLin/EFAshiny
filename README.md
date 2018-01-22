@@ -17,15 +17,11 @@ Status](https://dependencyci.com/github/PsyChiLin/EFAshiny/badge)](https://depen
 user-friendly application for exploratory factor analysis (EFA;
 Bartholomew, Knott, & Moustaki, 2011). The graphical user interface in
 shiny (Chang, Cheng, Allaire, Xie, & McPherson, 2017) is designed to
-free users from scripting in R by wrapping together various packages,
-such as
-[`ggplot2`](https://cran.r-project.org/web/packages/ggplot2/ggplot2.pdf)
-(Wickham, 2016) and
-[`psych`](https://cran.r-project.org/web/packages/psych/psych.pdf)
-(Revelle, 2017) R packages, for data management, factor analysis, and
-graphics. Easy-to-follow analysis flow and reasonable default settings
-avoiding common errors (Henson & Roberts, 2006) are provided. Results of
-analysis in tables and graphs are presented on-line and can be exported.
+free users from scripting in R by wrapping together various packages for
+data management, factor analysis, and graphics. Easy-to-follow analysis
+flow and reasonable default settings avoiding common errors (Henson &
+Roberts, 2006) are provided. Results of analysis in tables and graphs
+are presented on-line and can be exported.
 
 Key features include:
 
@@ -54,12 +50,10 @@ application is deployed on **shinyapps.io** server. <br /> Have fun with
 #### 2\. Github version
 
 To run `EFAshiny` on your R locally, you have to intsall
-[`shiny`](https://cran.r-project.org/web/packages/shiny/shiny.pdf) and
 [`devtools`](https://cran.r-project.org/web/packages/devtools/devtools.pdf).
 <br /> Then, intsall `EFAshiny` from Github.
 
 ``` r
-#install.packages("shiny")
 #install.packages("devtools")
 devtools::install_github("PsyChiLin/EFAshiny")
 ```
@@ -185,8 +179,7 @@ tab, a set of indices to determine numbers of factor are provided.
         hypothesized.
   - **Exploratory Graph Analysis (EGA)**: EGA is a new approach, which
     is based on the graphical lasso with the regularization parameter
-    specified using EBIC, for retaining factors (Golino & Epskamp,
-    2017).
+    specified using EBIC, for retaining factors (Golino & Epskamp,2017).
       - **Number of simulated analyses to perform**: Users can perform
         more simulation to obstain reliable results. Note that too much
         simulated analyses will somehow slow down the EGA.
@@ -312,17 +305,67 @@ built-in dataset, but
 [RSE.csv](https://github.com/PsyChiLin/EFAshiny/blob/master/RSE/RSE.csv)
 with
 [codebook](https://github.com/PsyChiLin/EFAshiny/blob/master/RSE/codebook.txt)
-can also be directly downloaded.
+can also be directly
+    downloaded.
+
+## Dependencies
+
+  - [`bootnet`](https://cran.r-project.org/web/packages/bootnet/bootnet.pdf)
+    (Epskamp,
+    2017)
+  - [`corrplot`](https://cran.r-project.org/web/packages/corrplot/corrplot.pdf)
+    (Taiyun & Viliam,
+    2017)
+  - [`EFAutilities`](https://cran.r-project.org/web/packages/EFAutilities/index.html)
+    (See Zhang, 2014 for
+    detail)
+  - [`reshape2`](https://cran.r-project.org/web/packages/reshape2/reshape2.pdf)
+    (Wickham, 2014)
+  - [`EGA`](https://github.com/hfgolino/EGA) (Golino & Epskamp,
+    2017)
+  - [`ggplot2`](https://cran.r-project.org/web/packages/ggplot2/ggplot2.pdf)
+    (Wickham,
+    2016)
+  - [`gridExtra`](https://cran.r-project.org/web/packages/gridExtra/gridExtra.pdf)
+    (Auguie,
+    2017)
+  - [`igraph`](https://cran.r-project.org/web/packages/igraph/igraph.pdf)
+    (Csardi & Nepusz,
+    2006)
+  - [`moments`](https://cran.r-project.org/web/packages/moments/moments.pdf)
+    (Komsta & Novomestky, 2013)
+  - [`psych`](https://cran.r-project.org/web/packages/psych/psych.pdf)
+    (Revelle,
+    2017)
+  - [`qgraph`](https://cran.r-project.org/web/packages/qgraph/qgraph.pdf)
+    (Epskamp, et al., 2012)
+  - [`shiny`](https://cran.r-project.org/web/packages/shiny/shiny.pdf)
+    (Chang, Cheng, Allaire, Xie, & McPherson,
+    2017)
+  - [`shinytheme`](https://cran.r-project.org/web/packages/shinythemes/shinythemes.pdf)
+    (Chang, 2016)
 
 ## References
 
+  - Auguie, B. (2017). gridExtra: Miscellaneous Functions for" Grid"
+    Graphics, 2016. R package version, 2.3.
   - Bartholomew, D.J., Knott, M., Irini Moustaki, I. (2011). Latent
     Variable Models and Factor Analysis. A Unified Approach. Wiley.
   - Cattell, R. B. (1966). The scree test for the number of factors.
     Multivar Behav Res, 1(2), 245-276.
+  - Chang, W. (2016). shinythemes: Themes for Shiny. R package version
+    1.1.1.
   - Chang, W., Cheng, J., Allaire, J. J., Xie, Y., & McPherson, J.
-    (2017). shiny: Web application framework for R.
-    <http://CRAN.R-project.org/package=shiny> (R package version 1.0.0).
+    (2017). shiny: Web application framework for R. R package version
+    1.0.0.
+  - Csardi, G., & Nepusz, T. (2006). The igraph software package for
+    complex network research. InterJournal, Complex Systems, 1695(5),
+    1-9.
+  - Epskamp, S., Cramer, A. O. J., Waldorp, L.J., Schmittmann, V.D., &
+    Borsboom, D. (2012). qgraph: Network Visualizations of Relationships
+    in Psychometric Data. Journal of Statistical Software, 48(4), 1-18.
+  - Epskamp, S. (2017). bootnet: Bootstrap methods for various network
+    estimation routines. R package version 1.0.1
   - Golino, H. F., & Epskamp, S. (2017). Exploratory graph analysis: A
     new approach for estimating the number of dimensions in
     psychological research. PloS one, 12(6), e0174035.
@@ -332,18 +375,26 @@ can also be directly downloaded.
     393-416.
   - Horn, J. L. (1965). A rationale and test for the number of factors
     in factor analysis. Psychometrika, 30(2), 179-185.
+  - Komsta, L., & Novomestky, F. (2013). moments: moments, cumulants,
+    skewness, kurtosis and related tests. R package version 0.13.
   - Revelle, W. (2017) psych: Procedures for Personality and
     Psychological Research, Northwestern University, Evanston, Illinois,
-    USA, <https://CRAN.R-project.org/package=psych> Version = 1.7.8.
+    USA, R package version 1.7.8.
   - Rosenberg, M. (1965). Rosenberg self-esteem scale (RSE). Acceptance
     and commitment therapy. Measures package, 61, 52.
+  - Taiyun Wei and Viliam Simko (2017). R package “corrplot”:
+    Visualization of a Correlation Matrix. R package version 0.84.
   - Velicer, W. F. (1976). Determining the number of components from the
     matrix of partial correlations. Psychometrika, 41(3), 321-327.
+  - Wickham, H. (2016). reshape2: Flexibly Reshape Data: A Reboot of the
+    Reshape Package. R package version 1.4.2.
   - Wickham, H. (2016). ggplot2: elegant graphics for data analysis.
     Springer.
   - Zhang, G., & Preacher, K. J. (2015). Factor rotation and standard
     errors in exploratory factor analysis. Journal of Educational and
     Behavioral Statistics, 40(6), 579-603.
+  - Zhang, G. (2014). Estimating standard errors in exploratory factor
+    analysis. Multivariate Behavioral Research, 49, 339-353.
 
 ## Authors
 
