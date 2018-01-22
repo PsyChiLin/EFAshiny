@@ -14,5 +14,5 @@
 #'   EFAshiny()
 #' }
 EFAshiny <- function() {
-  shiny::runApp(system.file("bn",package = 'EFAshiny'))
+  shiny::runApp(system.file("efas",package = 'EFAshiny'))
 }
