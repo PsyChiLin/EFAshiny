@@ -3,6 +3,7 @@ output:
         github_document:
         keep_md: true
         fig_caption: true
+        self-contained: no
 ---
 ```{r, echo = FALSE}
 knitr::opts_chunk$set(collapse=TRUE, 
@@ -11,8 +12,13 @@ knitr::opts_chunk$set(collapse=TRUE,
                       fig.path = "README_figs/README-")
 ```
 <!-- README.md is generated from README.Rmd. Please edit that file -->
+![CRAN](http://www.r-pkg.org/badges/version/EFAshiny)
+[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 [![Build Status](https://travis-ci.org/PsyChiLin/EFAshiny.svg?branch=master)](https://travis-ci.org/PsyChiLin/EFAshiny)
 [![APP Build](https://ci.appveyor.com/api/projects/status/ud2tblafomnka8hm?svg=true)](https://ci.appveyor.com/project/PsyChiLin/efashiny)
+[![SEMAPHORE](https://semaphoreci.com/api/v1/psychilin/efashiny/branches/master/badge.svg)](https://semaphoreci.com/psychilin/efashiny)
+[![Dependency Status](https://dependencyci.com/github/PsyChiLin/EFAshiny/badge)](https://dependencyci.com/github/PsyChiLin/EFAshiny)
+
 
 # [EFAshiny](https://psychilin.shinyapps.io/EFAshiny/)
 [`EFAshiny`](https://psychilin.shinyapps.io/EFAshiny/) is an user-friendly application for exploratory factor analysis (EFA; Bartholomew, Knott, & Moustaki, 2011). The graphical user interface in shiny (Chang, Cheng, Allaire, Xie, & McPherson, 2017) is designed to free users from scripting in R by wrapping together various packages, such as [`ggplot2`](https://cran.r-project.org/web/packages/ggplot2/ggplot2.pdf) (Wickham, 2016) and [`psych`](https://cran.r-project.org/web/packages/psych/psych.pdf) (Revelle, 2017) R packages, for data management, factor analysis, and graphics. Easy-to-follow analysis flow and reasonable default settings avoiding common errors (Henson & Roberts, 2006) are provided. Results of analysis in tables and graphs are presented on-line and can be exported.

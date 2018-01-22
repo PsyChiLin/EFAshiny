@@ -1,6 +1,9 @@
 
 <!-- README.md is generated from README.Rmd. Please edit that file -->
-[![Build Status](https://travis-ci.org/PsyChiLin/EFAshiny.svg?branch=master)](https://travis-ci.org/PsyChiLin/EFAshiny) [![APP Build](https://ci.appveyor.com/api/projects/status/ud2tblafomnka8hm?svg=true)](https://ci.appveyor.com/project/PsyChiLin/efashiny)
+![CRAN](http://www.r-pkg.org/badges/version/EFAshiny)
+[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
+[![Build Status](https://travis-ci.org/PsyChiLin/EFAshiny.svg?branch=master)](https://travis-ci.org/PsyChiLin/EFAshiny) [![APP Build](https://ci.appveyor.com/api/projects/status/ud2tblafomnka8hm?svg=true)](https://ci.appveyor.com/project/PsyChiLin/efashiny) [![SEMAPHORE](https://semaphoreci.com/api/v1/psychilin/efashiny/branches/master/badge.svg)](https://semaphoreci.com/psychilin/efashiny) \[![Dependency Status](https://dependencyci.com/github/PsyChiLin/EFAshiny/badge)\]
+[![Dependency Status](https://dependencyci.com/github/PsyChiLin/EFAshiny/badge)](https://dependencyci.com/github/PsyChiLin/EFAshiny)
 
 [EFAshiny](https://psychilin.shinyapps.io/EFAshiny/)
 ====================================================
