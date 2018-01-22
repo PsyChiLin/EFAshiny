@@ -1,7 +1,7 @@
 library(shiny);library(corrplot);library(psych)
 library(reshape2);library(ggplot2);library(moments)
 library(grid);library(gridExtra);library(shinythemes)
-library(EFAutilities);library(EGA);library(igraph);library(plotly)
+library(EFAutilities);library(EGA);
 
 shinyUI(fluidPage(
         theme = shinytheme("flatly"),

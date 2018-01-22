@@ -1,7 +1,7 @@
 library(shiny);library(corrplot);library(psych)
 library(reshape2);library(ggplot2);library(moments)
 library(grid);library(gridExtra);library(shinythemes)
-library(EFAutilities);library(igraph)
+library(EFAutilities);library(EGA)
 
 options(shiny.sanitize.errors = FALSE)
 file.sources = list.files(path = "functions/",pattern="*.R")
