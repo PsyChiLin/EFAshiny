@@ -1,0 +1,47 @@
+{
+  "input": {
+    "FLplot": "SE and Factor Loadings",
+    "FRmethod": "Exploratory Graph Analysis",
+    "barci": true,
+    "bsnum": 200,
+    "cortype": "Pearson",
+    "cutt": 0.33,
+    "dataformat": "csv",
+    "datatype": "Raw Data",
+    "errarr": true,
+    "es": 0.05,
+    "file": null,
+    "fm": "pa",
+    "hdr": "TRUE",
+    "highcol": "firebrick",
+    "lowcol": "chartreuse4",
+    "maxn": 4,
+    "nfactors": 2,
+    "nobs": 144,
+    "npasim": 200,
+    "ploth1": 800,
+    "ploth2": 300,
+    "ploth3": 500,
+    "ploth4": 500,
+    "ploth5": 500,
+    "ploth6": 500,
+    "plotw1": 800,
+    "plotw2": 700,
+    "plotw3": 700,
+    "plotw4": 700,
+    "plotw5": 700,
+    "plotw6": 700,
+    "qpa": "0.99",
+    "rotate": "Promax",
+    "sim": true,
+    "so": true,
+    "sorting": true,
+    "sorting2": true
+  },
+  "output": {
+
+  },
+  "export": {
+
+  }
+}

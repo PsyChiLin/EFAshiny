@@ -1,0 +1,10 @@
+app <- ShinyDriver$new("../")
+app$snapshotInit("mytest")
+
+app$setInputs(FRmethod = "Numeric Rules")
+app$setInputs(FRmethod = "Exploratory Graph Analysis")
+app$setInputs(FRmethod = "Scree Plot and Parallel Analysis")
+app$setInputs(FRmethod = "Exploratory Graph Analysis")
+app$setInputs(FLplot = "Factor Loadings and Correlation Matrix")
+app$setInputs(FLplot = "SE and Factor Loadings")
+app$snapshot()
