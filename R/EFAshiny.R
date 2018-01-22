@@ -1,10 +1,14 @@
-#' An user-friendly shiny application for exploratory factor analysis.
+#' An user-friendly shiny application for exploratory factor analysis
 #'
-#' The EFAshiny graphical user interface in shiny (Chang, Cheng, Allaire, Xie, & McPherson, 2017) is designed to free users from scripting in R by wrapping together various packages, such as ggplot2 (Wickham, 2016) and psych (Revelle, 2017) R packages, for data management, factor analysis, and graphics. Easy-to-follow analysis flow and reasonable default settings avoiding common errors (Henson & Roberts, 2006) are provided. Results of analysis in tables and graphs are presented on-line and can be exported.
+#' The EFAshiny graphical user interface is designed to free users from scripting in R by wrapping together various packages for data management, factor analysis, and graphics.
 #' @import shiny
 #' @import devtools
 #' @export 
-#' @seealso \url{https://github.com/PsyChiLin/EFAshiny}
+#' @note EFAshiny can directly be used on-line. Check See Also section.
+#' @seealso Online version: \url{https://psychilin.shinyapps.io/EFAshiny/} 
+#' @seealso Tutorial : \url{https://github.com/PsyChiLin/EFAshiny} 
+#' @author Chi-Lin Yu <psychilinyu@gmail.com>
+#' @author Ching-Fan Sheu <csheu@mail.ncku.edu.tw>
 #' @examples
 #' if (interactive()) {
 #'   EFAshiny()

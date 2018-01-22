@@ -1,6 +1,6 @@
 
 <!-- README.md is generated from README.Rmd. Please edit that file -->
-![Build Status](https://travis-ci.org/PsyChiLin/EFAshiny.svg?branch=master)
+[![Build Status](https://travis-ci.org/PsyChiLin/EFAshiny.svg?branch=master)](https://travis-ci.org/PsyChiLin/EFAshiny) [![APP Build](https://ci.appveyor.com/api/projects/status/ud2tblafomnka8hm?svg=true)](https://ci.appveyor.com/project/PsyChiLin/efashiny)
 
 [EFAshiny](https://psychilin.shinyapps.io/EFAshiny/)
 ====================================================
