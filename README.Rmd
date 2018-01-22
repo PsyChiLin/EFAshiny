@@ -166,6 +166,11 @@ We summarize, in six concrete steps, our provided flow in `EFAshiny` for perform
 5. Visualize the results. Three kinds of plots are shown by EFAshiny. Get a general idea of the results from these visualization. 
 6. Download and use the results, including figures and tables, in every step for any purpose.
 
+To see the tutorial in vignettes:
+```{r, eval=FALSE}
+browseVignettes("EFAshiny")
+```
+
 By following this analysis flow in `EFAshiny`, users without any knowledge of programming are able to perform EFA and obtain great understandings for their own studies.
 
 ## Data

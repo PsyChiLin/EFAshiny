@@ -283,6 +283,12 @@ performing EFA.
 6.  Download and use the results, including figures and tables, in every
     step for any purpose.
 
+To see the tutorial in vignettes:
+
+``` r
+browseVignettes("EFAshiny")
+```
+
 By following this analysis flow in `EFAshiny`, users without any
 knowledge of programming are able to perform EFA and obtain great
 understandings for their own studies.

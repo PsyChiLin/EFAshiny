@@ -5,8 +5,8 @@ account: psychilin
 server: shinyapps.io
 hostUrl: https://api.shinyapps.io/v1
 appId: 180501
-bundleId: 1185055
+bundleId: 1186696
 url: https://psychilin.shinyapps.io/EFAshiny/
-when: 1516505975.62555
+when: 1516620734.01131
 asMultiple: FALSE
 asStatic: FALSE
