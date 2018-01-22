@@ -37,6 +37,6 @@ EFAshiny is an user-friendly application for exploratory factor analysis (EFA) [
 - Default arguments from recommendations in the literature
 - Demonstrations using a typical item-level scale dataset 
 
-Our application is primarily aimed at behavioral science researchers who want to analyze and visualize item-level scales or datasets with a set of associated variables using EFA. It is also noted that EFAshiny can be used to provide EFA-based connectivity analyses in neuroimaging data, such as functional near-infrared spectroscopy (fNIRS).
+Our application is primarily aimed at behavioral science researchers who want to analyze and visualize item-level scales or datasets with a set of associated variables using EFA. It is also noted that EFAshiny can be used to provide EFA-based connectivity analyses in neuroimaging data, such as Event related potentials (ERPs) and functional near-infrared spectroscopy (fNIRS).
 
 # References
