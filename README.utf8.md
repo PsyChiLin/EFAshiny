@@ -5,12 +5,7 @@ output:
         fig_caption: true
         self-contained: no
 ---
-```{r, echo = FALSE}
-knitr::opts_chunk$set(collapse=TRUE, 
-                      comment="##", 
-                      fig.retina=2, 
-                      fig.path = "README_figs/README-")
-```
+
 <!-- README.md is generated from README.Rmd. Please edit that file -->
 ![CRAN](http://www.r-pkg.org/badges/version/EFAshiny)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
@@ -43,14 +38,16 @@ Have fun with `EFAshiny` : https://psychilin.shinyapps.io/EFAshiny/
 #### 2. Github version
 To run `EFAshiny` on your R locally, [`devtools`](https://cran.r-project.org/web/packages/devtools/devtools.pdf) and [`shiny`](https://cran.r-project.org/web/packages/shiny/shiny.pdf) are required. <br />
 Then, intsall `EFAshiny` from Github.
-```{r, eval=FALSE}
+
+```r
 #install.packages("devtools")
 #install.packages("shiny")
 devtools::install_github("PsyChiLin/EFAshiny")
 ```
 
 To launch the app:
-```{r, eval=FALSE}
+
+```r
 EFAshiny::EFAshiny()
 ```
 
@@ -168,7 +165,8 @@ We summarize, in six concrete steps, our provided flow in `EFAshiny` for perform
 6. Download and use the results, including figures and tables, in every step for any purpose.
 
 To see the tutorial in vignettes:
-```{r, eval=FALSE}
+
+```r
 browseVignettes("EFAshiny")
 ```
 
