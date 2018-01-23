@@ -51,7 +51,8 @@ devtools::install_github("PsyChiLin/EFAshiny")
 
 To launch the app:
 ```{r, eval=FALSE}
-EFAshiny::EFAshiny()
+library(EFAshiny)
+EFAshiny()
 ```
 
 
