@@ -1,6 +1,7 @@
 #' An user-friendly shiny application for exploratory factor analysis
 #'
 #' The EFAshiny graphical user interface is designed to free users from scripting in R by wrapping together various packages for data management, factor analysis, and graphics.
+#' @import shiny
 #' @export 
 #' @note EFAshiny can directly be used on-line. Check See Also section.
 #' @seealso Online version: \url{https://psychilin.shinyapps.io/EFAshiny/} 
