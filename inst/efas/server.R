@@ -11,8 +11,6 @@ if(!require(qgraph)) {require(qgraph)}
 if(!require(bootnet)) {require(bootnet)}
 if(!require(igraph)) {require(igraph)}
 
-
-
 options(shiny.sanitize.errors = FALSE)
 file.sources = list.files(path = "functions/",pattern="*.R")
 RSE <- read.csv("data/RSE_naomit.csv")

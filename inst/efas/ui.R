@@ -1,3 +1,16 @@
+if(!require(shiny)) {require(shiny)}
+if(!require(shinythemes)) {require(shinythemes)}
+if(!require(ggplot2)) {require(ggplot2)}
+if(!require(psych)) {require(psych)}
+if(!require(EFAutilities)) {require(EFAutilities)}
+if(!require(corrplot)) {require(corrplot)}
+if(!require(reshape2)) {require(reshape2)}
+if(!require(moments)) {require(moments)}
+if(!require(gridExtra)) {require(gridExtra)}
+if(!require(qgraph)) {require(qgraph)}
+if(!require(bootnet)) {require(bootnet)}
+if(!require(igraph)) {require(igraph)}
+
 shinyUI(fluidPage(
         theme = shinytheme("flatly"),
         navbarPage("EFAshiny",inverse = F, fluid = T,
