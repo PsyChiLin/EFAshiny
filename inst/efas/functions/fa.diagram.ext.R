@@ -47,7 +47,7 @@ fa.diagram.ext <- function (fa.results,col = c("black", "red"), Phi = NULL, fe.r
                 num.factors <- dim(factors)[2]
         }
         nvar <- dim(factors)[1]
-        e.size = e.size * 16 * cex/nvar
+        e.size <- e.size * 16 * cex/nvar
         if (is.null(nvar)) {
                 nvar <- length(factors)
                 num.factors <- 1
@@ -65,20 +65,20 @@ fa.diagram.ext <- function (fa.results,col = c("black", "red"), Phi = NULL, fe.r
         fact.rect <- list()
         max.len <- max(nchar(rownames(factors))) * rsize
         x.max <- max((nvar + 1), 6)
-        limx = c(-max.len/2, x.max)
+        limx <- c(-max.len/2, x.max)
         n.evar <- 0
         if (!is.null(fe.results)) {
                 n.evar <- dim(fe.results$loadings)[1]
                 limy <- c(0, max(nvar + 1, n.evar + 1))
         }
         else {
-                limy = c(0, nvar + 1)
+                limy <- c(0, nvar + 1)
         }
         top <- max(nvar, n.evar) + 1
         plot(0, type = "n", xlim = limx, ylim = limy, frame.plot = FALSE, 
              axes = FALSE, ylab = "", xlab = "", main = main, ...)
         max.len <- max(strwidth(rownames(factors)), strwidth("abc"))/1.8
-        limx = c(-max.len/2, x.max)
+        limx <- c(-max.len/2, x.max)
         cex <- min(cex, 20/x.max)
         if (g) {
                 left <- 0.3 * x.max

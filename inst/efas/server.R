@@ -12,7 +12,7 @@ if(!require(bootnet)) {require(bootnet)}
 if(!require(igraph)) {require(igraph)}
 
 options(shiny.sanitize.errors = FALSE)
-file.sources = list.files(path = "functions/",pattern="*.R")
+file.sources <- list.files(path = "functions/",pattern="*.R")
 RSE <- read.csv("data/RSE_naomit.csv")
 sapply(paste0("functions/",file.sources),source)
 
@@ -47,8 +47,8 @@ shinyServer(function(input, output) {
                        
         })
         output$Nselect <- renderUI({
-                if (input$datatype == "Correlation Matrix"){nobss = input$nobs}
-                if (input$datatype == "Raw Data"){nobss = dim(Dataset())[1] }
+                if (input$datatype == "Correlation Matrix"){nobss <- input$nobs}
+                if (input$datatype == "Raw Data"){nobss <- dim(Dataset())[1] }
                 sliderInput("Nselect", "Sample Size", 1, nobss , nobss,
                             step = 1, round = FALSE,
                             format = NULL, locale = NULL, ticks = TRUE, animate = FALSE,
