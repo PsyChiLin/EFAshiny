@@ -12,17 +12,18 @@ Encoding: UTF-8
 License: MIT
 LazyData: TRUE
 RoxygenNote: 6.0.1
-Depends: R (>= 3.2.0)
+Depends: 
+    R (>= 3.3.0),
+    shiny,
+    shinythemes
 Import:
     ggplot2,
     psych,
     EFAutilities,
-    shiny,
     corrplot,
     reshape2,
     moments,
     gridExtra,
-    shinythemes,
     qgraph,
     bootnet,
     igraph

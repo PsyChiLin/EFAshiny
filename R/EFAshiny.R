@@ -14,5 +14,15 @@
 #'   EFAshiny()
 #' }
 EFAshiny <- function() {
-  shiny::runApp(system.file("efas",package = 'EFAshiny'))
+        if(!require(ggplot2)) {require(ggplot2)}
+        if(!require(psych)) {require(psych)}
+        if(!require(EFAutilities)) {require(EFAutilities)}
+        if(!require(corrplot)) {require(corrplot)}
+        if(!require(reshape2)) {require(reshape2)}
+        if(!require(moments)) {require(moments)}
+        if(!require(gridExtra)) {require(gridExtra)}
+        if(!require(qgraph)) {require(qgraph)}
+        if(!require(bootnet)) {require(bootnet)}
+        if(!require(igraph)) {require(igraph)}
+        shiny::runApp(system.file("efas",package = 'EFAshiny'))
 }
