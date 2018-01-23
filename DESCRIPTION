@@ -1,7 +1,7 @@
 Package: EFAshiny
 Type: Package
 Title: EFAshiny : An user-friendly application for exploratory factor analysis
-Version: 0.1.1
+Version: 0.1.3
 Date: 2018-01-21
 Author: c(person("Chi-Lin", "Yu", email = "psychilinyu@gmail.com",role = c("aut", "cre")),
           person("Ching-Fan","Sheu", email = "csheu@mail.ncku.edu.tw",role = c("aut", "cre")))
