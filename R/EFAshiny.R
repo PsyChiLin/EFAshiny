@@ -14,6 +14,10 @@
 #'   EFAshiny()
 #' }
 EFAshiny <- function() {
+        if(!require(devtools)) {
+                message("installing the 'devtools' package")
+                install.packages("devtools")
+        }
         if(!require(shiny)) {
                 message("installing the 'shiny' package")
                 install.packages("shiny")
