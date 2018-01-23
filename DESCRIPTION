@@ -12,21 +12,8 @@ Encoding: UTF-8
 License: MIT + file LICENSE
 LazyData: TRUE
 RoxygenNote: 6.0.1
-Depends: 
-    R (>= 3.3.0),
-    shiny
-Import:
-    shinythemes
-    ggplot2,
-    psych,
-    EFAutilities,
-    corrplot,
-    reshape2,
-    moments,
-    gridExtra,
-    qgraph,
-    bootnet,
-    igraph
+Depends: R (>= 3.3.0),shiny
+Imports:shinythemes,ggplot2,psych,EFAutilities,corrplot,reshape2,moments,gridExtra,qgraph,bootnet,igraph
 Suggests: knitr,
     rmarkdown
 VignetteBuilder: knitr
