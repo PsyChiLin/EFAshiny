@@ -41,10 +41,11 @@ If you want to use the `EFAshiny`, installation is not required. The application
 Have fun with `EFAshiny` : https://psychilin.shinyapps.io/EFAshiny/
 
 #### 2. Github version
-To run `EFAshiny` on your R locally, you have to intsall [`devtools`](https://cran.r-project.org/web/packages/devtools/devtools.pdf). <br />
+To run `EFAshiny` on your R locally, [`devtools`](https://cran.r-project.org/web/packages/devtools/devtools.pdf) and [`shiny`](https://cran.r-project.org/web/packages/shiny/shiny.pdf) are required. <br />
 Then, intsall `EFAshiny` from Github.
 ```{r, eval=FALSE}
 #install.packages("devtools")
+#install.packages("shiny")
 devtools::install_github("PsyChiLin/EFAshiny")
 ```
 

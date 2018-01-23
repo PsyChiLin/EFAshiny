@@ -49,12 +49,14 @@ application is deployed on **shinyapps.io** server. <br /> Have fun with
 
 #### 2\. Github version
 
-To run `EFAshiny` on your R locally, you have to intsall
-[`devtools`](https://cran.r-project.org/web/packages/devtools/devtools.pdf).
-<br /> Then, intsall `EFAshiny` from Github.
+To run `EFAshiny` on your R locally,
+[`devtools`](https://cran.r-project.org/web/packages/devtools/devtools.pdf)
+and [`shiny`](https://cran.r-project.org/web/packages/shiny/shiny.pdf)
+are required. <br /> Then, intsall `EFAshiny` from Github.
 
 ``` r
 #install.packages("devtools")
+#install.packages("shiny")
 devtools::install_github("PsyChiLin/EFAshiny")
 ```
 

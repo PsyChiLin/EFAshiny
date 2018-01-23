@@ -1,8 +1,3 @@
-library(shiny);library(corrplot);library(psych)
-library(reshape2);library(ggplot2);library(moments)
-library(grid);library(gridExtra);library(shinythemes)
-library(EFAutilities);library(EGA);
-
 shinyUI(fluidPage(
         theme = shinytheme("flatly"),
         navbarPage("EFAshiny",inverse = F, fluid = T,
