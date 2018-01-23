@@ -14,49 +14,5 @@
 #'   EFAshiny()
 #' }
 EFAshiny <- function() {
-        if(!require(devtools)) {
-                message("installing the 'devtools' package")
-                install.packages("devtools")
-        }
-        if(!require(shiny)) {
-                message("installing the 'shiny' package")
-                install.packages("shiny")
-        }
-        if(!require(corrplot)) {
-                message("installing the 'corrplot' package")
-                install.packages("corrplot")
-        }
-        if(!require(psych)) {
-                message("installing the 'psych' package")
-                install.packages("psych")
-        }
-        if(!require(reshape2)) {
-                message("installing the 'reshape2' package")
-                install.packages("reshape2")
-        }
-        if(!require(ggplot2)) {
-                message("installing the 'ggplot2' package")
-                install.packages("ggplot2")
-        }
-        if(!require(moments)) {
-                message("installing the 'moments' package")
-                install.packages("moments")
-        }
-        if(!require(grid)) {
-                message("installing the 'grid' package")
-                install.packages("grid")
-        }
-        if(!require(gridExtra)) {
-                message("installing the 'gridExtra' package")
-                install.packages("gridExtra")
-        }
-        if(!require(EFAutilities)) {
-                message("installing the 'EFAutilities' package")
-                install.packages("EFAutilities")
-        }
-        if(!require(shinythemes)) {
-                message("installing the 'shinythemes' package")
-                install.packages("shinythemes")
-        }
   shiny::runApp(system.file("efas",package = 'EFAshiny'))
 }

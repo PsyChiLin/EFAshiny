@@ -1,20 +1,19 @@
 Package: EFAshiny
 Type: Package
 Title: EFAshiny : An user-friendly application for exploratory factor analysis
-Version: 0.1.0
+Version: 0.1.1
 Date: 2018-01-21
 Author: c(person("Chi-Lin", "Yu", email = "psychilinyu@gmail.com",role = c("aut", "cre")),
           person("Ching-Fan","Sheu", email = "csheu@mail.ncku.edu.tw",role = c("aut", "cre")))
 Maintainer: Chi-Lin Yu <psychilinyu@gmail.com>
 Description: EFAshiny is an user-friendly application for exploratory factor analysis (EFA; Bartholomew, Knott, & Moustaki, 2011). The graphical user interface in shiny (Chang, Cheng, Allaire, Xie, & McPherson, 2017) is designed to free users from scripting in R by wrapping together various packages, such as ggplot2 (Wickham, 2016) and psych (Revelle, 2017) R packages, for data management, factor analysis, and graphics. Easy-to-follow analysis flow and reasonable default settings avoiding common errors (Henson & Roberts, 2006) are provided. Results of analysis in tables and graphs are presented on-line and can be exported. 
-Depends: R (>= 3.2.0)
 URL: https://github.com/PsyChiLin/EFAshiny
 Encoding: UTF-8
 License: MIT
 LazyData: TRUE
 RoxygenNote: 6.0.1
-Imports:
-    devtools,
+Depends: 
+    R (>= 3.2.0),
     ggplot2,
     psych,
     EFAutilities,
