@@ -7,7 +7,6 @@ authors:
 - affiliation: 2
   name: Ching-Fan Sheu
   orcid: null
-date: "23 January 2018"
 output:
   pdf_document: default
   word_document: default
@@ -30,7 +29,7 @@ affiliations:
 
 # Summary
 
-`EFAshiny` is an user-friendly web application for exploratory factor analysis (EFA) [@efa]. The graphical user interface (GUI) in `shiny` [@shiny] is designed to free users from scripting by wrapping together various `R` [@r] packages, such as `ggplot2` [@ggplot2], `psych` [@psych], `corrplot` [@corp], and `EGA` [@EGA], for data management, EFA, and graphics. The major focus is on item-level scale data, which usually require the implementation of EFA. `EFAshiny` implments a easy-to-follow analysis flow and a vareity of appropaches to explore, analyze and visualize data and results. Resonable default setting are provided according to proffered recommendations in the literature [@efaguide] are provided. Without having worry about data processing or programming users can obtain insights into the data and the results of EFA. Also, results of analysis in tables and graphs are all presented on-line and can be exported. Documentation, tutorials and usages can be found on [**our page**](https://github.com/PsyChiLin/EFAshiny). 
+`EFAshiny` is an user-friendly web application for exploratory factor analysis (EFA) [@efa]. The `EFAshiny` graphical user interface (GUI) in `shiny` [@shiny] is designed to free users from scripting by wrapping together various `R` [@r] packages, such as `ggplot2` [@ggplot2], `psych` [@psych], `corrplot` [@corp], and `EGA` [@EGA], for data management, EFA, and graphics. The major focus is on item-level scale data, which usually require the implementation of EFA. In an easy-to-follow GUI (Figure 1), `EFAshiny` implments a step by step analysis flow and a vareity of appropaches to explore, analyze and visualize data and results. Resonable default setting are provided according to proffered recommendations in the literature [@efaguide] are provided. Without having worry about data processing or programming users can obtain insights into the data and the results of EFA. Also, results of analysis in tables and graphs are all presented on-line and can be exported. Documentation, tutorials and usages can be found on [**our page**](https://github.com/PsyChiLin/EFAshiny). 
 
 Key features of `EFAshiny` include:
 
@@ -47,3 +46,5 @@ Key features of `EFAshiny` include:
 Our application is primarily aimed at behavioral science researchers who want to analyze and visualize item-level scales or datasets with a set of associated variables using EFA. It is also noted that `EFAshiny` can be used to provide EFA-based connectivity analyses in neuroimaging data, such as event related potentials (ERPs) and functional near-infrared spectroscopy (fNIRS).
 
 # References
+
+![The GUI of `EFAshiny`](Introduction.png)
