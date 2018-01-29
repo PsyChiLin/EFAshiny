@@ -6,7 +6,7 @@ authors:
   orcid: 0000-0002-4381-7163
 - affiliation: 2
   name: Ching-Fan Sheu
-  orcid: null
+  orcid: 0000-0002-5978-5768
 output:
   pdf_document: default
   word_document: default
@@ -29,25 +29,28 @@ affiliations:
 
 # Summary
 
-`EFAshiny` is an user-friendly web application for exploratory factor analysis (EFA) [@efa]. The objectives of `EFAshiny` are to streamline the routine data analyses in EFA and to allow users to easily understand and interact with their data.
+`EFAshiny` is a user-friendly web application for exploratory factor analysis (EFA) [@efa]. 
+The motivation to create `EFAshiny` is to streamline the routine work flow of EFA so that 
+users unfamiliar with R can perform the analysis interactively in a web brower.
 
-With graphical user interface (GUI) in an interactive `shiny` [@shiny] framework (Figure 1), `EFAshiny` provides a step by step analysis flow to automate the procedure of EFA. A variety of approaches to manage, explore, analyze and visualize data is provided in `EFAshiny` through wrapping together various `R` [@r] packages, such as `ggplot2` [@ggplot2], `psych` [@psych], `corrplot` [@corp], and `EGA` [@EGA]. `EFAshiny` also allow users to estimate confidence intervals of factor loadings, thereby enhancing the functionality and practicality of the analyses. Finally, results of analysis in tables and graphs are all presented on-line and can be easily exported.
+Employing the graphical user interface (GUI) of `shiny` [@shiny] framework (Figure 1), `EFAshiny` provides an intergrated platform to perform EFA with a drop-down menu, offering a number of choices to manage, explore, analyze and visualize data. `EFAshiny` automates these processes by wrappings together several `R` [@r] packages, such as `ggplot2` [@ggplot2], `psych` [@psych], `corrplot` [@corp], and `EGA` [@EGA], etc. For example, users can point-and-click to obtain graphical display of confidence intervals for factor loadings, which is not available in many commericial software.  Moreover, results of analysis are presented on-line as tables and graphs and they can be saved and exported by the user.
 
 Key features of `EFAshiny` include:
 
-- An easy-to-use GUI to free users from R scripting
-- A step by step analysis flow to easily and systematically perform EFA 
-- Quick data explorations with numeric summary and graphics
-- Graphical and numerical factor retention methods
-- Plenty of extraction and rotation methods
-- Confidence intervals calculation of factor loadings
-- Visualizations of factor loadings and Visualizations of correlation matrix
-- Default arguments from recommendations in the previous literature [@efaguide]
-- Demonstrations using a typical item-level scale dataset 
+- An easy-to-use GUI to free users from scripting in R
+- A step by step analysis flow to perform EFA 
+- Quick ways to summarize data by tables or graphs
+- Several ways to explore factor retention numerically or graphically
+- Several ways to explore factor extraction and rotation numerically or graphically
+- A display of confidence intervals for factor loadings
+- Several ways to link visualization of correlation matrix with factor structure
+- Default options are chosen according to recommendations in the literature [@efaguide]
+- A demonstration using a real psychological scale dataset 
 
-Our application is primarily aimed at behavioral science researchers who want to analyze and visualize datasets with a set of associated variables (e.g., item-level scale dataset) using EFA. It is also noted that `EFAshiny` can be used to provide EFA-based connectivity analyses in neuroimaging data, such as event related potentials (ERPs) and functional near-infrared spectroscopy (fNIRS).
+Although the `EFAshiny` application is primarily aimed at behavioral researchers who want to perform EFA on a set of associated variables (e.g., item-level scale dataset), it can also be used to explore FA-based connectivity analyses [@mclaughlin1992potential] in instrument data, such as event related potentials (ERPs) and functional near-infrared spectroscopy (fNIRS).
 
-In conclusion, by using `EFAshiny`, users can obtain insights into the data and the results of EFA without having worry about data processing or programming. Documentation, tutorials and usages can be found on [**our page**](https://github.com/PsyChiLin/EFAshiny). 
+In conclusion, `EFAshiny` allows researchers to harness the combined power of many R packages together for performing interactive EFA and obtaining numerical and graphical results in a user-friendly menu-driven GUI. Documentation, tutorials and usages can be found on 
+[**our page**](https://github.com/PsyChiLin/EFAshiny). 
 
 # References
 
