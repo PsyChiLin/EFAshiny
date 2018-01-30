@@ -1,7 +1,7 @@
 
 <!-- README.md is generated from README.Rmd. Please edit that file -->
 
-![CRAN](http://www.r-pkg.org/badges/version/EFAshiny) [![License:
+[![License:
 MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 [![Build
 Status](https://travis-ci.org/PsyChiLin/EFAshiny.svg?branch=master)](https://travis-ci.org/PsyChiLin/EFAshiny)
@@ -24,19 +24,25 @@ are presented on-line and can be exported.
 
 Key features include:
 
-  - Easy-to-follow analysis flow
-  - Quick data summary
-  - Graphical and numerical retention methods
-  - Lots of extraction and rotation methods
-  - Confidence intervals of factor loadings
-  - Visualizations of factor loadings
-  - Default arguments suggested by current research
+  - An easy-to-use GUI to free users from scripting in R
+  - A step by step analysis flow to perform EFA
+  - Quick ways to summarize data by tables or graphs
+  - Several ways to explore factor retention numerically or graphically
+  - Several ways to explore factor extraction and rotation numerically
+    or graphically
+  - A display of confidence intervals for factor loadings
+  - Several ways to link visualization of correlation matrix with factor
+    structure
+  - Default options are chosen according to recommendations in the
+    literature
+  - A demonstration using a real psychological scale dataset
 
-The intended user of
-[`EFAshiny`](https://psychilin.shinyapps.io/EFAshiny/) is a behavioral
-science researcher who seeks an easy way to analyze and visualize
-item-level scales or datasets with a set of associated variables using
-EFA.
+The `EFAshiny` application is primarily aimed at behavioral researchers
+who want to perform EFA on a set of associated variables (e.g.,
+item-level scale dataset). Note that it can also be used to explore
+FA-based connectivity analyses (McLaughlin et al., 1992)in instrument
+data, such as event related potentials (ERPs) and functional
+near-infrared spectroscopy (fNIRS).
 
 ## Getting Started
 
@@ -384,6 +390,10 @@ can also be directly
     in factor analysis. Psychometrika, 30(2), 179-185.
   - Komsta, L., & Novomestky, F. (2013). moments: moments, cumulants,
     skewness, kurtosis and related tests. R package version 0.13.
+  - McLaughlin, T., Steinberg, B., Christensen, B., Law, I., Parving,
+    A., & Friberg, L. (1992). Potential language and attentional
+    networks revealed through factor analysis of rCBF data measured with
+    SPECT. Journal of Cerebral Blood Flow & Metabolism, 12(4), 535-545.
   - Revelle, W. (2017) psych: Procedures for Personality and
     Psychological Research, Northwestern University, Evanston, Illinois,
     USA, R package version 1.7.8.
