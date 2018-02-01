@@ -7,11 +7,8 @@ authors:
 - affiliation: 2
   name: Ching-Fan Sheu
   orcid: 0000-0002-5978-5768
-output:
-  pdf_document: default
-  word_document: default
-  html_document:
-    df_print: paged
+date: "1 February 2018"
+output: pdf_document
 bibliography: paper.bib
 tags:
 - Exploratory Factor Analysis (EFA)
