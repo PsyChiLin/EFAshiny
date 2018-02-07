@@ -81,7 +81,7 @@ shinyServer(function(input, output) {
                 if (!all(sapply(D(),class) %in% c("numeric","integer"))) { stop("All input variables should be numeric or integer")}
                 if (input$datatype == "Raw Data"){
                 dta_desc <- apply(D(),2,my_summary)
-                row.names(dta_desc) <- c("Mean","SD","Skewness","Kurtosis")
+                row.names(dta_desc) <- c("Mean","SD","Skewness","Kurtosis","Median","MAD")
                 rst <- as.data.frame(t(dta_desc))
                 rst <- round(rst,3)
                 return(rst)
