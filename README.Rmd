@@ -187,7 +187,7 @@ The dataset for demonstration is the 10-items Rosenberg Self-Esteem Scale (RSE; 
 - [`reshape2`](https://cran.r-project.org/web/packages/reshape2/reshape2.pdf) (Wickham, 2014)
 - [`EGA`](https://github.com/hfgolino/EGA) (Golino & Epskamp, 2017)
 - [`ggplot2`](https://cran.r-project.org/web/packages/ggplot2/ggplot2.pdf) (Wickham, 2016)
-- [`ggcorplot`](https://cran.r-project.org/web/packages/ggcorrplot/ggcorrplot.pdf) (Kassambara, 2016)
+- [`ggcorrplot`](https://cran.r-project.org/web/packages/ggcorrplot/ggcorrplot.pdf) (Kassambara, 2016)
 - [`gridExtra`](https://cran.r-project.org/web/packages/gridExtra/gridExtra.pdf) (Auguie, 2017)
 - [`igraph`](https://cran.r-project.org/web/packages/igraph/igraph.pdf) (Csardi & Nepusz, 2006)
 - [`moments`](https://cran.r-project.org/web/packages/moments/moments.pdf) (Komsta & Novomestky, 2013)
