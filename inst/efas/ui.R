@@ -92,7 +92,7 @@ shinyUI(fluidPage(
                                  selectInput("cortype","Type of Correlations",
                                              c("Pearson", "tetrachoric", "polychoric")),
                                  br(),
-                                 numericInput("ploth1", " Plot Height",800,min = 1),
+                                 numericInput("ploth1", " Plot Height",650,min = 1),
                                  numericInput("plotw1", " Plot Width",700,min = 1),
                                  br(),
                                  downloadLink('downloadSave_summary', 'Download Summary Table')

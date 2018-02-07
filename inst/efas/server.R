@@ -102,7 +102,7 @@ shinyServer(function(input, output) {
                                 geom_histogram(bins = 10)+
                                 facet_wrap(~Item)+
                                 theme_default()+
-                                labs(list(y = "Count"))
+                                labs(list(y = " ",x = " "))
                         ggplotly(dist1) %>% layout(height = input$ploth1,width = input$plotw1)
         }))
         # distribution of itmes : Density
@@ -115,7 +115,7 @@ shinyServer(function(input, output) {
                         geom_density()+
                         facet_wrap(~Item)+
                         theme_default()+
-                        labs(list(y = "Count"))
+                        labs(list(y = " ",x = " "))
                 ggplotly(dist2) %>% layout(height = input$ploth1,width = input$plotw1)
         }))
         #},height = input$ploth1,width = input$plotw1))
@@ -128,7 +128,8 @@ shinyServer(function(input, output) {
                          tl.pos="n", cl.pos="n")
         },height = input$ploth1,width = input$plotw1))
         observe(output$ggcorPlot <- renderPlot({
-                ggcorrplot(M(), hc.order = T,type = "lower", lab = TRUE)
+                ggcorrplot(M(), hc.order = T,type = "lower", lab = TRUE,
+                           colors = c("#E46726", "white", "#6D9EC2"))
         },height = input$ploth1,width = input$plotw1)) 
         
         ### Factor Retention
