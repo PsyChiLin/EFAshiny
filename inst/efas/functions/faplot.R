@@ -1,4 +1,6 @@
 faplot <- function(data,n.obs = NULL,quant,fm,n.iter){
+        set.seed(10)
+        rst_list <- list()
         library(reshape2)
         library(ggplot2)
         library(psych)
@@ -24,7 +26,9 @@ faplot <- function(data,n.obs = NULL,quant,fm,n.iter){
                 ggtitle("Scree Plots : Parallel Analysis")+
                 theme(legend.position = c(0.7,0.77),
                       plot.title = element_text(hjust = 0.5))
-        return(Fig)
+        rst_list[[1]] <- Fig
+        rst_list[[2]] <- PArst$ncomp
+        return(rst_list)
         print(Fig)
 } 
 

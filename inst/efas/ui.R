@@ -11,6 +11,7 @@ if(!require(qgraph)) {require(qgraph)}
 if(!require(bootnet)) {require(bootnet)}
 if(!require(igraph)) {require(igraph)}
 if(!require(plotly)) {require(plotly)}
+if(!require(psycho)) {require(psycho)}
 
 shinyUI(fluidPage(
         theme = shinytheme("flatly"),
@@ -109,12 +110,13 @@ shinyUI(fluidPage(
                                       selectInput("FRmethod", "Method of Factor Retention", 
                                                   c("Scree Plot and Parallel Analysis",
                                                     "Numeric Rules",
-                                                    "Exploratory Graph Analysis"),
+                                                    "Exploratory Graph Analysis",
+                                                    "Summary"),
                                                   "Scree Plot and Parallel Analysis"),
                                       conditionalPanel(
                                               condition = "input.FRmethod == 'Scree Plot and Parallel Analysis'",
                                               radioButtons('qpa',"Quantile of Parallel analysis",
-                                                           c(0.99,0.95,0.5),0.99),
+                                                           c(0.99,0.95,0.5),0.95),
                                               numericInput("npasim","Number of simulated analyses to perform",200,min = 1, step = 100),
                                               br(),
                                               numericInput("ploth2", " Plot Height",300,min = 1),
@@ -127,25 +129,34 @@ shinyUI(fluidPage(
                                       conditionalPanel(
                                               condition = "input.FRmethod == 'Exploratory Graph Analysis'",
                                               numericInput("npasim","Number of simulated analyses to perform",10,min = 1,max = 1000, step = 10),
+                                              selectInput("egalayout", "Layout", 
+                                                          c("spring","circle","groups"),
+                                                          "spring"),
                                               br(),
                                               numericInput("ploth2", " Plot Height",300,min = 1),
                                               numericInput("plotw2", " Plot Width",700,min = 1)
+                                      ),
+                                      conditionalPanel(
+                                              condition = "input.FRmethod == 'Summary'"
                                       ),
                                       conditionalPanel(
                                            condition = "input.datatype == 'Raw Data'",
                                            htmlOutput("Nselect")
                                       )
                                       ),
-                         mainPanel(conditionalPanel(
-                                 condition = "input.FRmethod == 'Scree Plot and Parallel Analysis'",
-                                 plotOutput("nfPlot")),
+                         mainPanel(
+                                 conditionalPanel(
+                                         condition = "input.FRmethod == 'Scree Plot and Parallel Analysis'",
+                                         plotOutput("nfPlot")),
+                                 conditionalPanel(
+                                         condition = "input.FRmethod == 'Summary'",
+                                         tableOutput("nfsum")),
                                  conditionalPanel(
                                          condition = "input.FRmethod == 'Numeric Rules'",
                                          tableOutput("nfTable")),
                                  conditionalPanel(
                                          condition = "input.FRmethod == 'Exploratory Graph Analysis'",
                                          plotOutput("EGAplot"))
-                                 
                                  )),
                 tabPanel("Extraction and Rotation", 
                         sidebarPanel(width = 3,

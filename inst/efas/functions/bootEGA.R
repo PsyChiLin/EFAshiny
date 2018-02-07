@@ -1,4 +1,5 @@
-bootEGA <- function(data, n, medianStructure = TRUE, plot.MedianStructure = TRUE, ncores = 4) {
+bootEGA <- function(data, n, medianStructure = TRUE, plot.MedianStructure = TRUE, ncores = 4, layout = "spring") {
+        set.seed(0)
           if(!require(qgraph)) {
                     message("installing the 'qgraph' package")
                     install.packages("qgraph")
@@ -45,8 +46,8 @@ bootEGA <- function(data, n, medianStructure = TRUE, plot.MedianStructure = TRUE
                             dim.variables <- data.frame(items = colnames(data), dimension = median.wc$membership)
                           }
                   if (plot.MedianStructure == TRUE) {
-                            plot.median.ega <- qgraph(median.Structure, layout = "spring",
-                                                                                     vsize = 6, groups = as.factor(median.wc$membership))
+                            plot.median.ega <- qgraph(median.Structure, layout =  layout ,
+                                                      vsize = 6, groups = as.factor(median.wc$membership))
                           }
                   Median <- median(boot.ndim[, 2])
                   sd.boot <- sd(boot.ndim[, 2])
@@ -64,6 +65,7 @@ bootEGA <- function(data, n, medianStructure = TRUE, plot.MedianStructure = TRUE
                   medianGraph$graph <- median.Structure
                   medianGraph$median.dim.variables <- dim.variables[order(dim.variables[,2]), ]
                   result$medianGraph <- medianGraph
+                  result$plot <- plot.median.ega 
                   class(result) <- "bootEGA"
                   return(result)
                 }

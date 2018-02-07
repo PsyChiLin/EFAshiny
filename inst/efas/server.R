@@ -11,6 +11,7 @@ if(!require(qgraph)) {require(qgraph)}
 if(!require(bootnet)) {require(bootnet)}
 if(!require(igraph)) {require(igraph)}
 if(!require(plotly)) {require(plotly)}
+if(!require(psycho)) {require(psycho)}
 
 options(shiny.sanitize.errors = FALSE)
 file.sources <- list.files(path = "functions/",pattern="*.R")
@@ -164,24 +165,62 @@ shinyServer(function(input, output) {
                 faplot(M2(),n.obs = ifelse(input$datatype == "Correlation Matrix",input$nobs,input$Nselect),
                        quant = as.numeric(input$qpa), fm = input$fm,
                        n.iter = input$npasim))
+                #print(fap$Fig)
                 },height = input$ploth2,width = input$plotw2))
         VssTable <- reactive({
                 Vs<- VSS(M2(),n = input$maxn,
                          plot = F, n.obs = ifelse(input$datatype == "Correlation Matrix",input$nobs,input$Nselect))
                 mapvss <- data.frame(nFactor = row.names(Vs$vss.stats),
+                                     VSS1 = Vs$cfit.1,
+                                     VSS2 = Vs$cfit.2,
                                      MAP = Vs$map)
                 otherindex <- Vs$vss.stats[,c(6:8,11)]
                 VssTable <- cbind(mapvss,otherindex)
                 return(VssTable)
         })
+        egarst <- reactive({
+                bootEGA(data = D2(), n = input$npasim, medianStructure = TRUE, 
+                        plot.MedianStructure = TRUE, ncores = 4, 
+                        layout = input$egalayout)
+        })
         observe(output$EGAplot <- renderPlot({
                 if(input$datatype == "Correlation Matrix"){stop("The EGA is not applicable for a corrleation matrix input.")}
-                bootEGA(data = D2(), n = input$npasim, 
-                                                      medianStructure = TRUE, 
-                                                      plot.MedianStructure = TRUE, 
-                                                      ncores = 4)},
-                                             height = input$ploth2,width = input$plotw2))
+                plot(egarst()$plot)
+        }))
         output$nfTable <- renderTable({print(VssTable())},rownames = F)
+        nfsummary <- reactive({
+                pa <- faplot(M2(),n.obs = ifelse(input$datatype == "Correlation Matrix",input$nobs,input$Nselect),
+                             quant = as.numeric(input$qpa), fm = input$fm,
+                             n.iter = input$npasim)
+                nfs <- data.frame(Method = c("Parallel analysis",colnames(VssTable())[2:8],"EGA"),
+                                  n_optimal = NA)
+                nfs$n_optimal <- as.character(nfs$n_optimal)
+                nfs[1,2] <- pa[[2]]
+                nfs[2,2] <- ifelse(length(VssTable()[VssTable()[,"VSS1"] == max(VssTable()[,"VSS1"]), ]$nFactor) == 1,
+                                   VssTable()[VssTable()[,"VSS1"] == max(VssTable()[,"VSS1"]), ]$nFactor,
+                                   "Multiple")
+                nfs[3,2] <- ifelse(length(VssTable()[VssTable()[,"VSS2"] == max(VssTable()[,"VSS2"]), ]$nFactor) == 1,
+                                   VssTable()[VssTable()[,"VSS2"] == max(VssTable()[,"VSS2"]), ]$nFactor,
+                                   "Multiple")
+                nfs[4,2] <- ifelse(length(VssTable()[VssTable()[,"MAP"] == min(VssTable()[,"MAP"]), ]$nFactor) == 1,
+                                   VssTable()[VssTable()[,"MAP"] == min(VssTable()[,"MAP"]), ]$nFactor,
+                                   "Multiple")
+                nfs[5,2] <- ifelse(length(VssTable()[VssTable()[,"RMSEA"] == min(VssTable()[,"RMSEA"]), ]$nFactor) == 1,
+                                   VssTable()[VssTable()[,"RMSEA"] == min(VssTable()[,"RMSEA"]), ]$nFactor,
+                                   "Multiple")
+                nfs[6,2] <- ifelse(length(VssTable()[VssTable()[,"BIC"] == min(VssTable()[,"BIC"]), ]$nFactor) == 1,
+                                   VssTable()[VssTable()[,"BIC"] == min(VssTable()[,"BIC"]), ]$nFactor,
+                                   "Multiple")
+                nfs[7,2] <- ifelse(length(VssTable()[VssTable()[,"SABIC"] == min(VssTable()[,"SABIC"]), ]$nFactor) == 1,
+                                   VssTable()[VssTable()[,"SABIC"] == min(VssTable()[,"SABIC"]), ]$nFactor,
+                                   "Multiple")
+                nfs[8,2] <- ifelse(length(VssTable()[VssTable()[,"SRMR"] == min(VssTable()[,"SRMR"]), ]$nFactor) == 1,
+                                   VssTable()[VssTable()[,"SRMR"] == min(VssTable()[,"SRMR"]), ]$nFactor,
+                                   "Multiple")
+                nfs[9,2] <- egarst()$summary.table$median.dim
+                return(nfs)
+        })   
+        output$nfsum <- renderTable({print(nfsummary())},rownames = F)
         output$downloadSave_nfTable <- downloadHandler(filename = "Vss_Table.csv",content = function(file) {
                 write.csv(VssTable(),file,row.names = F)
         })
