@@ -7,7 +7,7 @@ authors:
 - affiliation: 2
   name: Ching-Fan Sheu
   orcid: 0000-0002-5978-5768
-date: "1 February 2018"
+date: "7 February 2018"
 output: pdf_document
 bibliography: paper.bib
 tags:
@@ -30,7 +30,7 @@ affiliations:
 The motivation to create `EFAshiny` is to streamline the routine work flow of EFA so that 
 users unfamiliar with R can perform the analysis interactively in a web browser.
 
-Employing the graphical user interface (GUI) of `shiny` [@shiny] framework (Figure 1), `EFAshiny` provides an integrated platform to perform EFA with a drop-down menu, offering a number of choices to manage, explore, analyze and visualize data. `EFAshiny` automates these processes by wrappings together several `R` [@r] packages, such as `ggplot2` [@ggplot2], `psych` [@psych], `corrplot` [@corp], and `EGA` [@EGA], etc. For example, users can point-and-click to obtain graphical display of confidence intervals for factor loadings, which is not available in many commercial software.  Moreover, results of analysis are presented on-line as tables and graphs and they can be saved and exported by the user.
+Employing the graphical user interface (GUI) of `shiny` [@shiny] framework (Figure 1), `EFAshiny` provides an integrated platform to perform EFA with a drop-down menu, offering a number of choices to manage, explore, analyze and visualize data. `EFAshiny` automates these processes by wrappings together several `R` [@r] packages, such as `ggplot2` [@ggplot2], `psych` [@psych], `psycho` [@psycho], and `EGA` [@EGA], etc. For example, users can point-and-click to obtain graphical display of confidence intervals for factor loadings, which is not available in many commercial software.  Moreover, results of analysis are presented on-line as tables and graphs and they can be saved and exported by the user.
 
 Key features of `EFAshiny` include:
 
