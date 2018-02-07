@@ -101,7 +101,8 @@ shinyUI(fluidPage(
                                              tabPanel("Numeric Statistic",tableOutput("sum_table")),
                                              tabPanel("Histogram", plotlyOutput("itemdist")),
                                              tabPanel("Density Plot", plotlyOutput("itemdensity")),
-                                             tabPanel("Correlation Matrix", plotOutput("distPlot"))))
+                                             tabPanel("Correlation Matrix", plotOutput("distPlot")),
+                                             tabPanel("ggcorplot", plotOutput("ggcorPlot"))))
                 ),
                 tabPanel("Factor Retention",
                          sidebarPanel(width = 3,

@@ -121,11 +121,14 @@ shinyServer(function(input, output) {
         #},height = input$ploth1,width = input$plotw1))
         # Correlation Matrix
         observe(output$distPlot <- renderPlot({
-                corrplot(M(),order=input$rodermethod, method="ellipse",type="upper",tl.pos = "lt")
+                corrplot(M(),order="hclust", method="ellipse",type="upper",tl.pos = "lt")
                 corrplot(M(),add=TRUE, type="lower",
                          method="number",order="hclust",
                          diag=FALSE,
                          tl.pos="n", cl.pos="n")
+        },height = input$ploth1,width = input$plotw1))
+        observe(output$ggcorPlot <- renderPlot({
+                ggcorrplot(M(), hc.order = T,type = "lower", lab = TRUE)
         },height = input$ploth1,width = input$plotw1)) 
         
         ### Factor Retention
