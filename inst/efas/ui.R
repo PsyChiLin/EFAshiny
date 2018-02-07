@@ -12,6 +12,7 @@ if(!require(bootnet)) {require(bootnet)}
 if(!require(igraph)) {require(igraph)}
 if(!require(plotly)) {require(plotly)}
 if(!require(psycho)) {require(psycho)}
+if(!require(ggcorrplot)) {require(ggcorrplot)}
 
 shinyUI(fluidPage(
         theme = shinytheme("flatly"),
@@ -54,6 +55,7 @@ shinyUI(fluidPage(
                                                            tags$li("Henson, R. K., & Roberts, J. K. (2006). Use of exploratory factor analysis in published research: Common errors and some comment on improved practice. Educational and Psychological measurement, 66(3), 393-416."),
                                                            tags$li("Horn, J. L. (1965). A rationale and test for the number of factors in factor analysis. Psychometrika, 30(2), 179-185."),
                                                            tags$li("Komsta, L., & Novomestky, F. (2013). moments: moments, cumulants, skewness, kurtosis and related tests. R package version 0.13."),
+                                                           tags$li("Makowski, (2018). The psycho Package: an Efficient and Publishing-Oriented Workflow for Psychological Science. Journal of Open Source Software, 3(22), 470."),
                                                            tags$li("Revelle, W. (2017) psych: Procedures for Personality and Psychological Research, Northwestern University, Evanston, Illinois, USA, R package version 1.7.8."),
                                                            tags$li("Rosenberg, M. (1965). Rosenberg self-esteem scale (RSE). Acceptance and commitment therapy. Measures package, 61, 52."),
                                                            tags$li("Taiyun Wei and Viliam Simko (2017). R package 'corrplot': Visualization of a Correlation Matrix. R package version 0.84."),

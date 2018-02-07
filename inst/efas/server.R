@@ -12,6 +12,7 @@ if(!require(bootnet)) {require(bootnet)}
 if(!require(igraph)) {require(igraph)}
 if(!require(plotly)) {require(plotly)}
 if(!require(psycho)) {require(psycho)}
+if(!require(ggcorrplot)) {require(ggcorrplot)}
 
 options(shiny.sanitize.errors = FALSE)
 file.sources <- list.files(path = "functions/",pattern="*.R")
