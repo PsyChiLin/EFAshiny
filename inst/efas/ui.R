@@ -10,6 +10,7 @@ if(!require(gridExtra)) {require(gridExtra)}
 if(!require(qgraph)) {require(qgraph)}
 if(!require(bootnet)) {require(bootnet)}
 if(!require(igraph)) {require(igraph)}
+if(!require(plotly)) {require(plotly)}
 
 shinyUI(fluidPage(
         theme = shinytheme("flatly"),
@@ -92,13 +93,14 @@ shinyUI(fluidPage(
                                              c("Pearson", "tetrachoric", "polychoric")),
                                  br(),
                                  numericInput("ploth1", " Plot Height",800,min = 1),
-                                 numericInput("plotw1", " Plot Width",800,min = 1),
+                                 numericInput("plotw1", " Plot Width",700,min = 1),
                                  br(),
                                  downloadLink('downloadSave_summary', 'Download Summary Table')
                         ),
                         mainPanel(tabsetPanel(id  = "",
                                              tabPanel("Numeric Statistic",tableOutput("sum_table")),
-                                             tabPanel("Distribution", plotOutput("itemdist")),
+                                             tabPanel("Histogram", plotlyOutput("itemdist")),
+                                             tabPanel("Density Plot", plotlyOutput("itemdensity")),
                                              tabPanel("Correlation Matrix", plotOutput("distPlot"))))
                 ),
                 tabPanel("Factor Retention",

@@ -10,6 +10,7 @@ if(!require(gridExtra)) {require(gridExtra)}
 if(!require(qgraph)) {require(qgraph)}
 if(!require(bootnet)) {require(bootnet)}
 if(!require(igraph)) {require(igraph)}
+if(!require(plotly)) {require(plotly)}
 
 options(shiny.sanitize.errors = FALSE)
 file.sources <- list.files(path = "functions/",pattern="*.R")
@@ -91,18 +92,33 @@ shinyServer(function(input, output) {
         output$downloadSave_summary <- downloadHandler(filename = "Summary.csv",content = function(file) {
                         write.csv(SumTable(),file,row.names = T)
                 })
-        # distribution of itmes
-        observe(output$itemdist <- renderPlot({
+        # distribution of itmes : Histogram
+        observe(output$itemdist <- renderPlotly({
                 if (input$datatype == "Correlation Matrix") {stop("The distribution plot is not applicable for a corrleation matrix input.")}
                 if (!all(sapply(D(),class) %in% c("numeric","integer"))) { stop("All input variables should be numeric or integer")}
                         dtalong <- melt(D())
                         colnames(dtalong) <- c("Item", "Response")
-                        ggplot(dtalong, aes(x = Response, fill = Item))+
+                        dist1 <- ggplot(dtalong, aes(x = Response, fill = Item))+
                                 geom_histogram(bins = 10)+
                                 facet_wrap(~Item)+
                                 theme_default()+
                                 labs(list(y = "Count"))
-        },height = input$ploth1,width = input$plotw1))
+                        ggplotly(dist1) %>% layout(height = input$ploth1,width = input$plotw1)
+        }))
+        # distribution of itmes : Density
+        observe(output$itemdensity <- renderPlotly({
+                if (input$datatype == "Correlation Matrix") {stop("The distribution plot is not applicable for a corrleation matrix input.")}
+                if (!all(sapply(D(),class) %in% c("numeric","integer"))) { stop("All input variables should be numeric or integer")}
+                dtalong <- melt(D())
+                colnames(dtalong) <- c("Item", "Response")
+                dist2 <- ggplot(dtalong, aes(x = Response, fill = Item))+
+                        geom_density()+
+                        facet_wrap(~Item)+
+                        theme_default()+
+                        labs(list(y = "Count"))
+                ggplotly(dist2) %>% layout(height = input$ploth1,width = input$plotw1)
+        }))
+        #},height = input$ploth1,width = input$plotw1))
         # Correlation Matrix
         observe(output$distPlot <- renderPlot({
                 corrplot(M(),order=input$rodermethod, method="ellipse",type="upper",tl.pos = "lt")
