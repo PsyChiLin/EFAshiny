@@ -6,23 +6,14 @@ output: html_document
 ```{r setup, include=FALSE}
 knitr::opts_chunk$set(echo = TRUE)
 ```
-### Introduction
-This tutorial aims to demonstrate how to perform the fundamental analyses in `EFAshiny` using R code. By following each line in this tutorial, you can learn basic R programming and can implement automated processing script in future analyses. Also, you can further use the code in `EFAshiny` within a script pupeline without launching the app. However, we still suggest you to use `EFAshiny` APP :)) Have fun with `EFAshiny` and `R` !
+### Overview
+This tutorial aims to demonstrate how to perform the fundamental analyses in [`EFAshiny`](https://psychilin.shinyapps.io/EFAshiny/) using R code. By following each line in this tutorial, you can learn basic R programming and can implement automated processing script in future analyses. Also, you can further use the code in `EFAshiny` within a script pupeline without launching the app. However, we still suggest you to use [`EFAshiny`](https://psychilin.shinyapps.io/EFAshiny/) APP :)) You can also have a look at our [tutorial](https://github.com/PsyChiLin/EFAshiny) of `EFAshiny` GUI to make an easy comparison while writing the code. Have fun with [`EFAshiny`](https://psychilin.shinyapps.io/EFAshiny/) and `R` !
 
 ### Preparation
-First of all, we should load all the packages and fucntions in `EFAshiny` into `R` session. If you do not have these package installed, please use `install.package("packagename")` to perfrom installation.
+First of all, we should load all the packages and fucntions in `EFAshiny` into `R` session. If you do not have these package installed, please use `install.package("packagename")` to perfrom installations.
 ```{r, message=FALSE, warning=FALSE}
-if(!require(ggplot2)) {require(ggplot2)}
-if(!require(psych)) {require(psych)}
-if(!require(corrplot)) {require(corrplot)}
-if(!require(reshape2)) {require(reshape2)}
-if(!require(moments)) {require(moments)}
-if(!require(gridExtra)) {require(gridExtra)}
-if(!require(qgraph)) {require(qgraph)}
-if(!require(bootnet)) {require(bootnet)}
-if(!require(igraph)) {require(igraph)}
-if(!require(ggcorrplot)) {require(ggcorrplot)}
-if(!require(RCurl)) {require(RCurl)}
+require(ggplot2);require(psych);require(corrplot);require(reshape2);require(moments);require(gridExtra)
+require(qgraph);require(bootnet);require(igraph);require(ggcorrplot);require(RCurl)
 source("https://raw.githubusercontent.com/PsyChiLin/EFAshiny/master/inst/efas/functions/my_summary.R")
 source("https://raw.githubusercontent.com/PsyChiLin/EFAshiny/master/inst/efas/functions/faplot.R")
 source("https://raw.githubusercontent.com/PsyChiLin/EFAshiny/master/inst/efas/functions/bootEGA.R")
@@ -33,14 +24,14 @@ source("https://raw.githubusercontent.com/PsyChiLin/EFAshiny/master/inst/efas/fu
 ```
 
 ### Data Input
-Read the demonsration data `RSE` into `R`. We assign it to a object called `dta`. Then using `head` to observe and explore this data.
+Read the demonsration data [`RSE`](https://github.com/PsyChiLin/EFAshiny/blob/master/RSE/RSE.csv) into `R`. We assign it to a object called `dta`. Then using `head` to observe and explore this data. See our [tutorial](https://github.com/PsyChiLin/EFAshiny) for data description.
 ```{r}
 dta <- read.csv(text=getURL("https://raw.githubusercontent.com/PsyChiLin/EFAshiny/master/RSE/RSE.csv"))
 head(dta)
 ```
 
 ### Data Summary
-Several kinds of data summary can be perform in `EFAshiny`. We demonstrate them using basic code. The package `ggplot2` is a useful package for plotting. We use it to plot the histogram, density plot, and correlation matrix. You can also check the documentation of [`ggplot2`](https://cran.r-project.org/web/packages/ggplot2/ggplot2.pdf).
+Several kinds of data summary can be perform in `EFAshiny`. We demonstrate them using basic code. The package `ggplot2` is a useful package for plotting. We use it to plot the histograms, the density plots, and the correlation matrix. You can also check the documentation of [`ggplot2`](https://cran.r-project.org/web/packages/ggplot2/ggplot2.pdf).
 
 ##### Numeric Statistic
 ```{r}
@@ -87,7 +78,8 @@ ggcorrplot(CorMat, hc.order = T,type = "lower", lab = TRUE,
 ```
 
 ### Factor Retention
-We provide several factor retention methods in `EFAshiny`. Those analyses can also be performed using R code. You can adopt these methods for your own use.
+We provide several factor retention methods in `EFAshiny`. Those analyses can also be performed using R code. You can adopt these methods for your own use. 
+
 ##### Scree Plot and Parallel Analysis
 ```{r, message=FALSE}
 PA <- faplot(CorMat,n.obs = 256, quant = 0.95)
@@ -113,7 +105,7 @@ plot(EGArst$plot)
 ```
 
 ### Extarction and Rotation
-The key analyses in EFA is factor extarction and rotation. We teach you to perform the analyses using `psych` package. Using these lines, you can obtain basic results of EFA. Can also see the code in `EFAshiny` server and `psych` for details.  
+The key analyses in EFA is factor extarction and rotation. We teach you to perform the analyses using `psych` package. Using these lines, you can obtain basic results of EFA. Can also see the code in `EFAshiny` server and `psych` package for details.  
 ```{r}
 EFArst <- fa(CorMat,2,n.obs=256, rotate = "promax",fm = "pa", n.iter = 200)
 EFArst
@@ -130,7 +122,7 @@ fa.diagram(EFArst,simple = T,cut = 0.33,
 
 ##### Bootstrapping Factor Loadings
 ```{r,message=FALSE}
-order <- rev(row.names(as.data.frame(printLoadings(EFArst$cis$means,sort = T,cutoff = 0))))
+order <- rev(row.names(as.data.frame(printLoadings(EFArst$cis$means,sort = T,cutoff = 0)))) # define the order of the variable
 bargraph(EFArst,order = order,nf = 2,highcol = "firebrick",lowcol = "chartreuse4",ci = T)
 ```
 

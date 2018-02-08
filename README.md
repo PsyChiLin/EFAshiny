@@ -42,7 +42,9 @@ who want to perform EFA on a set of associated variables (e.g.,
 item-level scale dataset). Note that it can also be used to explore
 FA-based connectivity analyses (McLaughlin et al., 1992) in instrument
 data, such as event related potentials (ERPs) and functional
-near-infrared spectroscopy (fNIRS).
+near-infrared spectroscopy (fNIRS). Though the major focus of `EFAshiny`
+is to perform EFA, it is worth noting that confirmatory factor analysis
+(CFA) is an useful future direction for `shiny` APP.
 
 ## Getting Started
 
@@ -144,16 +146,24 @@ provided.
 
   - **Numeric Statistic**: The first to fourth order moments for each
     variable were automatically calculated and printed without worrying
-    about inputting any arguments.
-  - **Distribution**: Histograms that demonstrated numbers of
-    observations conditioned on the points of Likert scale (e.g. 1 to 4
-    points) reported the distribution of each variable.
+    about inputting any arguments. Median and MAD are provided as well.
+  - **Histogram**: Histograms that demonstrated numbers of observations
+    conditioned on the points of Likert scale (e.g. 1 to 4 points)
+    reported the distribution of each variable.
+  - **Density Plot**: Density plots are provided. Users can visualize
+    the distribution of each item accroding to the histograms and
+    density plots. Note that the histograms and density plots are
+    generated using `plotly` package. In other words, they can be played
+    dynamically. Try it with some clicks \!
   - **Correlation Matrix**: A bird’s eye view of the pairwise
     correlation between variables will be illustrated.
       - **Type of correlation**: Tetrachoric correlations can be adopted
         to calculate the correlations between bivariates, and Polychoric
         correlations can be used on dichotomous ordinal variables. The
         default argument is set to *Pearson’s correlation coefficients*.
+  - **ggcorrplot**: In addition to the `Correlation Matrix` tab using
+    `corrplot` package, we also provide a `ggcorrplot` version. Have fun
+    with those plots and further get some intuitions.
 
 Note that the provided correlation matrix is the basis of EFA, which is
 a procedure that aim to investigate the underlying structure from the
@@ -178,9 +188,10 @@ tab, a set of indices to determine numbers of factor are provided.
       - **Number of simulated analyses to perform**: Users can perform
         more simulation to obstain reliable results. In general, the
         default 200 is correct enough.
-  - **Numeric Rules**: Velicer’s minimum average partial (MAP, Velicer,
-    1976) test, RMSEA, BIC and SRMR are also provided as the objective
-    numeric rules.
+  - **Numeric Rules**: Very simple structure complexitiy (VSS),
+    Velicer’s minimum average partial (MAP, Velicer, 1976) test,
+    RMSEA, BIC and SRMR are also provided as the objective numeric
+    rules.
       - **Max Number of Factor For Estimation**: Users should define
         their max number of factor to estimate. Should be more than
         hypothesized.
@@ -190,6 +201,9 @@ tab, a set of indices to determine numbers of factor are provided.
       - **Number of simulated analyses to perform**: Users can perform
         more simulation to obstain reliable results. Note that too much
         simulated analyses will somehow slow down the EGA.
+  - **Summary**: We provide a easy summary for all these methods. Users
+    can easy make a decision for the number of factors according to the
+    summary.
 
 In addition, **Sample Size** is another option for users to validate the
 results for factor retentions by randomly adjusting different Sample
@@ -302,8 +316,34 @@ understandings for their own studies.
 
 #### 10\. R Code
 
-In addition to the `EFAshiny` GUI, we also provide  
-editor mode r markdown show case
+In addition to the `EFAshiny` GUI, we also provide an `Editor` tab with
+several code demonstrations. In this `Editor` mode (see figure below),
+we already present some quick examples allowing users to perform similar
+analyses in `EFAshiny` GUI. Users can also write their own R code here.
+With this feature users might have the possibility to use `EFAshiny`
+within a script pipeline. In general, this cool feature allow users to
+learn R, understand the code underlying analyses in `EFAshiny` or
+automate the analyses in the future.
+
+Note that this feature can also allow the use of `lavaan` R package to
+perform confirmatory factor analysis (CFA), which is also a widely used
+method but not the main focus of `EFAshiny`. Simply input
+`require(lavaan)` should work (see [lavaan
+package](http://lavaan.ugent.be/) for details). Another useful tool is
+the `showcase` version of `shiny` when running the APP ( definitely, you
+can directly see the code in `server.R` and `ui.R`).
+
+In summary, Users who want to further understand `EFAshiny` or learn `R`
+can (1) see the code in `Editor` tab of `EFAshiny` GUI (as shown in
+figure), (2) download the R markdown file similar to the code in editor
+mode
+[here](https://github.com/PsyChiLin/EFAshiny/blob/master/EFAshiny_RCodeDemo.Rmd),
+(3) see the same R markdown file in [this public
+link](http://rpubs.com/Chi-Lin/EFAshiny_R_Code_Demo), (4) use `showcase`
+function in `shiny`, and (5) directly see the code in `server.R` and
+`ui.R`.
+
+![Editor](rmdfigs/Editor.png)
 
 ## Data
 
@@ -404,6 +444,8 @@ can also be directly
     skewness, kurtosis and related tests. R package version 0.13.
   - Kassambara, A. (2016). ggcorrplot: Visualization of a Correlation
     Matrix using’ggplot2’. R package version 0.1.1.
+  - Yves Rosseel (2012). lavaan: An R Package for Structural Equation
+    Modeling. Journal of Statistical Software, 48(2), 1-36.
   - Makowski, (2018). The psycho Package: an Efficient and
     Publishing-Oriented Workflow for Psychological Science. Journal of
     Open Source Software, 3(22), 470.
