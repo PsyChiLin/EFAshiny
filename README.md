@@ -10,17 +10,16 @@ Build](https://ci.appveyor.com/api/projects/status/ud2tblafomnka8hm?svg=true)](h
 [![Dependency
 Status](https://dependencyci.com/github/PsyChiLin/EFAshiny/badge)](https://dependencyci.com/github/PsyChiLin/EFAshiny)
 
-# [EFAshiny](https://psychilin.shinyapps.io/EFAshiny/)
+# EFAshiny
 
-[`EFAshiny`](https://psychilin.shinyapps.io/EFAshiny/) is an
-user-friendly application for exploratory factor analysis (EFA;
-Bartholomew, Knott, & Moustaki, 2011). The graphical user interface in
-shiny (Chang, Cheng, Allaire, Xie, & McPherson, 2017) is designed to
-free users from scripting in R by wrapping together various packages for
-data management, factor analysis, and graphics. Easy-to-follow analysis
-flow and reasonable default settings avoiding common errors (Henson &
-Roberts, 2006) are provided. Results of analysis in tables and graphs
-are presented on-line and can be exported.
+`EFAshiny` is an user-friendly application for exploratory factor
+analysis (EFA; Bartholomew, Knott, & Moustaki, 2011). The graphical user
+interface in shiny (Chang, Cheng, Allaire, Xie, & McPherson, 2017) is
+designed to free users from scripting in R by wrapping together various
+packages for data management, factor analysis, and graphics.
+Easy-to-follow analysis flow and reasonable default settings avoiding
+common errors (Henson & Roberts, 2006) are provided. Results of analysis
+in tables and graphs are presented on-line and can be exported.
 
 Key features include:
 
@@ -48,30 +47,38 @@ is to perform EFA, it is worth noting that confirmatory factor analysis
 
 ## Getting Started
 
-#### 1\. Shiny APP version (recommended)
+#### 1\. Github version (Full version)
 
-If you want to use the `EFAshiny`, installation is not required. The
-application is deployed on **shinyapps.io** server. <br /> Have fun with
-`EFAshiny` : <https://psychilin.shinyapps.io/EFAshiny/>
-
-#### 2\. Github version
-
-To run `EFAshiny` on your R locally,
+To run `EFAshiny` on your R,
 [`devtools`](https://cran.r-project.org/web/packages/devtools/devtools.pdf)
 and [`shiny`](https://cran.r-project.org/web/packages/shiny/shiny.pdf)
-are required. <br /> Then, intsall `EFAshiny` from Github.
+are required. <br />
 
 ``` r
-#install.packages("devtools")
-#install.packages("shiny")
-devtools::install_github("PsyChiLin/EFAshiny")
+install.packages("devtools")
+install.packages("shiny")
 ```
 
-To launch the app:
+Directly run `EFAshiny`:
 
 ``` r
+runGitHub("EFAshiny", "PsyChiLin")
+```
+
+Install and launch `EFAshiny`:
+
+``` r
+devtools::install_github("PsyChiLin/EFAshiny")
 EFAshiny::EFAshiny()
 ```
+
+#### 2\. Shiny APP version (Standard version)
+
+If you want to use the standard version of `EFAshiny`, installation is
+not required. The application is deployed on **shinyapps.io** server.
+The online APP version does not provide the `Editor` mode due to the
+stablility of shinyapp.io server. All functions are provided. <br />
+Have fun with `EFAshiny` : <https://psychilin.shinyapps.io/EFAshiny/>
 
 ## Tutorial
 

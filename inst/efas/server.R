@@ -14,6 +14,7 @@ if(!require(plotly)) {require(plotly)}
 if(!require(ggcorrplot)) {require(ggcorrplot)}
 if(!require(shinyAce)) {require(shinyAce)}
 if(!require(RCurl)) {require(RCurl)}
+if(!require(knitr)) {require(knitr)}
 
 options(shiny.sanitize.errors = FALSE)
 file.sources <- list.files(path = "functions/",pattern="*.R")
@@ -349,24 +350,20 @@ shinyServer(function(input, output) {
         height = input$ploth6,
         width = input$plotw6))
         # Editor
-        output$knitr <- shiny::renderUI({
+        output$knitdoc <- shiny::renderUI({
                 
                 # Create a Progress object
                 progress <- shiny::Progress$new()
                 # Make sure it closes when we exit this reactive, even if there's an error
                 on.exit(progress$close())
-                progress$set(message = "Building report...", value = 0)
-                
+                progress$set(message = "Running...", value = 0)
                 input$eval
-                return(
-                        shiny::isolate(
+                return(shiny::isolate(
                                 shiny::HTML(
                                         knitr::knit2html(text = input$rmd, fragment.only = TRUE, quiet = TRUE)
                                 )
                         )
                 )
         })
-
-        
 })
 

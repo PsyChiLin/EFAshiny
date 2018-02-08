@@ -14,13 +14,20 @@ if(!require(plotly)) {require(plotly)}
 if(!require(ggcorrplot)) {require(ggcorrplot)}
 if(!require(shinyAce)) {require(shinyAce)}
 if(!require(RCurl)) {require(RCurl)}
+if(!require(knitr)) {require(knitr)}
 
 code = '
 ### Overview
-This tutorial aims to demonstrate how to perform the fundamental analyses in [`EFAshiny`](https://psychilin.shinyapps.io/EFAshiny/) using R code. By following each line in this tutorial, you can learn basic R programming and can implement automated processing script in future analyses. Also, you can further use the code in `EFAshiny` within a script pupeline without launching the app. However, we still suggest you to use [`EFAshiny`](https://psychilin.shinyapps.io/EFAshiny/) APP :)) You can also have a look at our [tutorial](https://github.com/PsyChiLin/EFAshiny) of `EFAshiny` GUI to make an easy comparison while writing the code. Have fun with [`EFAshiny`](https://psychilin.shinyapps.io/EFAshiny/) and `R` !
+This tutorial aims to demonstrate how to perform 
+the fundamental analyses in `EFAshiny`
+using R code. By following each line in this tutorial, 
+you can learn basic R programming and can implement 
+automated processing script in future analyses. 
+Have fun with `EFAshiny` and `R` !
 
 ### Preparation
-First of all, we should load all the packages and fucntions in `EFAshiny` into `R` session. If you do not have these package installed, please use `install.package("packagename")` to perfrom installations.
+Load all the packages and fucntions in `EFAshiny` into `R` session. 
+If you do not have these package installed, please use `install.package("packagename")`.
 ```{r, message=FALSE, warning=FALSE}
 require(ggplot2);require(psych);require(corrplot);require(reshape2);require(moments);require(gridExtra)
 require(qgraph);require(bootnet);require(igraph);require(ggcorrplot);require(RCurl)
@@ -374,16 +381,23 @@ shinyUI(fluidPage(
                                                      tabPanel("Point Estimation",tableOutput("PointTable"))))
                          )),
                 tabPanel("Editor",
-                         sidebarPanel(width = 4,
-                                      shinyAce::aceEditor("rmd", mode = "markdown", value = code),
-                                      shiny::actionButton("eval", "Run"),
-                                      br(),
-                                      br(),
-                                      helpText(a("Download example",href = "https://github.com/PsyChiLin/EFAshiny/blob/master/EFAshiny_RCodeDemo.Rmd")),
-                                      helpText(a("Online example",href = "http://rpubs.com/Chi-Lin/EFAshiny_R_Code_Demo")),
-                                      br()
-                                      ),
-                         mainPanel(shiny::htmlOutput("knitr"))
+                         shiny::fluidRow(
+                                 column(4,
+                                        # shinyAce editor box
+                                        shinydashboard::box(
+                                                title = "Editor",
+                                                #status = "success",
+                                                width = 12,
+                                                shinyAce::aceEditor("rmd", mode = "markdown", value = code),
+                                                shiny::actionButton("eval", "Run"),
+                                                helpText(a("Download example",href = "https://github.com/PsyChiLin/EFAshiny/blob/master/EFAshiny_RCodeDemo.Rmd")),
+                                                helpText(a("Online example",href = "http://rpubs.com/Chi-Lin/EFAshiny_R_Code_Demo"))
+                                        )
+                                 ),
+                                 column(8,
+                                        htmlOutput("knitdoc")
+                                 )
+                         )
                 ),
                 br(),
                 br(),
