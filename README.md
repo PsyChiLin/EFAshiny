@@ -59,12 +59,6 @@ install.packages("devtools")
 install.packages("shiny")
 ```
 
-Directly run `EFAshiny`:
-
-``` r
-runGitHub("EFAshiny", "PsyChiLin")
-```
-
 Install and launch `EFAshiny`:
 
 ``` r
@@ -321,16 +315,16 @@ By following this analysis flow in `EFAshiny`, users without any
 knowledge of programming are able to perform EFA and obtain great
 understandings for their own studies.
 
-#### 10\. R Code
+#### 10\. R Code for the Github version
 
-In addition to the `EFAshiny` GUI, we also provide an `Editor` tab with
-several code demonstrations. In this `Editor` mode (see figure below),
-we already present some quick examples allowing users to perform similar
-analyses in `EFAshiny` GUI. Users can also write their own R code here.
-With this feature users might have the possibility to use `EFAshiny`
-within a script pipeline. In general, this cool feature allow users to
-learn R, understand the code underlying analyses in `EFAshiny` or
-automate the analyses in the future.
+In addition to the GUI, we also provide an `Editor` tab with several
+code demonstrations in the Github version of `EFAshiny`. In this
+`Editor` mode (see figure below), we already present some quick examples
+allowing users to perform similar analyses in `EFAshiny` GUI. Users can
+also write their own R code here. With this feature users might have the
+possibility to use `EFAshiny` within a script pipeline. In general, this
+cool feature allow users to learn R, understand the code underlying
+analyses in `EFAshiny` or automate the analyses in the future.
 
 Note that this feature can also allow the use of `lavaan` R package to
 perform confirmatory factor analysis (CFA), which is also a widely used
