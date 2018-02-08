@@ -18,14 +18,14 @@ if(!require(knitr)) {require(knitr)}
 
 options(shiny.sanitize.errors = FALSE)
 file.sources <- list.files(path = "functions/",pattern="*.R")
-RSE <- read.csv("data/RSE_naomit.csv")
+RSE <- read.csv("data/RSE.csv")
 sapply(paste0("functions/",file.sources),source)
 
 shinyServer(function(input, output) {
         Dataset <- reactive({
                 if (is.null(input$file)) {
-                        set.seed(100)
-                        dst <- RSE[sort(sample(1: 46546, 256)),1:10]
+                        #set.seed(100)
+                        dst <- RSE
                         row.names(dst) <- 1:256
                         return(dst)
                 }
