@@ -40,7 +40,7 @@ Key features include:
 The `EFAshiny` application is primarily aimed at behavioral researchers
 who want to perform EFA on a set of associated variables (e.g.,
 item-level scale dataset). Note that it can also be used to explore
-FA-based connectivity analyses (McLaughlin et al., 1992)in instrument
+FA-based connectivity analyses (McLaughlin et al., 1992) in instrument
 data, such as event related potentials (ERPs) and functional
 near-infrared spectroscopy (fNIRS).
 
@@ -300,6 +300,11 @@ By following this analysis flow in `EFAshiny`, users without any
 knowledge of programming are able to perform EFA and obtain great
 understandings for their own studies.
 
+#### 10\. R Code
+
+In addition to the `EFAshiny` GUI, we also provide  
+editor mode r markdown show case
+
 ## Data
 
 The dataset for demonstration is the 10-items Rosenberg Self-Esteem
@@ -339,6 +344,9 @@ can also be directly
   - [`ggplot2`](https://cran.r-project.org/web/packages/ggplot2/ggplot2.pdf)
     (Wickham,
     2016)
+  - [`ggcorrplot`](https://cran.r-project.org/web/packages/ggcorrplot/ggcorrplot.pdf)
+    (Kassambara,
+    2016)
   - [`gridExtra`](https://cran.r-project.org/web/packages/gridExtra/gridExtra.pdf)
     (Auguie,
     2017)
@@ -347,9 +355,13 @@ can also be directly
     2006)
   - [`moments`](https://cran.r-project.org/web/packages/moments/moments.pdf)
     (Komsta & Novomestky, 2013)
+  - [`plotly`](https://plot.ly/r/) (Sievert, et al., 2017)
   - [`psych`](https://cran.r-project.org/web/packages/psych/psych.pdf)
     (Revelle,
     2017)
+  - [`psycho`](https://cran.r-project.org/web/packages/psycho/index.html)
+    (Makowski,
+    2018)
   - [`qgraph`](https://cran.r-project.org/web/packages/qgraph/qgraph.pdf)
     (Epskamp, et al., 2012)
   - [`shiny`](https://cran.r-project.org/web/packages/shiny/shiny.pdf)
@@ -390,6 +402,11 @@ can also be directly
     in factor analysis. Psychometrika, 30(2), 179-185.
   - Komsta, L., & Novomestky, F. (2013). moments: moments, cumulants,
     skewness, kurtosis and related tests. R package version 0.13.
+  - Kassambara, A. (2016). ggcorrplot: Visualization of a Correlation
+    Matrix using’ggplot2’. R package version 0.1.1.
+  - Makowski, (2018). The psycho Package: an Efficient and
+    Publishing-Oriented Workflow for Psychological Science. Journal of
+    Open Source Software, 3(22), 470.
   - McLaughlin, T., Steinberg, B., Christensen, B., Law, I., Parving,
     A., & Friberg, L. (1992). Potential language and attentional
     networks revealed through factor analysis of rCBF data measured with
@@ -399,6 +416,9 @@ can also be directly
     USA, R package version 1.7.8.
   - Rosenberg, M. (1965). Rosenberg self-esteem scale (RSE). Acceptance
     and commitment therapy. Measures package, 61, 52.
+  - Sievert, C., Parmer, C., Hocking, T., Chamberlain, S., Ram, K.,
+    Corvellec, M., & Despouy, P. (2016). plotly: Create Interactive Web
+    Graphics via ‘plotly. js’. R package version, 4.7.1.
   - Taiyun Wei and Viliam Simko (2017). R package “corrplot”:
     Visualization of a Correlation Matrix. R package version 0.84.
   - Velicer, W. F. (1976). Determining the number of components from the

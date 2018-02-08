@@ -30,6 +30,6 @@ printLoadings <- function (x, digits = 2, cutoff = 0, sort = T,decreasing = T, .
                         varex <- rbind(varex, `Cumulative Var` = cumsum(vx/p))
         }
         cat("\n")
-        print(round(varex, digits))
+        #print(round(varex, digits))
         invisible(newx) #previously returned x
 }

@@ -15,6 +15,137 @@ if(!require(ggcorrplot)) {require(ggcorrplot)}
 if(!require(shinyAce)) {require(shinyAce)}
 if(!require(RCurl)) {require(RCurl)}
 
+code = '
+### Preparation
+```{r, message=FALSE, warning=FALSE, echo = F}
+if(!require(shiny)) {require(shiny)}
+if(!require(shinythemes)) {require(shinythemes)}
+if(!require(ggplot2)) {require(ggplot2)}
+if(!require(psych)) {require(psych)}
+if(!require(EFAutilities)) {require(EFAutilities)}
+if(!require(corrplot)) {require(corrplot)}
+if(!require(reshape2)) {require(reshape2)}
+if(!require(moments)) {require(moments)}
+if(!require(gridExtra)) {require(gridExtra)}
+if(!require(qgraph)) {require(qgraph)}
+if(!require(bootnet)) {require(bootnet)}
+if(!require(igraph)) {require(igraph)}
+if(!require(ggcorrplot)) {require(ggcorrplot)}
+if(!require(RCurl)) {require(RCurl)}
+source("https://raw.githubusercontent.com/PsyChiLin/EFAshiny/master/inst/efas/functions/my_summary.R")
+source("https://raw.githubusercontent.com/PsyChiLin/EFAshiny/master/inst/efas/functions/faplot.R")
+source("https://raw.githubusercontent.com/PsyChiLin/EFAshiny/master/inst/efas/functions/bootEGA.R")
+source("https://raw.githubusercontent.com/PsyChiLin/EFAshiny/master/inst/efas/functions/bargraph.R")
+source("https://raw.githubusercontent.com/PsyChiLin/EFAshiny/master/inst/efas/functions/stackbar.R")
+source("https://raw.githubusercontent.com/PsyChiLin/EFAshiny/master/inst/efas/functions/printLoadings.R")
+source("https://raw.githubusercontent.com/PsyChiLin/EFAshiny/master/inst/efas/functions/theme_default.R")
+```
+
+### Data Input
+
+```{r}
+dta <- read.csv(text=getURL("https://raw.githubusercontent.com/PsyChiLin/EFAshiny/master/RSE/RSE.csv"))
+head(dta)
+```
+
+### Data Summary
+
+##### Numeric Statistic
+```{r}
+NumericStatistic <- apply(dta,2,my_summary)
+row.names(NumericStatistic) <- c("Mean","SD","Skewness","Kurtosis","Median","MAD")
+NumericStatistic <- as.data.frame(t(NumericStatistic))
+NumericStatistic <- round(NumericStatistic,3)
+NumericStatistic
+```
+
+##### Histogram
+```{r, message=FALSE}
+dta_long <- melt(dta)
+colnames(dta_long) <- c("Item", "Response")
+Histogram <- ggplot(dta_long, aes(x = Response, fill = Item))+
+geom_histogram(bins = 10)+
+facet_wrap(~Item)+
+theme_default()
+Histogram
+```
+
+##### Density Plot
+```{r, message=FALSE}
+DensityPlot <- ggplot(dta_long, aes(x = Response, fill = Item))+
+geom_density()+
+facet_wrap(~Item)+
+theme_default()
+DensityPlot 
+```
+
+##### Correlation Matrix
+```{r, fig.height=7, fig.width=7}
+CorMat <- cor(as.matrix(dta))
+corrplot(CorMat,order="hclust",type="upper",method="ellipse",
+tl.pos = "lt",mar = c(2,2,2,2))
+corrplot(CorMat,order="hclust",type="lower",method="number",
+diag=FALSE,tl.pos="n", cl.pos="n",add=TRUE,mar = c(2,2,2,2))
+```
+
+##### ggcorplot
+```{r}
+ggcorrplot(CorMat, hc.order = T,type = "lower", lab = TRUE,
+colors = c("#E46726", "white", "#6D9EC2"))
+```
+
+### Factor Retention
+
+##### Scree Plot and Parallel Analysis
+```{r, message=FALSE}
+PA <- faplot(CorMat,n.obs = 256, quant = 0.95)
+PA[[1]]
+```
+
+##### Numeric Rules
+```{r}
+NumericRule <- VSS(CorMat,n = 4, plot = F, n.obs = 256)
+temp1 <- data.frame(nFactor = row.names(NumericRule$vss.stats), 
+VSS1 = NumericRule$cfit.1, VSS2 = NumericRule$cfit.2, 
+MAP = NumericRule$map)
+temp2 <- NumericRule$vss.stats[,c(6:8,11)]
+NumericRule <- cbind(temp1,temp2)
+NumericRule
+```
+
+##### Exploratory Graph Analysis (EGA)
+```{r}
+EGArst <- bootEGA(data = dta, n = 10, medianStructure = TRUE, plot.MedianStructure = TRUE, 
+ncores = 4, layout = "spring")
+plot(EGArst$plot)
+```
+
+### Extarction and Rotation
+```{r}
+EFArst <- fa(CorMat,2,n.obs=256, rotate = "promax",fm = "pa", n.iter = 200)
+EFArst
+```
+
+### Visualization
+
+##### Diagram
+```{r,message=FALSE}
+fa.diagram(EFArst,simple = T,cut = 0.33,
+sort = T,errors = T,e.size = 0.05)
+```
+
+##### Bootstrapping Factor Loadings
+```{r,message=FALSE}
+order <- rev(row.names(as.data.frame(printLoadings(EFArst$cis$means,sort = T,cutoff = 0))))
+bargraph(EFArst,order = order,nf = 2,highcol = "firebrick",lowcol = "chartreuse4",ci = T)
+```
+
+##### Factor Loadings and Correlation Matrix
+```{r,message=FALSE}
+stackbar(CorMat,EFArst,order = order,highcol = "firebrick",lowcol = "chartreuse4")
+```
+
+'
 shinyUI(fluidPage(
         theme = shinytheme("flatly"),
         navbarPage("EFAshiny",inverse = F, fluid = T,
@@ -242,8 +373,8 @@ shinyUI(fluidPage(
                                                      tabPanel("Point Estimation",tableOutput("PointTable"))))
                          )),
                 tabPanel("Editor",
-                         sidebarPanel(width = 3,
-                                      shinyAce::aceEditor("rmd", mode = "markdown", value = 'yes'),
+                         sidebarPanel(width = 4,
+                                      shinyAce::aceEditor("rmd", mode = "markdown", value = code),
                                       shiny::actionButton("eval", "Run")
                                       ),
                          mainPanel(shiny::htmlOutput("knitr"))

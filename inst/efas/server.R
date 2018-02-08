@@ -283,7 +283,6 @@ shinyServer(function(input, output) {
                         colnames(test)[1:I(1*3)] <- nam
                         colnames(test)[I(1*3+1):I(1*3+3)] <- c("h2","u2","com")
                         if(input$sorting == T){test <- test[order(test[,2],decreasing = T),]}
-                        
                 }
                 return(test)
         }) 

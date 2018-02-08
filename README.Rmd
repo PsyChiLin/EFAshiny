@@ -177,8 +177,10 @@ By following this analysis flow in `EFAshiny`, users without any knowledge of pr
 
 #### 10. R Code
 
+In addition to the `EFAshiny` GUI, we also provide  
 editor mode
 r markdown
+show case
 
 ## Data
 

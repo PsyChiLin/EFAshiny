@@ -1,4 +1,4 @@
-faplot <- function(data,n.obs = NULL,quant = 0.95,fm = "promax",n.iter = 200){
+faplot <- function(data,n.obs = NULL,quant = 0.95,fm = "minres",n.iter = 200){
         set.seed(10)
         rst_list <- list()
         library(reshape2)
