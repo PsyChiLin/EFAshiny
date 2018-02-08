@@ -82,7 +82,7 @@ ggcorrplot(CorMat, hc.order = T,type = "lower", lab = TRUE,
 
 ##### Scree Plot and Parallel Analysis
 ```{r, message=FALSE}
-PA <- suppressMessages(faplot(CorMat,n.obs = 256, quant = 0.95))
+PA <- faplot(CorMat,n.obs = 256, quant = 0.95)
 PA[[1]]
 ```
 
