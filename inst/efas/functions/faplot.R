@@ -1,4 +1,4 @@
-faplot <- function(data,n.obs = NULL,quant,fm,n.iter){
+faplot <- function(data,n.obs = NULL,quant = 0.95,fm = "promax",n.iter = 200){
         set.seed(10)
         rst_list <- list()
         library(reshape2)
@@ -31,25 +31,3 @@ faplot <- function(data,n.obs = NULL,quant,fm,n.iter){
         return(rst_list)
         print(Fig)
 } 
-
-
-
-
-# preprocesing of data
-#R <- read.csv("NIHSScsv.csv",header = T)
-#row.names(R) <- R[,1]
-#R <- R[,-1]
-#R[upper.tri(R)] <- t(R)[upper.tri(t(R))]
-#R <- as.matrix(R)
-#R1 <- R 
-#diag(R1) <- 1
-#PArst <- fa.parallel(R1,152, fa ="pc",quant=.5) #2
-
-#faplot(R1,152,quant = .99)
-
-
-
-#PA99 <- fa.parallel(R1,152, fa ="pc",quant=.99) #2
-### plotting for PA and Scree plot
-#plotpa <- melt(data.frame(Actual = PA50$pc.values ,PA50 = PA50$pc.sim, PA99 = PA99$pc.sim))
-#plotpa$index <- as.factor(rep(seq(1,15),3))
