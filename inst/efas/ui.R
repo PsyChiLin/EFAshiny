@@ -381,23 +381,23 @@ shinyUI(fluidPage(
                                                      tabPanel("Point Estimation",tableOutput("PointTable"))))
                          )),
                 tabPanel("Editor",
-                         shiny::fluidRow(
-                                 column(4,
-                                        # shinyAce editor box
-                                        shinydashboard::box(
-                                                title = "Editor",
-                                                #status = "success",
-                                                width = 12,
-                                                shinyAce::aceEditor("rmd", mode = "markdown", value = code),
-                                                shiny::actionButton("eval", "Run"),
-                                                helpText(a("Download example",href = "https://github.com/PsyChiLin/EFAshiny/blob/master/EFAshiny_RCodeDemo.Rmd")),
-                                                helpText(a("Online example",href = "http://rpubs.com/Chi-Lin/EFAshiny_R_Code_Demo"))
-                                        )
-                                 ),
-                                 column(8,
-                                        htmlOutput("knitdoc")
-                                 )
-                         )
+                        shiny::fluidRow(
+                                column(4,
+                                       # shinyAce editor box
+                                       shinydashboard::box(
+                                               title = "Editor",
+                                               #status = "success",
+                                               width = 12,
+                                               shinyAce::aceEditor("rmd", mode = "markdown", value = code),
+                                               shiny::actionButton("eval", "Run"),
+                                               helpText(a("Download example",href = "https://github.com/PsyChiLin/EFAshiny/blob/master/EFAshiny_RCodeDemo.Rmd")),
+                                               helpText(a("Online example",href = "http://rpubs.com/Chi-Lin/EFAshiny_R_Code_Demo"))
+                                       )
+                                ),
+                                column(8,
+                                       htmlOutput("knitdoc")
+                                )
+                        )
                 ),
                 br(),
                 br(),

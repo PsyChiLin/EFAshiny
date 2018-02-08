@@ -351,19 +351,13 @@ shinyServer(function(input, output) {
         width = input$plotw6))
         # Editor
         output$knitdoc <- shiny::renderUI({
-                
-                # Create a Progress object
-                progress <- shiny::Progress$new()
-                # Make sure it closes when we exit this reactive, even if there's an error
-                on.exit(progress$close())
-                progress$set(message = "Running...", value = 0)
-                input$eval
-                return(shiny::isolate(
-                                shiny::HTML(
-                                        knitr::knit2html(text = input$rmd, fragment.only = TRUE, quiet = TRUE)
-                                )
-                        )
-                )
+               # Create a Progress object
+               progress <- shiny::Progress$new()
+               # Make sure it closes when we exit this reactive, even if there's an error
+               on.exit(progress$close())
+               progress$set(message = "Running...", value = 0)
+               input$eval
+               return(shiny::isolate(shiny::HTML(knitr::knit2html(text = input$rmd, fragment.only = TRUE, quiet = TRUE))))
         })
 })
 
