@@ -11,8 +11,9 @@ if(!require(qgraph)) {require(qgraph)}
 if(!require(bootnet)) {require(bootnet)}
 if(!require(igraph)) {require(igraph)}
 if(!require(plotly)) {require(plotly)}
-if(!require(psycho)) {require(psycho)}
 if(!require(ggcorrplot)) {require(ggcorrplot)}
+if(!require(shinyAce)) {require(shinyAce)}
+if(!require(RCurl)) {require(RCurl)}
 
 options(shiny.sanitize.errors = FALSE)
 file.sources <- list.files(path = "functions/",pattern="*.R")
@@ -336,6 +337,24 @@ shinyServer(function(input, output) {
         observe(output$SEFig <- renderPlot({return(SEplot(q(),v(),M2(),nbf = input$nfactors))},
         height = input$ploth6,
         width = input$plotw6))
+        # Editor
+        output$knitr <- shiny::renderUI({
+                
+                # Create a Progress object
+                progress <- shiny::Progress$new()
+                # Make sure it closes when we exit this reactive, even if there's an error
+                on.exit(progress$close())
+                progress$set(message = "Building report...", value = 0)
+                
+                input$eval
+                return(
+                        shiny::isolate(
+                                shiny::HTML(
+                                        knitr::knit2html(text = input$rmd, fragment.only = TRUE, quiet = TRUE)
+                                )
+                        )
+                )
+        })
 
         
 })

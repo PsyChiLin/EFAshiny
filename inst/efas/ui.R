@@ -11,8 +11,9 @@ if(!require(qgraph)) {require(qgraph)}
 if(!require(bootnet)) {require(bootnet)}
 if(!require(igraph)) {require(igraph)}
 if(!require(plotly)) {require(plotly)}
-if(!require(psycho)) {require(psycho)}
 if(!require(ggcorrplot)) {require(ggcorrplot)}
+if(!require(shinyAce)) {require(shinyAce)}
+if(!require(RCurl)) {require(RCurl)}
 
 shinyUI(fluidPage(
         theme = shinytheme("flatly"),
@@ -240,6 +241,13 @@ shinyUI(fluidPage(
                                                      tabPanel("SE Figure",plotOutput("SEFig")),
                                                      tabPanel("Point Estimation",tableOutput("PointTable"))))
                          )),
+                tabPanel("Editor",
+                         sidebarPanel(width = 3,
+                                      shinyAce::aceEditor("rmd", mode = "markdown", value = 'yes'),
+                                      shiny::actionButton("eval", "Run")
+                                      ),
+                         mainPanel(shiny::htmlOutput("knitr"))
+                ),
                 br(),
                 br(),
                 tabPanel("Authors",

@@ -1,0 +1,96 @@
+---
+title: "Codeversion"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+### Preparation
+```{r, message=FALSE, warning=FALSE}
+if(!require(shiny)) {require(shiny)}
+if(!require(shinythemes)) {require(shinythemes)}
+if(!require(ggplot2)) {require(ggplot2)}
+if(!require(psych)) {require(psych)}
+if(!require(EFAutilities)) {require(EFAutilities)}
+if(!require(corrplot)) {require(corrplot)}
+if(!require(reshape2)) {require(reshape2)}
+if(!require(moments)) {require(moments)}
+if(!require(gridExtra)) {require(gridExtra)}
+if(!require(qgraph)) {require(qgraph)}
+if(!require(bootnet)) {require(bootnet)}
+if(!require(igraph)) {require(igraph)}
+if(!require(ggcorrplot)) {require(ggcorrplot)}
+if(!require(RCurl)) {require(RCurl)}
+source("https://raw.githubusercontent.com/PsyChiLin/EFAshiny/master/inst/efas/functions/my_summary.R")
+source("https://raw.githubusercontent.com/PsyChiLin/EFAshiny/master/inst/efas/functions/faplot.R")
+```
+
+### Data Input
+
+```{r}
+dta <- read.csv(text=getURL("https://raw.githubusercontent.com/PsyChiLin/EFAshiny/master/RSE/RSE.csv"))
+head(dta)
+```
+
+### Data Summary
+
+##### Numeric Statistic
+```{r}
+NumericStatistic <- apply(dta,2,my_summary)
+row.names(NumericStatistic) <- c("Mean","SD","Skewness","Kurtosis","Median","MAD")
+NumericStatistic <- as.data.frame(t(NumericStatistic))
+NumericStatistic <- round(NumericStatistic,3)
+NumericStatistic
+```
+
+##### Histogram
+```{r, message=FALSE}
+dta_long <- melt(dta)
+colnames(dta_long) <- c("Item", "Response")
+Histogram <- ggplot(dta_long, aes(x = Response, fill = Item))+
+        geom_histogram(bins = 10)+
+        facet_wrap(~Item)
+Histogram
+```
+
+##### Density Plot
+```{r, message=FALSE}
+DensityPlot <- ggplot(dta_long, aes(x = Response, fill = Item))+
+        geom_density()+
+        facet_wrap(~Item)
+DensityPlot 
+```
+
+##### Correlation Matrix
+```{r, fig.height=7, fig.width=7}
+CorMat <- cor(as.matrix(dta))
+corrplot(CorMat,order="hclust",type="upper",method="ellipse",
+         tl.pos = "lt",mar = c(2,2,2,2))
+corrplot(CorMat,order="hclust",type="lower",method="number",
+         diag=FALSE,tl.pos="n", cl.pos="n",add=TRUE,mar = c(2,2,2,2))
+```
+
+##### ggcorplot
+```{r}
+ggcorrplot(CorMat, hc.order = T,type = "lower", lab = TRUE,
+           colors = c("#E46726", "white", "#6D9EC2"))
+```
+
+### Factor Retention
+
+##### Scree Plot and Parallel Analysis
+```{r, message=FALSE}
+PA <- suppressMessages(faplot(CorMat,n.obs = 256, quant = 0.95))
+PA[[1]]
+```
+
+
+
+
+
+
+
+
+

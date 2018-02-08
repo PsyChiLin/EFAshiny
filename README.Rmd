@@ -33,7 +33,7 @@ Key features include:
 - Default options are chosen according to recommendations in the literature
 - A demonstration using a real psychological scale dataset 
 
-The `EFAshiny` application is primarily aimed at behavioral researchers who want to perform EFA on a set of associated variables (e.g., item-level scale dataset). Note that it can also be used to explore FA-based connectivity analyses (McLaughlin et al., 1992)in instrument data, such as event related potentials (ERPs) and functional near-infrared spectroscopy (fNIRS).
+The `EFAshiny` application is primarily aimed at behavioral researchers who want to perform EFA on a set of associated variables (e.g., item-level scale dataset). Note that it can also be used to explore FA-based connectivity analyses (McLaughlin et al., 1992) in instrument data, such as event related potentials (ERPs) and functional near-infrared spectroscopy (fNIRS).
 
 ## Getting Started
 
@@ -174,6 +174,11 @@ browseVignettes("EFAshiny")
 ```
 
 By following this analysis flow in `EFAshiny`, users without any knowledge of programming are able to perform EFA and obtain great understandings for their own studies.
+
+#### 10. R Code
+
+editor mode
+r markdown
 
 ## Data
 
