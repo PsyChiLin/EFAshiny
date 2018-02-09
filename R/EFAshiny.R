@@ -12,11 +12,18 @@
 #' if (interactive()) {
 #'   EFAshiny()
 #' }
-EFAshiny <- function(run = T) {
+EFAshiny <- function(run = T, report_Apppath = F) {
         app <- system.file("efas",
                            package = 'EFAshiny')
         if (run == T) {shiny::runApp(app)}
         if (run == F) {
-                return(app)
+                if (report_Apppath == T){
+                        return(app)
+                }
+                if (report_Apppath == F){
+                        onlineapp <- "Have fun with EFAshiny : https://psychilin.shinyapps.io/EFAshiny/"
+                        tutorial <- "See tutorial : https://github.com/PsyChiLin/EFAshiny"
+                        return(onlineapp)
+                }
         }
 }
