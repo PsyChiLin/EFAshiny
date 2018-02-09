@@ -12,6 +12,11 @@
 #' if (interactive()) {
 #'   EFAshiny()
 #' }
-EFAshiny <- function() {
-        shiny::runApp(system.file("efas",package = 'EFAshiny'))
+EFAshiny <- function(run = T) {
+        app <- system.file("efas",
+                           package = 'EFAshiny')
+        if (run == T) {shiny::runApp(app)}
+        if (run == F) {
+                return(app)
+        }
 }

@@ -5,6 +5,7 @@
 MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 [![Build
 Status](https://travis-ci.org/PsyChiLin/EFAshiny.svg?branch=master)](https://travis-ci.org/PsyChiLin/EFAshiny)
+[![codecov](https://codecov.io/gh/PsyChiLin/EFAshiny/branch/master/graph/badge.svg)](https://codecov.io/gh/PsyChiLin/EFAshiny)
 [![APP
 Build](https://ci.appveyor.com/api/projects/status/ud2tblafomnka8hm?svg=true)](https://ci.appveyor.com/project/PsyChiLin/efashiny)
 [![Dependency
@@ -70,9 +71,11 @@ EFAshiny::EFAshiny()
 
 If you want to use the standard version of `EFAshiny`, installation is
 not required. The application is deployed on **shinyapps.io** server.
-The online APP version does not provide the `Editor` mode due to the
-stablility of shinyapp.io server. All functions are provided. <br />
-Have fun with `EFAshiny` : <https://psychilin.shinyapps.io/EFAshiny/>
+This standard version has all the function except for the `Editor` tab
+(which is only useful for users who want to code online). Users can
+easily explore and analyze their data with this online APP without
+worrying about installation. <br /> Have fun with `EFAshiny` :
+<https://psychilin.shinyapps.io/EFAshiny/>
 
 ## Tutorial
 
@@ -335,9 +338,9 @@ the `showcase` version of `shiny` when running the APP ( definitely, you
 can directly see the code in `server.R` and `ui.R`).
 
 In summary, Users who want to further understand `EFAshiny` or learn `R`
-can (1) see the code in `Editor` tab of `EFAshiny` GUI (as shown in
-figure), (2) download the R markdown file similar to the code in editor
-mode
+can (1) see the code in `Editor` tab of github version `EFAshiny` GUI
+(as shown in figure), (2) download the R markdown file similar to the
+code in editor mode
 [here](https://github.com/PsyChiLin/EFAshiny/blob/master/EFAshiny_RCodeDemo.Rmd),
 (3) see the same R markdown file in [this public
 link](http://rpubs.com/Chi-Lin/EFAshiny_R_Code_Demo), (4) use `showcase`
