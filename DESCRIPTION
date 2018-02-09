@@ -13,7 +13,7 @@ License: MIT + file LICENSE
 LazyData: TRUE
 RoxygenNote: 6.0.1
 Depends: R (>= 3.3.0),shiny
-Imports:shinythemes,ggplot2,psych,EFAutilities,corrplot,reshape2,moments,gridExtra,qgraph,bootnet,igraph,plotly,ggcorrplot,RCurl,lavaan,shinyAce
+Imports:shinythemes,ggplot2,psych,EFAutilities,corrplot,reshape2,moments,gridExtra,qgraph,bootnet,igraph,plotly,ggcorrplot,RCurl,lavaan,shinyAce,shinydashboard
 Suggests: knitr,
     rmarkdown
 VignetteBuilder: knitr

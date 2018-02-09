@@ -15,6 +15,8 @@ if(!require(ggcorrplot)) {require(ggcorrplot)}
 if(!require(shinyAce)) {require(shinyAce)}
 if(!require(RCurl)) {require(RCurl)}
 if(!require(knitr)) {require(knitr)}
+if(!require(shinydashboard)) {require(shinydashboard)}
+
 
 options(shiny.sanitize.errors = FALSE)
 file.sources <- list.files(path = "functions/",pattern="*.R")
