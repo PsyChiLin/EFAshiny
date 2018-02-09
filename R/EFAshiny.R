@@ -8,9 +8,11 @@
 #' @seealso Tutorial : \url{https://github.com/PsyChiLin/EFAshiny} 
 #' @author Chi-Lin Yu <psychilinyu@gmail.com>
 #' @author Ching-Fan Sheu <csheu@mail.ncku.edu.tw>
+#' @param run run the EFAshiny app or not. Default is true, and the APP will be lanuched.
+#' @param report_Apppath report the directory of the APP in your system. If false, show the online APP link.
 #' @examples
 #' if (interactive()) {
-#'   EFAshiny()
+#'   EFAshiny::EFAshiny()
 #' }
 EFAshiny <- function(run = T, report_Apppath = F) {
         app <- system.file("efas",

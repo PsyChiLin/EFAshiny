@@ -4,7 +4,12 @@
 \alias{EFAshiny}
 \title{An user-friendly shiny application for exploratory factor analysis}
 \usage{
-EFAshiny()
+EFAshiny(run = T, report_Apppath = F)
+}
+\arguments{
+\item{run}{run the EFAshiny app or not. Default is true, and the APP will be lanuched.}
+
+\item{report_Apppath}{report the directory of the APP in your system. If false, show the online APP link.}
 }
 \description{
 The EFAshiny graphical user interface is designed to free users from scripting in R by wrapping together various packages for data management, factor analysis, and graphics.
@@ -14,7 +19,7 @@ EFAshiny can directly be used on-line. Check See Also section.
 }
 \examples{
 if (interactive()) {
-  EFAshiny()
+  EFAshiny::EFAshiny()
 }
 }
 \seealso{
