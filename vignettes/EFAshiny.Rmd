@@ -10,38 +10,41 @@ vignette: >
 ---
 
 ## A Tutorial to EFAshiny
-[`EFAshiny`](https://psychilin.shinyapps.io/EFAshiny/) is an user-friendly application for exploratory factor analysis (EFA; Bartholomew, Knott, & Moustaki, 2011). The graphical user interface in shiny (Chang, Cheng, Allaire, Xie, & McPherson, 2017) is designed to free users from scripting in R by wrapping together various packages for data management, factor analysis, and graphics. Easy-to-follow analysis flow and reasonable default settings avoiding common errors (Henson & Roberts, 2006) are provided. Results of analysis in tables and graphs are presented on-line and can be exported.
+`EFAshiny` is an user-friendly application for exploratory factor analysis (EFA; Bartholomew, Knott, & Moustaki, 2011). The graphical user interface in shiny (Chang, Cheng, Allaire, Xie, & McPherson, 2017) is designed to free users from scripting in R by wrapping together various packages for data management, factor analysis, and graphics. Easy-to-follow analysis flow and reasonable default settings avoiding common errors (Henson & Roberts, 2006) are provided. Results of analysis in tables and graphs are presented on-line and can be exported.
 
 Key features include:
 
-- Easy-to-follow analysis flow 
-- Quick data summary
-- Graphical and numerical retention methods
-- Lots of extraction and rotation methods
-- Confidence intervals of factor loadings
-- Visualizations of factor loadings
-- Default arguments suggested by current research 
+- An easy-to-use GUI to free users from scripting in R
+- A step by step analysis flow to perform EFA 
+- Quick ways to summarize data by tables or graphs
+- Several ways to explore factor retention numerically or graphically
+- Several ways to explore factor extraction and rotation numerically or graphically
+- A display of confidence intervals for factor loadings
+- Several ways to link visualization of correlation matrix with factor structure
+- Default options are chosen according to recommendations in the literature
+- A demonstration using a real psychological scale dataset 
 
-The intended user of [`EFAshiny`](https://psychilin.shinyapps.io/EFAshiny/) is a behavioral science researcher who seeks an easy way to analyze and visualize item-level scales or datasets with a set of associated variables using EFA.
+The `EFAshiny` application is primarily aimed at behavioral researchers who want to perform EFA on a set of associated variables (e.g., item-level scale dataset). Note that it can also be used to explore FA-based connectivity analyses (McLaughlin et al., 1992) in instrument data, such as event related potentials (ERPs) and functional near-infrared spectroscopy (fNIRS). Though the major focus of `EFAshiny` is to perform EFA, it is worth noting that confirmatory factor analysis (CFA) is an useful future direction for `shiny` APP.
 
 ## Getting Started
 
-#### 1. Shiny APP version (recommended)
-If you want to use the `EFAshiny`, installation is not required. The application is deployed on **shinyapps.io** server. <br />
-Have fun with `EFAshiny` : https://psychilin.shinyapps.io/EFAshiny/
+#### 1. Github version (Full version)
+To run `EFAshiny` on your R, [`devtools`](https://cran.r-project.org/web/packages/devtools/devtools.pdf) and [`shiny`](https://cran.r-project.org/web/packages/shiny/shiny.pdf) are required. <br />
 
-#### 2. Github version
-To run `EFAshiny` on your R locally, you have to intsall [`devtools`](https://cran.r-project.org/web/packages/devtools/devtools.pdf). <br />
-Then, intsall `EFAshiny` from Github.
 ```{r, eval=FALSE}
-#install.packages("devtools")
-devtools::install_github("PsyChiLin/EFAshiny")
+install.packages("devtools")
+install.packages("shiny")
 ```
 
-To launch the app:
+Install and launch `EFAshiny`:
 ```{r, eval=FALSE}
+devtools::install_github("PsyChiLin/EFAshiny")
 EFAshiny::EFAshiny()
 ```
+
+#### 2. Shiny APP version (Standard version)
+If you want to use the standard version of `EFAshiny`, installation is not required. The application is deployed on **shinyapps.io** server. This standard version has all the function except for the `Editor` tab (which is only useful for users who want to code online). Users can easily explore and analyze their data with this online APP without worrying about installation. <br />
+Have fun with `EFAshiny` : https://psychilin.shinyapps.io/EFAshiny/
 
 
 ## Tutorial
@@ -59,8 +62,6 @@ When you open [`EFAshiny`](https://psychilin.shinyapps.io/EFAshiny/), the interf
 
 In the `Introduction` tab, you can see the main features for `EFAshiny`, a demo figure, and some key references.<br />
 
-<img src="https://github.com/PsyChiLin/EFAshiny/blob/master/rmdfigs/Introduction.png?raw=true" height="400px" />
-
 #### 3. Data Input
 The data sets that required the implementations of EFA are typically in a wide format, i.e., one observation per row.<br />
 They are composed of a set of responses in one or more psychometric tests in Likert scale.<br />
@@ -74,22 +75,18 @@ In the `Data Input` tab, users can upload the data.
 
 If no data is uploaded, `EFAshiny` will use the [Rosenberg Self-Esteem Scale ](https://github.com/PsyChiLin/EFAshiny/blob/master/RSE/RSE.csv) dataset to perform the default demostrations.
 
-<img src="https://github.com/PsyChiLin/EFAshiny/blob/master/rmdfigs/DataInput.png?raw=true" height="400px" />
-
 #### 4. Data Summary
 After uploading the data, the exploratory data analysis should be conducted.<br />
 In `Data Summary` tab, three types of explorations are provided.
 
-- **Numeric Statistic**: The first to fourth order moments for each variable were automatically calculated and printed without worrying about inputting any arguments. 
-- **Distribution**: Histograms that demonstrated numbers of observations conditioned on the points of Likert scale (e.g. 1 to 4 points) reported the distribution of each variable.
+- **Numeric Statistic**: The first to fourth order moments for each variable were automatically calculated and printed without worrying about inputting any arguments. Median and MAD are provided as well.
+- **Histogram**: Histograms that demonstrated numbers of observations conditioned on the points of Likert scale (e.g. 1 to 4 points) reported the distribution of each variable.
+- **Density Plot**: Density plots are provided. Users can visualize the distribution of each item accroding to the histograms and density plots. Note that the histograms and density plots are generated using `plotly` package. In other words, they can be played dynamically. Try it with some clicks !
 - **Correlation Matrix**: A bird’s eye view of the pairwise correlation between variables will be illustrated.
     + **Type of correlation**: Tetrachoric correlations can be adopted to calculate the correlations between bivariates, and Polychoric correlations can be used on dichotomous ordinal variables. The default argument is set to *Pearson’s correlation coefficients*.
+- **ggcorrplot**: In addition to the `Correlation Matrix` tab using `corrplot` package, we also provide a `ggcorrplot` version. Have fun with those plots and further get some intuitions.
 
 Note that the provided correlation matrix is the basis of EFA, which is a procedure that aim to investigate the underlying structure from the correlations between variables, so either calculating or visualizing the correlation matrix will be really important.
-
-
-<img src="https://github.com/PsyChiLin/EFAshiny/blob/master/rmdfigs/DataSummary.png?raw=true" height="400px" />
-
 
 #### 5. Factor Retention
 
@@ -99,15 +96,14 @@ In `Factor Retention` tab, a set of indices to determine numbers of factor are p
 - **Scree Plot and Parallel Analysis**: Scree Plot (Cattell, 1966) and Parallel Analysis (Horn, 1965) are two popular methods to determine numbers of factor. 
     + **Quantile of Parallel analysis**: Mean, 95th- and 99th-percentile eigenvalues of random data can be used as criteria.
     + **Number of simulated analyses to perform**: Users can perform more simulation to obstain reliable results. In general, the default 200 is correct enough.
-- **Numeric Rules**: Velicer's minimum average partial (MAP, Velicer, 1976) test, RMSEA, BIC and SRMR are also provided as the objective numeric rules.
+- **Numeric Rules**: Very simple structure complexitiy (VSS), Velicer's minimum average partial (MAP, Velicer, 1976) test, RMSEA, BIC and SRMR are also provided as the objective numeric rules.
     + **Max Number of Factor For Estimation**: Users should define their max number of factor to estimate. Should be more than hypothesized.
 - **Exploratory Graph Analysis (EGA)**: EGA is a new approach, which is based on the graphical lasso with the regularization parameter specified using EBIC, for retaining factors (Golino & Epskamp,2017).
     + **Number of simulated analyses to perform**: Users can perform more simulation to obstain reliable results. Note that too much simulated analyses will somehow slow down the EGA.
+- **Summary**: We provide a easy summary for all these methods. Users can easy make a decision for the number of factors according to the summary.
     
 In addition, **Sample Size** is another option for users to validate the results for factor retentions by randomly adjusting different Sample Size.<br />
 Although users still have to determine the number of factors upon their own decisions, `EFAshiny` provides users several indices without worrying on methods implementations.
-
-<img src="https://github.com/PsyChiLin/EFAshiny/blob/master/rmdfigs/FactorRetention.png?raw=true" height="400px" />
 
 #### 6. Extraction and Rotation
 
@@ -120,16 +116,12 @@ In `Extraction and Rotation` tab, several factor extraction and rotation methods
 
 By providing plenty of factor extraction methods, rotation methods, and useful interval estimations of factor loadings, `EFAshiny` is not only helpful for EFA newbies, but also flexible for EFA users with many experiences.
 
-<img src="https://github.com/PsyChiLin/EFAshiny/blob/master/rmdfigs/ExtractionRotation.png?raw=true" height="400px" />
-
 #### 7. Diagram
 
 For EFA results, the fundamental visualizations is plotting the relationship between factors and indicators.<br />
 In `Diagram` tab, the path diagram representation is provided by using `psych` R package (Revelle, 2017).<br />
 It has the structure that all factors and indicators are represented as a bigger or smaller node, and all loadings with absolute values greater than some thresholds (e.g. 0.3) are represented as a line.<br />
 Through the graphical representations with flexible plotting options, users can easily understand the factor structure.
-
-<img src="https://github.com/PsyChiLin/EFAshiny/blob/master/rmdfigs/Diagram.png?raw=true" height="400px" />
 
 #### 8. Factor Loadings
 
@@ -142,8 +134,6 @@ Preacher, 2015), by presenting comparison figure. Users can observe whether the 
 
 In addition to providing a table of loadings for EFA results, users can automatically get the whole picture of the EFA results through these visualizations.
 
-<img src="https://github.com/PsyChiLin/EFAshiny/blob/master/rmdfigs/FactorLoading.png?raw=true" height="400px" />
-
 #### 9. Summarized Steps
 
 We summarize, in six concrete steps, our provided flow in `EFAshiny` for performing EFA.
@@ -155,7 +145,20 @@ We summarize, in six concrete steps, our provided flow in `EFAshiny` for perform
 5. Visualize the results. Three kinds of plots are shown by EFAshiny. Get a general idea of the results from these visualization. 
 6. Download and use the results, including figures and tables, in every step for any purpose.
 
+To see the tutorial in vignettes:
+```{r, eval=FALSE}
+browseVignettes("EFAshiny")
+```
+
 By following this analysis flow in `EFAshiny`, users without any knowledge of programming are able to perform EFA and obtain great understandings for their own studies.
+
+#### 10. R Code for the Github version
+
+In addition to the GUI, we also provide an `Editor` tab with several code demonstrations in the Github version of `EFAshiny`. In this `Editor` mode (see figure below), we already present some quick examples allowing users to perform similar analyses in `EFAshiny` GUI. Users can also write their own R code here. With this feature users might have the possibility to use `EFAshiny` within a script pipeline. In general, this cool feature allow users to learn R, understand the code underlying analyses in `EFAshiny` or automate the analyses in the future. 
+
+Note that this feature can also allow the use of `lavaan` R package to perform confirmatory factor analysis (CFA), which is also a widely used method but not the main focus of `EFAshiny`. Simply input `require(lavaan)` should work (see [lavaan package](http://lavaan.ugent.be/) for details). Another useful tool is the `showcase` version of `shiny` when running the APP ( definitely, you can directly see the code in `server.R` and `ui.R`).
+
+In summary, Users who want to further understand `EFAshiny` or learn `R` can (1) see the code in `Editor` tab of github version `EFAshiny` GUI (as shown in figure), (2) download the R markdown file similar to the code in editor mode [here](https://github.com/PsyChiLin/EFAshiny/blob/master/EFAshiny_RCodeDemo.Rmd), (3) see the same R markdown file in [this public link](http://rpubs.com/Chi-Lin/EFAshiny_R_Code_Demo), (4) use `showcase` function in `shiny`, and (5) directly see the code in `server.R` and `ui.R`.
 
 ## Data
 
@@ -169,10 +172,13 @@ The dataset for demonstration is the 10-items Rosenberg Self-Esteem Scale (RSE; 
 - [`reshape2`](https://cran.r-project.org/web/packages/reshape2/reshape2.pdf) (Wickham, 2014)
 - [`EGA`](https://github.com/hfgolino/EGA) (Golino & Epskamp, 2017)
 - [`ggplot2`](https://cran.r-project.org/web/packages/ggplot2/ggplot2.pdf) (Wickham, 2016)
+- [`ggcorrplot`](https://cran.r-project.org/web/packages/ggcorrplot/ggcorrplot.pdf) (Kassambara, 2016)
 - [`gridExtra`](https://cran.r-project.org/web/packages/gridExtra/gridExtra.pdf) (Auguie, 2017)
 - [`igraph`](https://cran.r-project.org/web/packages/igraph/igraph.pdf) (Csardi & Nepusz, 2006)
 - [`moments`](https://cran.r-project.org/web/packages/moments/moments.pdf) (Komsta & Novomestky, 2013)
+- [`plotly`](https://plot.ly/r/) (Sievert, et al., 2017)
 - [`psych`](https://cran.r-project.org/web/packages/psych/psych.pdf) (Revelle, 2017)
+- [`psycho`](https://cran.r-project.org/web/packages/psycho/index.html) (Makowski, 2018)
 - [`qgraph`](https://cran.r-project.org/web/packages/qgraph/qgraph.pdf) (Epskamp, et al., 2012)
 - [`shiny`](https://cran.r-project.org/web/packages/shiny/shiny.pdf) (Chang, Cheng, Allaire, Xie, & McPherson, 2017)
 - [`shinytheme`](https://cran.r-project.org/web/packages/shinythemes/shinythemes.pdf) (Chang, 2016)
@@ -191,14 +197,20 @@ The dataset for demonstration is the 10-items Rosenberg Self-Esteem Scale (RSE; 
 - Henson, R. K., & Roberts, J. K. (2006). Use of exploratory factor analysis in published research: Common errors and some comment on improved practice. Educational and Psychological measurement, 66(3), 393-416.
 - Horn, J. L. (1965). A rationale and test for the number of factors in factor analysis. Psychometrika, 30(2), 179-185.
 - Komsta, L., & Novomestky, F. (2013). moments: moments, cumulants, skewness, kurtosis and related tests. R package version 0.13.
+- Kassambara, A. (2016). ggcorrplot: Visualization of a Correlation Matrix using'ggplot2'. R package version 0.1.1.
+- Yves Rosseel (2012). lavaan: An R Package for Structural Equation Modeling. Journal of Statistical Software, 48(2), 1-36.
+- Makowski, (2018). The psycho Package: an Efficient and Publishing-Oriented Workflow for Psychological Science. Journal of Open Source Software, 3(22), 470.
+- McLaughlin, T., Steinberg, B., Christensen, B., Law, I., Parving, A., & Friberg, L. (1992). Potential language and attentional networks revealed through factor analysis of rCBF data measured with SPECT. Journal of Cerebral Blood Flow & Metabolism, 12(4), 535-545.
 - Revelle, W. (2017) psych: Procedures for Personality and Psychological Research, Northwestern University, Evanston, Illinois, USA, R package version 1.7.8.
 - Rosenberg, M. (1965). Rosenberg self-esteem scale (RSE). Acceptance and commitment therapy. Measures package, 61, 52.
+- Sievert, C., Parmer, C., Hocking, T., Chamberlain, S., Ram, K., Corvellec, M., & Despouy, P. (2016). plotly: Create Interactive Web Graphics via ‘plotly. js’. R package version, 4.7.1.
 - Taiyun Wei and Viliam Simko (2017). R package "corrplot": Visualization of a Correlation Matrix. R package version 0.84.
 - Velicer, W. F. (1976). Determining the number of components from the matrix of partial correlations. Psychometrika, 41(3), 321-327.
 - Wickham, H. (2016). reshape2: Flexibly Reshape Data: A Reboot of the Reshape Package. R package version 1.4.2.
 - Wickham, H. (2016). ggplot2: elegant graphics for data analysis. Springer.
 - Zhang, G., & Preacher, K. J. (2015). Factor rotation and standard errors in exploratory factor analysis. Journal of Educational and Behavioral Statistics, 40(6), 579-603.
 - Zhang, G. (2014). Estimating standard errors in exploratory factor analysis. Multivariate Behavioral Research, 49, 339-353.
+
 
 ## Authors
 [**Chi-Lin Yu**](https://github.com/PsyChiLin) : Department of Psychology, National Taiwan University, Taiwan<br />
