@@ -24,7 +24,7 @@ EFAshiny <- function(run = T, report_Apppath = F) {
                 }
                 if (report_Apppath == F){
                         onlineapp <- "Have fun with EFAshiny : https://psychilin.shinyapps.io/EFAshiny/"
-                        tutorial <- "See tutorial : https://github.com/PsyChiLin/EFAshiny"
+                        #tutorial <- "See tutorial : https://github.com/PsyChiLin/EFAshiny"
                         return(onlineapp)
                 }
         }
