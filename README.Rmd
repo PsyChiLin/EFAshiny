@@ -246,4 +246,10 @@ The dataset for demonstration is the 10-items Rosenberg Self-Esteem Scale (RSE; 
 [**Chi-Lin Yu**](https://github.com/PsyChiLin) : Department of Psychology, National Taiwan University, Taiwan<br />
 [**Ching-Fan Sheu**](http://140.116.183.121/~sheu/) : Institute of Education, National Cheng Kung University, Taiwan<br />
 <br />
-If you have a question, comment, concern or code contribution about `EFAshiny`, please  send us an email at psychilinyu@gmail.com.
+If you have a question, comment, concern or code contribution about `EFAshiny`, please send us an email at psychilinyu@gmail.com.
+
+## How To Cite
+Please cite as:
+
+- Yu et al., (2018). EFAshiny: An User-Friendly Shiny Application for Exploratory Factor Analysis. Journal of Open Source Software, 3(22), 567, https://doi.org/10.21105/joss.00567
+
