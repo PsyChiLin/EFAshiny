@@ -494,5 +494,5 @@ send us an email at <psychilinyu@gmail.com>.
 Please cite as:
 
   - Yu et al., (2018). EFAshiny: An User-Friendly Shiny Application for
-    Exploratory Factor Analysis. Journal of Open Source Software, 3(22),
-    567, <https://doi.org/10.21105/joss.00567>
+    Exploratory Factor Analysis. *Journal of Open Source Software*,
+    3(22), 567, <https://doi.org/10.21105/joss.00567>
