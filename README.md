@@ -10,6 +10,7 @@ Status](https://travis-ci.org/PsyChiLin/EFAshiny.svg?branch=master)](https://tra
 Build](https://ci.appveyor.com/api/projects/status/ud2tblafomnka8hm?svg=true)](https://ci.appveyor.com/project/PsyChiLin/efashiny)
 [![Dependency
 Status](https://dependencyci.com/github/PsyChiLin/EFAshiny/badge)](https://dependencyci.com/github/PsyChiLin/EFAshiny)
+[![DOI](http://joss.theoj.org/papers/10.21105/joss.00567/status.svg)](https://doi.org/10.21105/joss.00567)
 
 # EFAshiny
 
