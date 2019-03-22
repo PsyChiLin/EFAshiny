@@ -43,9 +43,9 @@ who want to perform EFA on a set of associated variables (e.g.,
 item-level scale dataset). Note that it can also be used to explore
 FA-based connectivity analyses (McLaughlin et al., 1992) in instrument
 data, such as event related potentials (ERPs) and functional
-near-infrared spectroscopy (fNIRS). Though the major focus of `EFAshiny`
-is to perform EFA, it is worth noting that confirmatory factor analysis
-(CFA) is an useful future direction for `shiny` APP.
+near-infrared spectroscopy (fNIRS) data. Though the major focus of
+`EFAshiny` is to perform EFA, it is worth noting that confirmatory
+factor analysis (CFA) is an useful future direction for `shiny` APP.
 
 ## Getting Started
 

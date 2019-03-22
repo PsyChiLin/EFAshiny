@@ -19,7 +19,7 @@ if(!require(shinydashboard)) {require(shinydashboard)}
 
 code = '
 ### Overview
-This tutorial aims to demonstrate how to perform 
+This tutorial demonstrates how to perform 
 the fundamental analyses in `EFAshiny`
 using R code. By following each line in this tutorial, 
 you can learn basic R programming and can implement 
